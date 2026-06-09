@@ -5,3 +5,6 @@
 
 ## vscode-notes
 - note-taking.md
+
+## gemini-notes
+- basics.md
