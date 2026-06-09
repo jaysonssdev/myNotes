@@ -1,12 +1,12 @@
 # Git & Github Crash Course
-[Youtube Link](https://www.youtube.com/watch?v=mAFoROnOfHs)
+[Youtube Link: Git & GitHub Crash Course for Beginners](https://www.youtube.com/watch?v=mAFoROnOfHs)
 
 ## Commands - Summary
 - `git init` - creates a '.git' in your working directory
 - `git clone <url>` - used to clone a repository from Github
 - `git status` - show what changes have been made
 - `git add <option>` - you want to stage the changes
-    - `git add --all` or **git add -A**   - stages every single change across the entire repository.
+    - `git add --all` or `git add -A`   - stages every single change across the entire repository.
     - `git add .` - stages changes only within the current directory and its subdirectories, it completely ignores changes made in parent or sibling directories
     - `git add *` - stage new or modified ones only, but will not stage the deleted ones
     - `git add <fileName>` - to stage a specific file only
@@ -21,6 +21,28 @@
 - `git rm -r <folderName>` - deletes a directory and everything inside it, it will also be staged automatically
 - `git log` - view the full commit history
 - `git log --oneline` - view a short summary of all the commits
+- `git log --all --decorate --oneline --graph` - to view the branches better
+- `git branch` - to list all the branches of a project
+- `git branch <branchName>` - creates a new branch
+- `git switch -c <newBranchName>` - creates a new branch and automatically moves on to that branch
+- `git switch <branchName>` or `git checkout <branchName>` - moves to another branch
+- `git diff <commitId2> <commitId1>` - to compare commits. Note: put the latest commit ID first before the old one. Press `q` to exit the log window
+- `git push origin main` - to upload/update your project to github
+- `git pull` - to download the updates from github to your local machine 
+- `git restore .` - to revert back the entire repository from its last commited state
+- `git restore <folderName>` - to revert an entire directory to its latest commited state
+- `git restore <fileName>` - to revert back a specific file to its latest commited state
+- `git restore --staged .` - if you already staged, this removes the files in the staged area, but leaves the actual directory unchanged
+- `git restore --staged <fileName>` - if you already staged, this removes a specific file in the staged area, but leaves the actual file unchanged
+- `git stash` - to just stash your unfinished work to be able to switch on another branch
+- `git stash list` - to view the stash list
+- `git stash drop` - to remove stash from the list
+- `git stash pop` - to load the latest saved stash and remove it from the list
+- `git stash apply` - to load the latest saved stash without removing it from the list
+- `git stash pop stash@{0}` or `git stash apply stash{0}` - to load a specific stash
+- `git revert <commitID>` - goes back to a specific commit and creates a new commit. Type `:wq` to accept the default description and save.
+- `git rebase <branchName>` - will get the commits from that branchName, like its new starting point 
+
 
 <br>
 
@@ -36,9 +58,11 @@
 
 ## Cloning a Repository from Github
 - Go to github, click Code > HTTPS tab > Copy url to clipboard
-![alt text](images/essentials/2026-06-08_14-07.png)
+    
+    ![alt text](images/essentials/2026-06-08_14-07.png)
+
 - In your local machine, go to the location where you want to clone the folder.
-- In terminal run `git clone <paste the url>`
+- In terminal run `git clone <url>`
 
 
 ## Tracking Changes
@@ -81,9 +105,11 @@
 
 
 ## Branching
-- On online repository (Github) the default branch is called *main*, while on local repository the default is *master*
+- On online repository (Github) the default branch is called 'main', while on local repository the default is 'master'
 - Projects usually have multiple branches before merging them to finalize it.
-![alt text](images/essentials/2026-06-08_22-30.png)
+
+    ![alt text](images/essentials/2026-06-08_22-30.png)
+
 - To create a new branch, run `git branch <branchName>`, example: `git branch development`
 - To create a new branch and automatically move on that branch, run `git switch -c <newBranchName>`
 - To list all the branches of a project, run `git branch`. Note: The * next to the name means you are currently working on that branch.
@@ -100,23 +126,29 @@
     - `git merge development -m "Merging on main with development"`
     - now everything that you made in 'development' branch will be added in 'main' branch
 - To view the branches better, run `git log --all --decorate --oneline --graph`
-![alt text](images/essentials/2026-06-08_23-58.png)
+
+    ![alt text](images/essentials/2026-06-08_23-58.png)
+
 - Merge conflict happens when same file was modified on different branches. Example: one.txt was modified in 'main' branch, and one.txt was also modified in 'development' branch. Then *conflicting markers* will appear on one.txt. It is up to you to decide what to do -- finalize the one.txt, then stage, then commit.
 
 
 ## Checking Out Previous Commits (Time Travel)
 - See sample process below:
     - `git log --oneline`
-    ![alt text](images/essentials/2026-06-09_00-08.png)
-    - `git switch <commitID>`. Example: `git checkout cf5373e`
+
+        ![alt text](images/essentials/2026-06-09_00-08.png)
+    
+    - `git checkout <commitID>`. Example: `git checkout cf5373e`
 
 
 ## Comparing Commits
 - See sample process below:
     - `git log --oneline`
-    ![alt text](images/essentials/2026-06-09_00-15.png)
+
+        ![alt text](images/essentials/2026-06-09_00-15.png)
+    
     - `git diff f662069 cf5373e`
-        - Note: put the latest the commit ID first before the old one, in this example: f662069
+        - Note: put the latest commit ID first before the old one, in this example: f662069
     - press '**q**' to exit the log window
 
 <br>
@@ -135,7 +167,8 @@
 ### Fetch and Pull
 - For example, you made changes and commited directly on GitHub. In your local machine, run `git fetch` but it will not yet reflect the update on your files, you still need to run `git merge`
 - Or run `git pull`, it is also the same with git fetch + git merge
-![alt text](images/essentials/2026-06-09_12-14.png)
+
+    ![alt text](images/essentials/2026-06-09_12-14.png)
 
 
 ## Pull Requests (PR) & Collaboration
@@ -157,7 +190,8 @@
 
 ## git stash: Saving Unfinished Work
 - For example, you are working on a big project, and you already finished the half of it and you are not yet ready to commit, but your supervisor needs you to check a different branch. How would you switch branches without losing your work? With **git stash**, you can set aside your unfinished work, switch to another branch to do something.
- ![alt text](images/essentials/2026-06-09_14-17.png)
+
+    ![alt text](images/essentials/2026-06-09_14-17.png)
 
 - See example workflow below:
     - You're working in 'main' branch, run `git stash`
@@ -178,7 +212,11 @@
 
 
 ## git rebase: Cleaning Up History
+
 ![alt text](images/essentials/2026-06-09_15-21.png)
-Now while you are in the 'feature' branch, run `git rebase main`, 'feature' branch will now get the commits from the 'main' branch, like its new starting point.
+
+Now while you are in the 'feature' branch, run `git rebase main`, 'feature' branch will now get the commits from the 'main' branch, like its new starting point. 
+
 ![alt text](images/essentials/2026-06-09_15-27.png)
+
 But merge is still advisable for multiple developers working together than rebase, because rebase rewrites existing commits. So rebase is only advisable to use for personal projects.
