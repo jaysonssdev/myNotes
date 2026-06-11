@@ -40,7 +40,11 @@ print("Message1\tMessage2") # To put a tab space between the words
 
 
 ### Variables
-- `=` - to assign variables. Example: `name = "John"`
+- `=` - to assign variables. Example:
+```py
+name = "John"
+print("My name is", name)
+```
 - You can't use on variable names: <br>
     hyphen(-), start with a number, characters like '!', keywords like 'if' or 'for'
 
