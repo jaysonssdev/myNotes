@@ -361,18 +361,164 @@ print(abs(2 - 10))  # Result is 8
 #### floor(), ceil(), round()
 ![alt text](images/essentials/2026-06-13_15-42.png)
 
+```py
+import math     # You need to import math to use the floor & ceil functions
+price = 35.54879
+print(math.floor(price))    # Result is 35
+print(math.ceil(price))     # Result is 36
+print(round(price))         # Result is 36
+print(round(price,2))       # Result is 35.55
+```
+#### trunc()
+- cuts off the decimal part and keeps the whole number (no rounding). Also needs to import math to be used. Example:
+```py
+import math
+price = 15.69
+print(math.trunc(price))    # Result is 15
+# if you don't want to import math just to use trunc(), you can also use int() which will do the same
+print(int(price))           # Result is also 15
+```
 
+### Random
+#### random()
+- returns a random float between 0.0 and 1.0. We need to import random. Output is float.
+```py
+import random
+print(random.random())  # Result is 0.496024166 which is random
+```
+#### randint()
+- gets a random whole number from start to end that you specify (both included). Also need to import random. Output is int. Example:
+```py
+import random
+print(random.randint(1,6))  # Result will be any number from 1 to 6
+```
 
-
-
-
-
-
+### Validation
+#### is_integer()
+- is a built-in method that checks if a float has no decimal part (is a whole number). Output is boolean. Example:
+```py
+x = 7.0
+print(x.is_integer())   # Result is True
+y = 7.1
+print(y.is_integer())   # Result is False
+```
+#### isinstance()
+- is a built-in function that checks if a value belongs to a certain data type that you expect. Output is boolean. Example:
+```py
+x = 70
+print(isinstance(x, int))   # Result is True
+print(isinstance(x, float)) # Result is False
+```
 
 <br>
 <br>
 
 ## Chapter 4 - Python Logic & Operators
+![alt text](images/essentials/2026-06-13_23-44.png)
+
+### Functions
+#### bool()
+- is a built-in function. Output is boolean.
+- True - if the value is non-empty or non-zero
+- False - if the value is empty or zero
+```py
+print(bool(123))    # Result is True
+print(bool("Hi!"))  # Result is True
+print(bool())       # Result is False since it is empty
+print(bool(0))      # Result is False
+print(bool(""))     # Result is False
+print(bool(None))   # Result is False
+```
+#### any(), all()
+![alt text](images/essentials/2026-06-13_23-59.png)
+![alt text](images/essentials/2026-06-14_00-01.png)
+
+```py
+email = ""
+phone = "0919-1234567"
+username = ""
+# Allows registration if any field is filled
+print(any([email, phone, username])) # Result is True because at least one is filled which is the phone
+
+# Allows registration only if all fields is filled
+print(all([email, phone, username])) # Result is False because only one field is filled
+```
+#### isinstance()
+- is a built-in function that checks if a value belongs to a certain data type that you expect. Output is boolean. Example:
+```py
+print(isinstance(123, int))   # Result is True
+print(isinstance(True, str))  # Result is False
+```
+
+### Comparison Operators
+- it compares two or more values and return True or False based on the result.
+
+![alt text](images/essentials/2026-06-14_00-31.png)
+![alt text](images/essentials/2026-06-14_00-33.png)
+
+#### Chained Comparison
+- it evaluates it from left to right, checking each condition one by one. Example:
+```py
+# Is age between 18 and 30?
+age = 20
+print(18 <= age <= 30)    # Result is True
+```
+
+### Logical Operators
+#### and | or 
+- used to combine multiple boolean expressions
+
+![alt text](images/essentials/2026-06-14_00-49.png)
+
+#### not
+- it reverses the truth
+- it turns True into False, and False into True
+```py
+print(3 > 2)        # Result is True
+print(not 3 > 2)    # Result is False
+
+name = ""
+print(not name)     # Result is True
+print(not 0)        # Result is True
+```
+
+#### Execution Order
+- "and" has higher priority than "or"
+ ![alt text](images/essentials/2026-06-14_01-03.png)
+
+- use parenthesis to control the order
+![alt text](images/essentials/2026-06-14_12-55.png)
+
+### Membership Operators - "in" and "not in"
+- checks if a value is inside another value
+```py
+print("o" in "python")      # Result is True
+print("f" not in "python")  # Result is True
+print(3 not in [1, 2, 3])   # Result is False
+# One of its use in real world is to validate a domain if it is in the banned list.
+domain = "gmail.com"
+banned_domains = ["spam.com", "fake.org", "bot.net"]
+print(domain not in banned_domains]     # Result is True
+```
+
+### Identity Operators - "is" and "is not"
+- checks if two variables refer to the same object in memory, python creates different IDs if the values are not simple
+
+![alt text](images/essentials/2026-06-14_13-21.png)
+![alt text](images/essentials/2026-06-14_13-22.png)
+
+- But python will create same IDs if the values are simple
+
+![alt text](images/essentials/2026-06-14_13-29.png)
+![alt text](images/essentials/2026-06-14_13-30.png)
+
+- And if you created a new variable from a previous variable, python will not create a new ID.
+```py
+x = [1, 2, 3]
+y = x
+print(x == y)   # Result is True
+print(x is y)   # Result is True
+```
 
 <br>
 <br>
