@@ -524,6 +524,162 @@ print(x is y)   # Result is True
 <br>
 
 ## Chapter 5 - Python Conditional Statements
+- checkpoint that checks a condition
+    - True? Runs the Code
+    - False? Skip it
+
+### if (stand-alone)
+- defines the first condition
+- "if this is true, do this - otherwise, do nothing"
+![alt text](images/essentials/2026-06-14_14-03.png)
+
+```py
+score = 100
+if score >= 90:
+    print("A")   # Result is A. But if you change the score to a lower value like 89 or below, it will not print anything. 
+```
+
+### else (two-way decision)
+- runs only if all previous conditions are false
+- "if nothing was true, do this instead"
+![alt text](images/essentials/2026-06-14_14-25.png)
+
+```py
+score = 80
+if score >= 90:
+    print("A")
+else:
+    print("F")  # Result is F
+```
+
+### elif (multiple conditions)
+- asks a follow-up question, and only runs if previous conditions were false
+- "if the first wasn't true, try this one"
+![alt text](images/essentials/2026-06-14_14-43.png)
+
+```py
+score = 85
+if score >= 90:
+    print("A")
+elif score >= 80:
+    print("B")
+else:
+    print("F")  # Result is B
+```
+
+### elif elif (branching)
+- you can have multiple elif
+![alt text](images/essentials/2026-06-14_14-55.png)
+
+```py
+score = 75
+if score >= 90:
+    print("A")
+elif score >= 80:
+    print("B")
+elif score >= 70:
+    print("C")
+elif score >= 60:
+    print("D")
+else:
+    print("F")  # Result is C
+```
+
+### nested if
+- if statement inside another if
+- "if the first is true, then check the second"
+![alt text](images/essentials/2026-06-14_15-02.png)
+
+```py
+score = 95
+is_submitted_project = True
+if score >= 90:
+    if is_submitted_project:
+        print("A+")
+    else:
+        print("A")
+elif score >= 80:
+    print("B")
+elif score >= 70:
+    print("C")
+elif score >= 60:
+    print("D")
+else:
+    print("F")  # Result is A+
+```
+
+### Connecting Conditions with "and" & "or"
+![alt text](images/essentials/2026-06-14_15-18.png)
+![alt text](images/essentials/2026-06-14_15-18_1.png)
+
+```py
+score = 95
+is_submitted_project = True
+if score >= 90 and is_submitted_project:
+    print("A+")
+elif:
+    print("A")
+elif score >= 80:
+    print("B")
+elif score >= 70:
+    print("C")
+elif score >= 60 or is_submitted_project:
+    print("D") 
+else:
+    print("F")  # Result is A+ if the student get 90+ & submitted a project. And students who got below 60 can still get a D as long as they submitted a project.
+```
+
+### Inline if (ternary)
+- used only for simple logics
+![alt text](images/essentials/2026-06-14_15-41.png)
+![alt text](images/essentials/2026-06-14_15-45.png)
+
+```py
+# We will convert this to inline if
+score = 80
+if score >= 90:
+    print("A")
+else:
+    print("F")
+
+# This is the simplified version
+score = 100
+print("A" if score >= 90 else "F")
+
+# Or we could put it in a variable
+grade = ("A" if score >= 90 else "F")
+print(grade)
+
+# If the statement has an elif
+score = 80
+if score >= 90:
+    print("A")
+elif score >= 80:
+    print("B")
+else:
+    print("F")
+# This will be the simplified version
+print("A" if score >= 90 else "B" if score >= 80 else "F")
+```
+
+### case-match
+- evaluate a value against multiple values
+- runs the code of the first match
+- can be used only for matching values
+```py
+# Example: Convert the full country names into 2-letter abbreviations
+country = "United States"
+
+match country:
+    case "United States"
+        print("US")
+    case "India"
+        print("IN")
+    case "Egypt"
+        print("EG")
+    case _:                 # this is the equivalent of "else"
+        print("Unknown Country")
+```
 
 <br>
 <br>
