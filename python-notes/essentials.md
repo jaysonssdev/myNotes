@@ -685,6 +685,176 @@ match country:
 <br>
 
 ## Chapter 6 - Python Loops
+- repeat a block of code over and over until a condition is met
+- there two types - for and while
+
+### "for" loops
+```py
+# Instead of writing this code this sample code:
+print("Round: 1")
+print("Round: 2")
+print("Round: 3")
+print("Round: 4")
+print("Round: 5")
+# We could simplify this using for loops:
+for i in (1,2,3,4,5):
+    print(f"Round: {i}")
+# Or we could also put the tuple in a variable:
+items = (1,2,3,4,5)
+for item in items:
+    print(f"Round: {item})
+```
+```py
+# Another example:
+scores = [80, 50, 60, 75]
+total = 0
+for score in scores:
+    total += score
+    print("Current Total:", total)
+print("Final Total:", total)
+```
+```py
+# Another example (cleaning data)
+files = [' Report.csv ', 'DATA.csv ', ' final.TXT']
+for file in files:
+    file = file.strip().lower().replace(".txt", ".csv")
+    print(f"Processing {file}")
+# Result:
+# Processing report.csv
+# Processing data.csv
+# Processing final.csv
+```
+
+#### Sequences that are used in "for" loops
+- tuple or list like the examples above
+- string
+
+![alt text](images/essentials/2026-06-15_14-53.png)
+
+- range
+
+![alt text](images/essentials/2026-06-15_15-10.png)
+
+![alt text](images/essentials/2026-06-15_14-59.png)
+
+![alt text](images/essentials/2026-06-15_15-09.png)
+
+#### Special Loop Statements
+![alt text](images/essentials/2026-06-15_15-51.png)
+
+#### break
+- it stops the loop immediately
+- it jumps out and ends the loop right away
+```py
+name = ["john", "maria", "", "sam"]
+for name in names:
+    if name == "":
+        print("Empty value detected!")
+        break
+    print(f"Name: {name}")
+# The Result will be:
+# Name: john
+# Name: maria
+# Empty value detected!
+```
+#### continue
+- it skips one loop cycle without stopping the loop
+```py
+name = ["john", "maria", "", "sam"]
+for name in names:
+    if name == "":
+        print("Empty value detected!")
+        continue
+    print(f"Name: {name}")
+# The Result will be:
+# Name: john
+# Name: maria
+# Empty value detected!
+# Name: sam
+```
+#### pass
+- it is a placeholder where nothing happens
+- "for now, just keep going and do nothing"
+```py
+name = ["john", "maria", "", "sam"]
+for name in names:
+    if name == "":
+        pass    # todo: handle empty value later
+    print(f"Name: {name}")
+# The Result will be:
+# Name: john
+# Name: maria
+# Name:
+# Name: sam
+```
+
+#### "else" in "for" loops
+- runs a block of code only if the loop finishes naturally
+- best used with "break", you'll know something went wrong if "else" didn't execute
+```py
+# Check for even number
+items = [1, 3, 5, 7]
+for i in items:
+    if i % 2 == 0:
+        print("Even number found:", i)
+        break
+else:
+    print("All numbers are odd!")
+```
+
+#### nested "for" loops
+- loop inside another loop
+```py
+letters = ["a", "b"]
+numbers = [1, 2, 3]
+
+for x in letters:       # outer loop
+    for y in numbers:   # inner loop
+        print(f"({x}, {y})")
+
+# Result will be:
+# (a, 1)
+# (a, 2)
+# (a, 3)
+# (b, 1)
+# (b, 2)
+# (b, 3)
+```
+
+### "while" loops
+- repeats a block of code over and over as long as the condition is **True**
+- "while" loops have a risk of infinite loops
+
+#### "while" condition (1st type of "while" loop)
+- initialize the variable first (ex. i = 1)
+- then make a condition (ex. i < 4)
+- then update that value (ex. i +=1)
+![alt text](images/essentials/2026-06-15_23-34.png)
+
+```py
+# A program that will keep asking until you say "yes"
+answer = ""
+while answer != "yes":
+    answer = input("Do you agree?(yes/no): ")
+print("Thank You")
+```
+#### "while" True (2nd type of "while" loop)
+![alt text](images/essentials/2026-06-16_00-44.png)
+
+```py
+# Let's recreate the "keep asking until you say yes program" above with "while True"
+while True:
+    answer = input("Do you agree?(yes/no): ")
+    if answer == "yes":
+        break
+print("Thank You")
+```
+#### while condition vs while True
+![alt text](images/essentials/2026-06-16_19-13.png)
+
+### for vs while
+![alt text](images/essentials/2026-06-16_19-17.png)
+
 
 <br>
 <br>
