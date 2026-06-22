@@ -1460,4 +1460,299 @@ print(user)     # Result is {"id": None, "name": None, "age": None, "city": None
 <br>
 
 ## Chapter 8 - Python Functions 
+**Functions** are small, reusable block of code that does one specific job.
 
+### Sources of Functions
+- `Built-in` - comes with python
+```py
+# Built-in Function (Just Calling)
+print(len("Python"))
+```
+- `Standard Library` - written by python team 
+    - Import them to be able to use them
+```py
+# Function From Libraries (Import then Call)
+import math
+number = 4.2
+print(math.ceil(number))
+```
+- `External Library` - written by community / other developers.
+    - Install the external libraries
+    - Then Import them to be able to use them
+- `User-Defined` - written by you
+    - Define them then use them
+
+![alt text](images/essentials/2026-06-22_12-37.png)
+
+![alt text](images/essentials/2026-06-22_12-39.png)
+
+```py
+# Simple Example:
+def make_coffee():
+    print("Start Machine")
+    print("Make Coffee")
+    print("Add milk")
+    print("Enjoy it")
+
+print("Wake Up")
+make_coffee()
+print("Working for a while")
+make_coffee()
+```
+
+### Parameters and Arguments
+![alt text](images/essentials/2026-06-22_14-02.png)
+
+- `Parameters` - names used in function definition that describe what data the function expects
+- `Arguments` - actual values passed in a function call that are assigned to parameters
+
+![alt text](images/essentials/2026-06-22_14-06.png)
+```py
+# Simple Example:
+def multiply_two(x):
+    print(x * 2)
+
+multiply_two(3)         # Result is 6
+
+# Another Example: Rule - Normalize Strings
+def clean_name(name):
+    print(name.strip().lower())
+
+clean_name("  MarIa  ") # Result is maria
+```
+
+#### Global Variables and Local Variables
+- `Global Variable` is created outside the function that can be accessed anywhere
+- `Local Variable` is created inside the function that can be accessed only inside the function
+
+![alt text](images/essentials/2026-06-22_14-30.png)
+
+#### Multiple Arguments
+- rule is number of arguments must match the number of parameters
+
+- `Positional Arguments` - values pass to the function based on their order. The order of arguments must match the order of the parameters.
+```py
+# Create a function that
+# Send first & last names to be cleaned
+# then merge them into a full name
+def clean_name(first, last, country):
+    cleaned_first = first.strip().lower()
+    cleaned_last = last.strip().lower()
+    merged = (f"{cleaned_first} {cleaned_last} from {country}")
+    print(merged)
+
+clean_name("  JOhn  ", " dOe   ", "DE") # result is john doe from DE
+```
+
+- `Keyword Arguments` - values pass to the function based on their names. To convert the above example to a keyword argument, you must assign the variable inside the parameters when calling the function.
+```py
+clean_name(country = "DE", first = "  JOhn ", last = "DOE ")
+# result will also be john doe from DE
+```
+
+- `Mixed Arguments` - combination of Positional & Keyword. Rule is you must start with positional args then keyword
+```py
+clean_name("  JOhn  ", last = "DOE ", country = "DE")
+# result will also be john doe from DE
+```
+
+#### Default Parameter
+- Parameter that has already a value so if you don't pass anything in Python uses that value automatically
+```py
+def clean_name(first, last, country = "n/a"):
+    cleaned_first = first.strip().lower()
+    cleaned_last = last.strip().lower()
+    merged = (f"{cleaned_first} {cleaned_last} from {country}")
+    print(merged)
+# Now even if the user doesn't specify a country, it will just show "n/a"
+```
+
+#### *args & **kwargs
+- Allows functions to accept an unknown number of arguments, because sometimes you don't know how many arguments will be passed to your function
+- `*args` - one star (*) means positional arguments
+- data type is tuple
+- When to use *args
+    - when you pass similar values (multiple int, multiple strings, etc)
+
+```py
+# Get the total of numbers
+def total(*args):
+    print(sum(args))
+
+total(1, 2)         # Result is 3
+total(1, 4, 5)      # Result is 10
+```
+
+- `**kwargs` - two stars (**) means keyword arguments
+- data type is dict
+- when to use **kwargs
+    - when you pass different type of values (combination of string, int, boolean, etc)
+```py
+# Create the user profile
+def create_user(**kwargs):
+    print(kwargs)
+
+create_user(first_name = "John", last_name = "Doe", age = 33, is_male = True)
+# Result is {"first name": "John", "last_name": "Doe", "age": 33, "is_male": True}
+create_user(name = "Maria", age = 20)
+# Result is {"name": "Maria", "age": 20}
+```
+
+#### Return
+![alt text](images/essentials/2026-06-22_21-42.png)
+
+![alt text](images/essentials/2026-06-22_21-44.png)
+
+- In our previous function examples, we use `print` for us humans to see the new value, now we will use `return` for Python to see the new value (send data back to the program)
+- If a function has no return statement, Python returns None
+- Assign the function call to a variable to store the result
+```py
+def clean_name(name):
+    cleaned = name.strip().lower()
+    return cleaned
+
+cln_name = clean_name("  MaRia ")
+print(cln_name)     # Result is maria
+```
+- A function can have multiple return statements
+```py
+def clean_name(name):
+    if not name:
+        return None
+    else:
+        cleaned = name.strip().lower()
+        return cleaned
+
+cln_name = clean_name("  MaRia ")
+print(cln_name)     # Result is maria
+cln_name = clean_name("")
+print(cln_name)     # Result is None
+```
+- You can also have multiple return values separated by commas
+```py
+def clean_name(name):
+    lo_cleaned = name.strip().lower()
+    up_cleaned = name.strip().upper()
+    return lo_cleaned, up_cleaned
+
+cln_name = clean_name("  MaRia ")
+print(cln_name)     # Result is a tuple ("maria", "MARIA")
+# If you don't want your result to be a tuple, create 2 global variables
+lo_name, up_name = clean_name("  MaRia ")
+print(lo_name) 
+print(up_name)      # Result is maria 
+                    #           MARIA
+```
+
+### Function Types By Purpose "use cases"
+![alt text](images/essentials/2026-06-22_22-21.png)
+
+#### Action Functions
+- Designed to perform an operation in the system instead of returning values
+![alt text](images/essentials/2026-06-22_22-25.png)
+
+- `with open` - opens the file safely and closes it automatically when done
+- `append mode "a"` - it appends data at the end of the file
+```py
+# Example: Store app that log messages in a file whenever an event occurs
+def write_log(message):
+    with open(r"C:\Main\Python\app.log", "a") as file:
+        file.write(message + "\n")
+
+write_log("App Started")    # Result is it will create an app.log that has App Started message inside
+```
+
+#### Transformation Functions
+- Raw data goes in, gets transformed, and returns processed data
+![alt text](images/essentials/2026-06-22_22-55.png)
+
+```py
+# Example: Python program that cleans email addresses and splits them into structured data (username and domain)
+def clean_and_split_email(email):
+    cl_email = email.strip().lower()
+    #john@gmail.com
+    username, domain = cl_email.split("@")
+    return {"username": username,
+            "domain": domain}
+
+print(clean_and_split_email(" jOhn@gMail.com  "))
+# Result is {"username": "john", "domain": "gmail.com"}
+```
+
+#### Validation Functions
+- Validates a condition and returns a boolean result (True or False)
+![alt text](images/essentials/2026-06-22_23-07.png)
+
+```py
+# Example: Python program that checks whether the password meets the minimum requirement of 8 characters
+def is_valid_password(password):
+    return len(password) >= 8
+
+print(is_valid_password("123456"))  # Result is False
+```
+
+#### Orchestrator Functions
+- Controls program flow by calling other functions in the correct order
+![alt text](images/essentials/2026-06-22_23-17.png)
+
+- **Create a mini-project**
+    - Receive an email from the user
+    - Validate the email
+    - If it is invalid, Log an error in a file
+    - If it is valid, clean and structure the email
+    - Log each step of the program
+```py
+# Action Function
+def write_log(message):
+    with open(r"C:\Main\Python\app.log", "a") as file:
+        file.write(message + "\n")
+
+# Validation Function
+def is_valid_email(email):
+    return "@" in email and "." in email
+
+# Transformation Function
+def clean_and_split_email(email):
+    email = email.strip().lower()
+    username, domain = email.split("@")
+    return {"username": username,
+            "domain": domain}
+
+# Orchestrator Function
+def process_user_email(email)
+    write_log("App Started")
+    # We must check if the email is valid
+    is_valid_email(email)
+    # If it is not valid, we log the problem
+    # If it is valid, we clean it and store structured data
+    # And we log what happened
+    if not is_valid_email(email):
+        write_log(f"Invalid Email received: {email}")
+    else:
+        clean_email = clean_and_split_email(email)
+        write_log(f"Processed Email: {clean_email}")
+    write_log("App Stopped")
+
+# We receive an email from a user
+email = input("Please enter your Email: ")
+process_user_email(email)
+```
+
+### 8x Habits for Writing Functions
+1. Use `snake_case` for function names.
+2. Use clear descriptive function names.
+    - Describe exactly what the function does
+    - Start with a `verb`
+    - Use full words, avoid abbreviations
+3. Parameter names describe their values.
+    - Use full, meaningful words
+    - Avoid abbreviations and single letters
+4. Always describe functions using docstring (""" """).
+    - Help teammates understand your code
+    - Help future you remember the logic 
+5. Replace `prints` with `return` to send data back to the program.
+6. Don't change parameter values directly, create `local variables` for any processing.
+7. Use data type hints.
+    - Always add type hints to parameters and return to make the function easier to understand
+8. Explain `args` & `return` in docstring (""" """).
+    - Always describe what goes in and what comes out of the function in the docstring
