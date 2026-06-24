@@ -36,6 +36,7 @@ print("Message1\n")     # To print a space line after your message
 print("Message1\tMessage2") # To put a tab space between the words
 ```
 - **Triple Quotes** - for Python to allow multiples lines inside the triple quotes
+
 ![alt text](images/essentials/2026-06-11_21-26.png)
 
 
@@ -49,6 +50,7 @@ print("My name is", name)     # Output is: My name is John
 - You can't use on variable names: <br>
     hyphen(-), start with a number, characters like '!', keywords like 'if' or 'for'
 - **Python Naming Conventions**
+
 ![alt text](images/essentials/2026-06-12_13-16.png)
 
 ### input() function
@@ -207,10 +209,15 @@ print("ha" * 3)     # Result is hahaha
 print("#" * 10)     # Result is ########## 
 ```
 #### Indexing and Slicing
+
 ![alt text](images/essentials/2026-06-12_22-32.png)
+
 ![alt text](images/essentials/2026-06-12_22-38.png)
+
 ![alt text](images/essentials/2026-06-12_22-40.png)
+
 ![alt text](images/essentials/2026-06-12_22-42.png)
+
 ![alt text](images/essentials/2026-06-12_22-46.png)
 
 ```py
@@ -254,6 +261,7 @@ print(search == data)   # Result is True
 ### Search
 #### startswith(), endswith(), in, find()
 - are used to search characters
+
 ![alt text](images/essentials/2026-06-13_12-44.png)
 ```py
 phone = "+63-919-1234567"
@@ -431,6 +439,7 @@ print(bool(None))   # Result is False
 ```
 #### any(), all()
 ![alt text](images/essentials/2026-06-13_23-59.png)
+
 ![alt text](images/essentials/2026-06-14_00-01.png)
 
 ```py
@@ -454,6 +463,7 @@ print(isinstance(True, str))  # Result is False
 - it compares two or more values and return True or False based on the result.
 
 ![alt text](images/essentials/2026-06-14_00-31.png)
+
 ![alt text](images/essentials/2026-06-14_00-33.png)
 
 #### Chained Comparison
@@ -484,9 +494,11 @@ print(not 0)        # Result is True
 
 #### Execution Order
 - "and" has higher priority than "or"
+
  ![alt text](images/essentials/2026-06-14_01-03.png)
 
 - use parenthesis to control the order
+
 ![alt text](images/essentials/2026-06-14_12-55.png)
 
 ### Membership Operators - "in" and "not in"
@@ -505,11 +517,13 @@ print(domain not in banned_domains]     # Result is True
 - checks if two variables refer to the same object in memory, python creates different IDs if the values are not simple
 
 ![alt text](images/essentials/2026-06-14_13-21.png)
+
 ![alt text](images/essentials/2026-06-14_13-22.png)
 
 - But python will create same IDs if the values are simple
 
 ![alt text](images/essentials/2026-06-14_13-29.png)
+
 ![alt text](images/essentials/2026-06-14_13-30.png)
 
 - And if you created a new variable from a previous variable, python will not create a new ID.
@@ -531,6 +545,7 @@ print(x is y)   # Result is True
 ### if (stand-alone)
 - defines the first condition
 - "if this is true, do this - otherwise, do nothing"
+
 ![alt text](images/essentials/2026-06-14_14-03.png)
 
 ```py
@@ -542,6 +557,7 @@ if score >= 90:
 ### else (two-way decision)
 - runs only if all previous conditions are false
 - "if nothing was true, do this instead"
+
 ![alt text](images/essentials/2026-06-14_14-25.png)
 
 ```py
@@ -555,6 +571,7 @@ else:
 ### elif (multiple conditions)
 - asks a follow-up question, and only runs if previous conditions were false
 - "if the first wasn't true, try this one"
+
 ![alt text](images/essentials/2026-06-14_14-43.png)
 
 ```py
@@ -569,6 +586,7 @@ else:
 
 ### elif elif (branching)
 - you can have multiple elif
+
 ![alt text](images/essentials/2026-06-14_14-55.png)
 
 ```py
@@ -588,6 +606,7 @@ else:
 ### nested if
 - if statement inside another if
 - "if the first is true, then check the second"
+
 ![alt text](images/essentials/2026-06-14_15-02.png)
 
 ```py
@@ -610,6 +629,7 @@ else:
 
 ### Connecting Conditions with "and" & "or"
 ![alt text](images/essentials/2026-06-14_15-18.png)
+
 ![alt text](images/essentials/2026-06-14_15-18_1.png)
 
 ```py
@@ -631,7 +651,9 @@ else:
 
 ### Inline if (ternary)
 - used only for simple logics
+
 ![alt text](images/essentials/2026-06-14_15-41.png)
+
 ![alt text](images/essentials/2026-06-14_15-45.png)
 
 ```py
@@ -829,6 +851,7 @@ for x in letters:       # outer loop
 - initialize the variable first (ex. i = 1)
 - then make a condition (ex. i < 4)
 - then update that value (ex. i +=1)
+
 ![alt text](images/essentials/2026-06-15_23-34.png)
 
 ```py
@@ -862,9 +885,11 @@ print("Thank You")
 ## Chapter 7 - Python Data Structures
 - is a way of organizing and storing data so it can be used efficiently
 - `4x Types of Data Structures`
+
 ![alt text](images/essentials/2026-06-16_19-39.png)
 
 - there are built-in methods specifically for each type of data
+
 ![alt text](images/essentials/2026-06-16_19-41.png)
 
 ### functions vs methods
@@ -879,6 +904,7 @@ print("Thank You")
 - allows duplicates
 - very commonly used
 - see picture below for our roadmap on how to use lists
+
 ![alt text](images/essentials/2026-06-16_20-04.png)
 
 #### Create Lists
@@ -911,6 +937,7 @@ print(lst[-1])              # Result is d
 - To get item/s from a nested (matrix) list, see below:
 
 ![alt text](images/essentials/2026-06-17_12-15.png)
+
 ![alt text](images/essentials/2026-06-17_12-22.png)
 ```py
 # To get one item from a nested (matrix) list, specify its row index first, then its column index
@@ -921,6 +948,7 @@ print(matrix[2][1])     # To get the "h"
 print(matrix[0][0])     # To get the "a"
 ```
 - Slicing - to get multiple items
+
 ![alt text](images/essentials/2026-06-17_12-45.png)
 ```py
 lst = ["a", "b", "c", "d"]
@@ -1166,6 +1194,7 @@ for l in letters:
 print(letters_big))    # Result is ["A", "B", "C"]
 ```
 - `enumerate` function is used to add index on each value in list. It is commonly used on finding the exact position of the bad data in your list.
+
 ![alt text](images/essentials/2026-06-18_14-01.png)
 ```py
 letters = ["a", "b", "c"]
@@ -1206,6 +1235,7 @@ print(list(map(int, numbers)))    # Result is [1, 2, 3]
 ```
 
 - `filter` function is used to filter only the values that you need. This is also used to clean up the list by removing invalid data.
+
 ![alt text](images/essentials/2026-06-18_15-06_1.png)
 ```py
 letters = ["a", "", "b", None, "c", False]
@@ -1216,6 +1246,7 @@ print(list(filter(bool, letters)))  # Result is ["a", "b", "c"]
 ```
 
 - `lambda` function is a small, anonymous function that can be defined in a single line of code. A lambda can contain any expression, including conditions.
+
 ![alt text](images/essentials/2026-06-18_15-30.png)
 ```py
 # Example 1: Only 1 variable
@@ -1254,7 +1285,9 @@ print(list(filter(lambda row: row[0].startswith("M"), students)))
 
 #### List Comprehensions
 - Loop, data transformation, and filtering all in one line. Example:
+
 ![alt text](images/essentials/2026-06-19_14-49.png)
+
 ![alt text](images/essentials/2026-06-19_15-44.png)
 ```py
 # Example: Normalize the domains into standard format
@@ -1318,7 +1351,9 @@ print(a)        # Result is {40, 20, 30}
 
 #### Sets Math Methods
 - **Math Operators** return a new set and leave the originals untouched
+
 ![alt text](images/essentials/2026-06-20_14-19.png)
+
 - `union` method is used to combine all unique items from both sets.
 ```py
 a = {10 ,20, 30, 40}
@@ -1649,6 +1684,7 @@ print(up_name)      # Result is maria
 
 #### Action Functions
 - Designed to perform an operation in the system instead of returning values
+
 ![alt text](images/essentials/2026-06-22_22-25.png)
 
 - `with open` - opens the file safely and closes it automatically when done
@@ -1664,6 +1700,7 @@ write_log("App Started")    # Result is it will create an app.log that has App S
 
 #### Transformation Functions
 - Raw data goes in, gets transformed, and returns processed data
+
 ![alt text](images/essentials/2026-06-22_22-55.png)
 
 ```py
@@ -1681,6 +1718,7 @@ print(clean_and_split_email(" jOhn@gMail.com  "))
 
 #### Validation Functions
 - Validates a condition and returns a boolean result (True or False)
+
 ![alt text](images/essentials/2026-06-22_23-07.png)
 
 ```py
@@ -1693,6 +1731,7 @@ print(is_valid_password("123456"))  # Result is False
 
 #### Orchestrator Functions
 - Controls program flow by calling other functions in the correct order
+
 ![alt text](images/essentials/2026-06-22_23-17.png)
 
 - **Create a mini-project**
