@@ -1795,3 +1795,91 @@ process_user_email(email)
     - Always add type hints to parameters and return to make the function easier to understand
 8. Explain `args` & `return` in docstring (""" """).
     - Always describe what goes in and what comes out of the function in the docstring
+
+<br>
+<br>
+
+## Chapter 9 - Python Environments
+
+### venv 
+- [Youtube Link: Python Virtual Environments](https://www.youtube.com/watch?v=Y21OR1OPC9A)
+
+#### What Are Virtual Environments?
+- A self-contained location that enables you to maintain separate and isolated environments for your python projects.
+- To manage dependencies, versions, & packages without conflicts across different projects
+
+#### Creating a Virtual Environment
+1. Open linux terminal.
+2. Go to your python project folder.
+3. Run this command: `python3 -m venv env`, where 'env' is the name of the directory that will be created for your virtual environment. You can name it anything that you want, but it is conventional to use 'env'
+4. To activate it, run `source env/bin/activate`. To verify that you're inside the environment, you should see (env) before the normal line on your terminal.
+5. To deactivate it, just run `deactivate`.
+
+#### Installing Packages
+- `pip list` - To view the packages that are currently in the environment
+- `pip install` - To install a package. Example: `pip install requests`
+
+#### Saving Dependencies
+- `pip freeze > requirements.txt` - save a list of all the dependencies we used into a requirements.txt file
+
+#### Install Packages from a txt file
+- Example workflow when you download a Python project that has requirements.txt.
+Create a new folder for that downloaded python project, once your inside that folder run these commands:
+```
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+```
+#### Final Tip
+- Don't create your python file inside the 'env' folder. It is better that your python file is just in the project folder with the 'env' folder. The 'env' folder is just for storing the things related to the virtual environment.
+
+<br>
+
+### uv 
+- [Youtube Link: Stop Using Pip - This New Tool is 100x Faster (UV Tutorial)](https://www.youtube.com/watch?v=6pttmsBSi8M)
+- `uv`is an extremely fast, all-in-one package and project manager written in Rust by Astral.
+
+#### uv installation / setup
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source ~/.bashrc
+uv --version
+uv self update
+```
+
+#### Installing Python Versions
+In terminal run these commands:
+- `uv` - shows the various commands
+- `uv python list` - this will list all the available python versions that are already installed and other versions that can still be installed
+- `uv python install` - to install a particular Python installation. Example: `uv python install 3.8`
+- `uv python find` - to find a particular Python version. Example: `uv python find 3.8`
+- `uv python uninstall` - to uninstall a version. Example: `uv python uninstall 3.8`
+
+#### uv for scripts
+In terminal run these commands:
+- `uv run` - to run your python script with the default python version. Example: `uv run main.py`
+- `uv run --python` - to manually specify the version of Python to use when we're running a particular script. Example: `uv run --python 3.9.21 main.py`
+- `uv run --with` - what this mean is that uv will run your script with this dependency. Example: `uv run --with rich --python 3.9 main.py`. So that when you 'import rich' in your script, you can use that module and don't have to install it anymore. You can also include multiple '--with'. Example: `uv run --with rich --with requests main.py`
+- To add the dependencies and Python version directly into the script:
+    - `uv init --script main.py --python 3.9.21` - this will add a string on top of your script
+    
+    ![alt text](images/essentials/2026-06-24_23-15.png)
+
+    - `uv init --script main.py "rich"` - to add the dependency that you want and this will also be automatically added on top of your script
+
+    ![alt text](images/essentials/2026-06-24_23-20.png)
+
+#### uv for projects
+1. Go to the directory where you want your code to exist.
+
+2. In terminal, run `uv init`. It will create files like the ones below. Note: pyproject.toml is like the equivalent of requirements.txt
+
+![alt text](images/essentials/2026-06-25_12-36.png)
+
+3. To add a dependency, for example you want to add 'requests' run `uv add requests`. it will automatically creates a virtual environment (.venv directory) and it will also automatically updates the pyproject.toml
+
+![alt text](images/essentials/2026-06-25_12-42.png)
+
+4. To remove a dependency, run `uv remove requests`, and this will automatically be removed in pyproject.toml
+
+5. You can run `uv sync` to sync everything but it will automatically run whenever you run your Python script - `uv run main.py`
