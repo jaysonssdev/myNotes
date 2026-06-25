@@ -1883,3 +1883,110 @@ In terminal run these commands:
 4. To remove a dependency, run `uv remove requests`, and this will automatically be removed in pyproject.toml
 
 5. You can run `uv sync` to sync everything but it will automatically run whenever you run your Python script - `uv run main.py`
+
+<br>
+<br>
+
+## Chapter 10 - Python OOP
+- [Youtube Link: Python Classes, Objects, Inheritance & Polymorphism for Beginners](https://www.youtube.com/watch?v=RpBBzci_cBk&list=PL0Zuz27SZ-6MQri81d012LwP5jvFZ_scc&index=18)
+
+#### Class
+- A blueprint for what an object should look like and how it should function.
+- They contain all the relevant information for what an object should do.
+- Class can have properties and methods.
+- Class name conventionally should follow **camel case** (every new word starts with uppercase). Examples: BlueCar, BigChair
+
+#### Simple Class & Object example
+```py
+class Vehicle:
+    def moves(self):
+        print('Moves along...')
+
+# Assign a variable to create an object for the class
+my_car = Vehicle()
+# Then you can use the created method from the class
+my_car.moves()      # Result is Moves along...
+```
+
+#### `__init__` and properties
+- Use `__init__` to provide properties for your class
+```py
+class Vehicle:
+    def __init__(self, brand, model):    
+        self.brand = brand
+        self.model = model
+
+    def moves(self):
+        print('Moves along...')
+# Now you are required to provide the arguments when creating an object
+my_car = Vehicle('Tesla', 'Model 3')
+# To retrieve that values
+print(my_car.brand)     # Result is Tesla
+print(my_car.model)     # Result is Model 3
+```
+
+#### Creating a get method
+```py
+class Vehicle:
+    def __init__(self, brand, model):    
+        self.brand = brand
+        self.model = model
+
+    def moves(self):
+        print('Moves along...')
+    # To create a get method
+    def get_brand_model(self):
+        print(f"I'm a {self.brand} {self.model}.")
+
+my_car = Vehicle('Tesla', 'Model 3')
+# Now instead of printing the values like we did earlier, we can just use the get method that we created
+my_car.get_brand_model()    # Result is I'm a Tesla Model 3.
+```
+
+#### Create multiple objects from a class
+```py
+your_car = Vehicle('Cadillac', 'Escalade')
+
+your_car.get_brand_model()  # Result is I'm a Cadillac Escalade.
+your_car.moves()            # Result is Moves along...
+```
+
+#### Class Inheritance
+- In this example, follow this script if you want to create several new class that inherits the class 'Vechicle'. Notice that if we put the same method in here this will overwrite whatever it would inherit from that 'Vehicle' class.
+```py
+class Airplane(Vehicle):
+    def moves(self):            # This will overwrite the moves method of the Vehicle class, but inherits the rest
+        print('Flies along...')
+
+class Truck(Vehicle):           
+    def moves(self):            # This will overwrite the moves method of the Vehicle class, but inherits the rest
+        print('Rumbles along...')
+
+class GolfCart(Vehicle):
+    pass     # pass means you want to inherit everything as is
+
+# Since they inherit the required arguments, you need to provide the 'brand' and the 'model' arguments when creating objects
+cessna = Airplane('Cessna', 'Skyhawk')
+mack = Turck('Mack', 'Pinnacle')
+wagon = GolfCart('Yamaha', 'GC100')
+
+cessna.get_brand_model()    # Result is I'm a Cessna Skyhawk.
+cessna.moves()              # Result is Flies along.. 
+```
+- In this example, if you want to add parameters on the Airplane's properties, you can replace the 'self.brand = brand' and 'self.model = model' by `super().__init__(make, model)`, then add the new param, see below:
+```py
+class Vehicle:
+    def __init__(self, brand, model, faa_id):    
+        super().__init__(make, model)
+        self.faa_id = faa_id
+```
+
+#### Polymorphism
+- is the ability to behave differently in response to the same input messages.
+```py
+for v in (my_car, your_car, cessna, mack, wagon):
+    v.get_brand_model()
+    v.moves()  
+# They all have the same methods but that doesn't mean they provide the same responses.
+```
+- In our example, it means that even if we're using the same methods on each of the objects, we're going to get different responses.
