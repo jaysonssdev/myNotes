@@ -183,3 +183,288 @@ When creating custom loggers, you are essentially assembling these three parts:
 2. **Handler:** The destination (File, Console, etc.).
 
 3. **Formatter:** The visual style of your log entries.
+
+<br>
+<br>
+<br>
+
+## Pytest
+- [Youtube Link: Pytest Tutorial – Pytest Tutorial](https://www.youtube.com/watch?v=EgpLj86ZHFQ)
+- Testing framework for Python
+- Auto-dicovery of tests
+- Rich assertion introspection
+- Support parameterized and fixture-based testing
+
+### Installation & Setup
+Install the dependencies pytest and pytest-mock:
+- `uv add pytest pytest-mock`
+- or, if you still using pip:
+    - `pip install pytest`
+    - `pip install pytest-mock`
+
+### Importance of Unit Testing
+- **Unit Test** is the smallest type of test and it's typically testing one very small component of code, like function, method, or class.
+- To ensure that you get the expected outcome or result from a small unit of code.
+- So if we do get an error, we can isolate where it comes from and fix it very easily
+- Aside from unit test, we can also make other test like integration test, system test, and end-to-end test that have their own purposes.
+
+### Writing Your First Test & Assertion
+- Let's say we have a Python file named 'main.py'
+```py
+# main.py
+def get_weather(temp):
+    if temp > 20:
+        return "hot"
+    else:
+        return "cold"
+```
+- We will create a separate Python test file named 'test_main.py' specifically for the 'main.py'.
+- Requirements: You need to import the code that you want to test, and you need to write a function that contains an assertion. - `assert` is a built-in debugging keyword used to test if a specific condition is 'True'
+```py
+# test_main.py
+from main import get_weather    # this is the function that we want to test from the file 'main.py'
+
+# this is the test function for the function 'get_weather'. It is important to put 'test' on its function name for pytest to detect it.
+def test_get_weather():         
+    assert get_weather(21) == "hot"  # If the condition is True, it means our test case passes. If False, the test case fails.
+```
+- To run this test, open Terminal and run:
+`pytest test_main.py`
+- This test should pass because '21 > 20', which means 'hot == hot'. It will fail if you put `assert get_weather(21) == "cold"` or `assert get_weather(18) == "hot"`
+- **Note:** If you're using `uv`:
+    - `uv run pytest test_main.py`
+    - Useful Variations:
+        - `uv run pytest` - to run all tests
+        - `uv run pytest -v` - to run with verbose output
+        - `uv run pytest test_main.py::test_function_name` - to run a specific test function
+    
+- Another example:
+```py
+# main.py
+def add(a, b):
+    return a + b
+
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
+```
+```py
+# test_main.py
+from main import add, divide    # import the 2 functions from 'main.py'
+import pytest
+
+def test_add():     
+    # provide multiple assertions to make sure that you cover as many things as possible
+    assert add(2, 3) == 5, "2 + 3 should be 5"
+    assert add(-1, 1) == 0, "-1 + 1 should be 0"
+    assert add(0, 0) == 0, "0 + 0 should be 0"
+
+def test_divide():
+    # this test is to ensure that the error is being raised if you divide a number by zero, and the exact words "Cannot divide by zero"
+    with pytest.raises(ValueError, match="Cannot divide by zero"):      
+        divide(10, 0)
+```
+- This test on those 2 functions should pass as all are True
+
+### Fixtures
+- **Fixtures** - is something that you can have run before every single test.
+- One thing you can do with fixtures is it will run a setup step that you gives you a fresh start or instance **before every test runs**. See example below:
+```py
+# main.py
+# a class that have some initialization, we can add a user but won't allow you to create a duplicate user
+class UserManager:
+    def __init__(self):
+        self.users = {}
+
+    def add_user(self, username, email):
+        if username in self.users:
+            raise ValueError("User already exists")
+        self.users[username] = email
+        return True
+
+    def get_user(self, username):
+        return sel.users.get(username)
+```
+
+```py
+# test_main.py
+import pytest
+from main import UserManager
+
+# We add a fixture to create an independent test for each - test_add_user and test_add_duplicate_user. Because you want to isolate each test, so that one test can't affect the other.
+@pytest.fixture
+def user_manager():
+    """Creates a fresh instance of UserManager before each test."""
+    return UserManager()
+
+# This test checks if we can add a user
+def test_add_user(user_manager): # <- Inject here the 'user_manager' fixture that you created from above
+    assert user_manager.add_user("john_doe", "john@example.com") == True
+    assert user_Manager.get_user("john_doe") == "john@example.com"
+
+# This test checks if it doesn't allow us to create a duplicate
+def test_add_duplicate_user(user_manager): # <- Inject here the 'user_manager' fixture that you created from above
+    user_manager.add_user("john_doe", "john@example.com")
+    with pytest.raises(ValueError):
+        user_manager.add_user("john_doe", "another@example.com")
+```
+
+### Parameterized Testing
+- **Parameterized testing** allows you to run a single test function multiple times with different sets of input data. Instead of writing repetitive test functions for varying conditions, you define the test logic once and provide a list of arguments to pass into it.
+```py
+# main.py
+# a function that checks if a number is a prime number
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+```
+```py
+# test_main.py
+import pytest
+from main import is_prime
+
+# To avoid creating multiple tests for different number output, we use parameterized testing using '.mark.parameterize'
+@pytest.mark.parameterize("num, expected", [
+    (1, False),
+    (2, True),
+    (3, True),
+    (4, False),
+    (17, True),
+    (18, False),
+    (19, True),
+    (25, False),
+])
+def test_is_prime(num, expected):
+    assert is_prime(num) == expected
+```
+
+### Mocking
+- A lot of times when you write tests, there's part of your code that relies on something that's not active in a testing environment.
+- For example, this front end code (main.py) that relies on a back end API in order to be working properly, but you don't want to reach or spin up the back end API, or setup all of these different dependencies just to test the fron end. So what you should do is **mock or create a fake version** of that dependency in this case the back end API that returns some fake data.
+```py
+# main.py
+import requests
+
+def get_weather(city):
+    response = requests.get(f"https://api.weather.com/v1/{city}") # you can't control this API, and you don't want your test to fail because this back end may someday fails
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise ValueError("Could not fetch weather data")
+```
+```py
+# test_main.py
+import pytest
+from main import get_weather
+
+def test_get_weather(mocker):   # this 'mocker' will work because we installed the pytest-mock earlier)
+    # Mock requests.get
+    mock_get = mocker.patch("main.requests.get") # 'main' came from 'main.py', 'requests' came from 'import requests', and 'get' came from '.get{f"https://api....}'
+
+    # Set return values
+    mock_get.return_value.status_code = 200
+    mock_get.return_value.json.return_value = {"temperature": 25, "condition": "Sunny"}
+
+    # Call function
+    result = get_weather("Dubai")
+
+    # Assertions
+    assert result == {"temperature": 25, "condition": "Sunny"}
+    mock_get.assert_called_once_with("https://api.weather.com/v1/Dubai")
+```
+
+**Mocking a Database example:**
+- This is your production code (db.py) that interacts with the real SQLite database.
+```py
+# db.py
+import sqlite3
+
+def save_user(name, age):
+    # Establish a connection to the local SQLite database file named 'users.db'
+    conn = sqlite3.connect("users.db")
+    
+    # Create a cursor object, which allows you to execute SQL commands
+    cursor = conn.cursor()
+    
+    # Execute the SQL statement using parameterized queries to safely insert data
+    cursor.execute("INSERT INTO users (name, age) VALUES (?, ?)", (name, age))
+    
+    # Save (commit) the changes permanently to the database file
+    conn.commit()
+    
+    # Close the database connection to free up system resources
+    conn.close()
+```
+- This is your test file (test_db.py). It uses the `mocker` fixture to intercept the real database calls and replace them with fake objects (mocks).
+```py
+# Import the actual function we want to test from our app code
+from db import save_user
+
+def test_save_user(mocker):
+    """
+    Test if save_user correctly connects to the database and runs the SQL.
+    'mocker' is a pytest fixture that simplifies creating and cleaning up mocks.
+    """
+    
+    # 1. Intercept the real 'sqlite3.connect' function.
+    # From this point on, calling sqlite3.connect will return a fake connection object ('mock_conn').
+    mock_conn = mocker.patch("sqlite3.connect")
+    
+    # 2. Set up the chain of return values for our mock.
+    # When sqlite3.connect() runs, it returns mock_conn.
+    # When mock_conn.cursor() runs, it returns a fake cursor object.
+    # We store that fake cursor in 'mock_cursor' so we can inspect it later.
+    mock_cursor = mock_conn.return_value.cursor.return_value
+
+    # 3. Execute the code under test.
+    # This runs the production logic, but it uses our fake database objects behind the scenes.
+    save_user("Alice", 30)
+
+    # 4. Verify that the application attempted to open the correct database file.
+    mock_conn.assert_called_once_with("users.db")
+    
+    # 5. Verify that the application attempted to run the correct SQL query with the right data.
+    mock_cursor.execute.assert_called_once_with(
+        "INSERT INTO users (name, age) VALUES (?, ?)", ("Alice", 30)
+    )
+```
+
+### Testing an API
+- Here is a simple, self-contained example of testing a REST API using `pytest`.To run this code, you will need the `requests` library installed (`uv add requests`).
+- This test (test_api.py) uses a real, free online API (://typicode.com) that developers use for testing. It fetches a single placeholder "To-Do" item and verifies the results.
+```py
+# Import the requests library to send HTTP network requests
+import requests
+
+def test_get_todo_item():
+    """
+    Test that fetching a specific to-do item from the API works correctly.
+    """
+    # 1. Define the target API endpoint URL
+    url = "https://typicode.com"
+    
+    # 2. Send a live HTTP GET request to the API and store the response
+    response = requests.get(url)
+    
+    # 3. Verify the HTTP Status Code is 200 (OK / Success)
+    assert response.status_code == 200
+    
+    # 4. Convert the raw text response from the API into a Python dictionary (JSON format)
+    data = response.json()
+    
+    # 5. Verify the API data contains the exact expected key-value pairs
+    assert data["id"] == 1                  # Checks if the ID matches our request
+    assert data["userId"] == 1              # Checks if the owner ID is correct
+    assert "title" in data                  # Ensures the 'title' key exists in the response
+    assert data["completed"] is False       # Checks the boolean status of the task
+```
+
+#### Key API Testing Concepts
+- `requests.get(url)` - Sends a real network request over the internet to the server.
+- `response.status_code` - Every API response comes with a 3-digit status code. `200` means successful, `404` means not found, and `500` means server error. Testing this first prevents your test from crashing on broken data.
+- `response.json()` - Most modern APIs talk in JSON format. This method instantly turns that JSON string into a normal Python dictionary so you can look up values using keys (like `data["id"]`).
