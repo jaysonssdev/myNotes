@@ -11,5 +11,8 @@
 - data-and-apis.md
 - code-safety-and-testing.md
 
+## web-fundamentals-notes
+- http.md
+
 ## gemini-notes
 - basics.md

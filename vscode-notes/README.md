@@ -1,3 +1,7 @@
 # My VS Code Notes
 
-Notes and screenshots from watching youtube free courses on how to use Visual Studio Code.
+## note-taking.md
+- How to Note Codes
+- Putting Images
+- Adding Links
+- Publish your Notes to Github
