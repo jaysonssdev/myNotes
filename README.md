@@ -13,6 +13,8 @@
 
 ## web-fundamentals-notes
 - http.md
+- html-css.md
+- chrome-devtools.md
 
 ## gemini-notes
 - basics.md

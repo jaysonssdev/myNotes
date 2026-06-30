@@ -6,3 +6,12 @@
 - HTTP Responses
 - HTTP Methods
 - HTTP Status Codes
+
+## html-css.md
+- HTML
+- CSS
+- HTML & CSS for QA Automation
+
+## chrome-devtools.md
+- Essential Panels and Workflows
+- How Automation Testers Use DevTools
