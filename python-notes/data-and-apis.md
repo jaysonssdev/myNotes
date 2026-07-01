@@ -545,6 +545,299 @@ except ValueError:
 <br>
 <br>
 
+## Types of API
+- [Youtube Link: Every Type Of API Explained in 18 Minutes](https://www.youtube.com/watch?v=VQyPVCT2Kl8)
+
+### REST (Representational State Transfer)
+#### What It Is
+**REST** is an architectural style designed around **resources** (like users, products, or orders), each identified by a unique URL. It uses standard HTTP methods (`GET, POST, PUT, DELETE`) to perform operations. REST is stateless, meaning each request must contain all the information necessary to understand and process it. It relies heavily on HTTP status codes to communicate success or failure and most commonly uses **JSON** or **XML** for data exchange.
+
+#### Testing Strategy & Tools
+- **Validation**: You must validate HTTP status codes (e.g., 200 OK, 201 Created, 400 Bad Request, 401 Unauthorized), response JSON schemas, header fields, performance latency, and query parameters.
+
+- **Tools**: Postman, RestAssured (Java), Playwright, Cypress, `requests` (Python).
+
+#### Code Example (Python)
+```py
+import requests
+
+base_url = "https://typicode.com"
+
+# 1. Test POST (Create Resource)
+new_user = {"name": "QA Engineer", "username": "qa_automation"}
+post_response = requests.post(base_url, json=new_user)
+
+assert post_response.status_code == 201
+user_id = post_response.json()["id"]
+
+# 2. Test GET (Read Resource)
+get_response = requests.get(f"{base_url}/1")  # Using a known valid ID for this public API
+assert get_response.status_code == 200
+
+response_data = get_response.json()
+# QA Assertion: Schema validation and data verification
+assert "name" in response_data
+assert "email" in response_data
+assert isinstance(response_data["id"], int)
+```
+
+<br>
+
+### GraphQL
+#### What It Is
+GraphQL is a query language and runtime for APIs developed by Meta. Unlike REST, which has multiple endpoints for different resources, GraphQL exposes a **single endpoint** (usually `/graphql`). The client sends a highly structured request specifying exactly what data fields it needs, and the server returns a JSON payload containing only those requested fields. This completely eliminates the REST issues of **over-fetching** (getting unnecessary data) and **under-fetching** (needing multiple API requests to get related data).
+
+#### Testing Strategy & Tools
+- **Validation**: Since GraphQL almost always returns an HTTP `200 OK` (even when business logic errors occur), you must explicitly parse the `errors` array in the JSON response body. You validate specific data structures matching the client's query.
+
+- **Tools**: Apollo Studio, Postman, Insomnia, Playwright, `requests` (Python).
+
+#### Code Example (Python)
+```py
+import requests
+
+url = "https://trevorblades.com"
+
+# GraphQL queries are structured string payloads sent via HTTP POST
+graphql_query = """
+query GetCountryDetails($code: ID!) {
+  country(code: $code) {
+    name
+    native
+    capital
+    currency
+  }
+}
+"""
+
+# Variables keep the query reusable and parameterized
+variables = {"code": "CA"}
+
+response = requests.post(url, json={"query": graphql_query, "variables": variables})
+
+assert response.status_code == 200
+response_json = response.json()
+
+# QA Critical Step: GraphQL errors appear inside the body, not in the HTTP status code
+assert "errors" not in response_json, f"GraphQL Error found: {response_json.get('errors')}"
+
+# QA Assertion: Validate exact structural response requested
+country_data = response_json["data"]["country"]
+assert country_data["name"] == "Canada"
+assert country_data["capital"] == "Ottawa"
+assert country_data["currency"] == "CAD"
+```
+
+<br>
+
+### SOAP (Simple Object Access Protocol)
+#### What It Is
+SOAP is a legacy, highly structured protocol that uses strictly XML for data exchange. It relies on a **WSDL (Web Services Description Language)** file, which acts as a strict contract defining exactly what operations, inputs, and outputs are allowed. It is still heavily used in banking, healthcare, and legacy enterprise systems due to its built-in security (WS-Security) and ACID compliance.
+
+#### Testing Strategy & Tools
+- **Validation**: You must validate against the WSDL schema. Testing involves checking strict XML structures, headers, and fault codes.
+
+- **Tools**: SoapUI, Postman, ReadyAPI, and libraries like `zeep` (Python) or `Apache CXF` (Java)
+
+#### Code Example (Python)
+```py
+import requests
+
+# SOAP requests require specific headers and an XML payload
+url = "http://dneonline.com"
+headers = {
+    "Content-Type": "text/xml; charset=utf-8",
+    "SOAPAction": "http://tempuri.org"
+}
+
+# The XML payload strictly matching the WSDL contract
+payload = """<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://w3.org" 
+               xmlns:xsd="http://w3.org" 
+               xmlns:soap="http://xmlsoap.org">
+  <soap:Body>
+    <Add xmlns="http://tempuri.org">
+      <intA>5</intA>
+      <intB>3</intB>
+    </Add>
+  </soap:Body>
+</soap:Envelope>"""
+
+response = requests.post(url, data=payload, headers=headers)
+
+# QA Assertion: Verify status code and look for specific XML tags
+assert response.status_code == 200
+assert "<AddResult>8</AddResult>" in response.text
+```
+
+<br>
+
+### WebSockets
+#### What It Is
+Unlike REST, which is request-response based, WebSockets provide a **persistent, bi-directional, real-time connection** over a single TCP socket. Once the handshake is complete, the client and server can send data to each other at any time without waiting for a request. This is used for chat apps, live sports tickers, and stock trading platforms.
+
+#### Testing Strategy & Tools
+- **Validation**: You must test the connection handshake, state preservation, asynchronous message ordering, reconnect logic, and data payloads (usually JSON).
+
+- **Tools**: Postman (WebSocket requests), K6, `websockets` library (Python), or `Socket.io-client` (JavaScript).
+
+#### Code Example (Python)
+```py
+import asyncio
+import websocket  # pip install websocket-client
+
+# Establish a persistent connection to a live crypto price feed
+ws = websocket.WebSocket()
+ws.connect("wss://://binance.com")
+
+# Receive the real-time stream data
+result = ws.recv()
+print(result)  # Outputs a JSON string of the latest trade
+
+# QA Assertion: Verify connection stability and payload schema
+assert ws.connected is True
+assert "price" in result or "p" in result
+ws.close()
+```
+<br>
+
+### gRPC (Google Remote Procedure Call)
+#### What It Is
+gRPC is a high-performance, open-source framework developed by Google. It uses **Protocol Buffers (Protobuf)** as its interface definition language and message interchange format instead of JSON or XML. It runs exclusively over **HTTP/2**, allowing for multiplexing and streaming (client, server, or bidirectional). It is the industry standard for microservice-to-microservice communication.
+
+#### Testing Strategy & Tools
+- **Validation**: Testing requires compiling `.proto` files to understand the method definitions. You validate binary payloads, latency, metadata headers, and streaming endpoints.
+
+- **Tools**: BloomRPC, Postman (gRPC support), gRPCurl, `grpcio-testing` (Python).
+
+#### Code Example (Python)
+```py
+import grpc
+import user_pb2       # Generated from user.proto file
+import user_pb2_grpc  # Generated from user.proto file
+
+# Open a gRPC channel to the microservice
+channel = grpc.insecure_channel('localhost:50051')
+stub = user_pb2_grpc.UserServiceStub(channel)
+
+# Create a strongly-typed request defined by the Protobuf file
+request = user_pb2.UserRequest(user_id="12345")
+response = stub.GetUserProfile(request)
+
+# QA Assertion: Type-safe assertions on the response object
+assert response.email == "testuser@example.com"
+assert response.status == user_pb2.UserStatus.ACTIVE
+```
+<br>
+
+### Webhooks (Reverse APIs)
+#### What It Is
+A Webhook is an **event-driven API**. Instead of your application polling a server for updates, the third-party server automatically sends an HTTP POST request to your application's endpoint whenever an event occurs. Common examples include Stripe sending a webhook when a payment succeeds, or GitHub sending one when code is pushed.
+
+#### Testing Strategy & Tools
+- **Validation**: As a QA, you must mock or trigger the third-party event and verify your application receives the payload, processes it correctly, handles duplicates (idempotency), and verifies security signatures (e.g., HMAC-SHA256 headers).
+
+- **Tools**: Ngrok (to expose localhost), Hookdeck, Mockoon, WireMock.
+
+#### Code Example (Python / Flask for receiving side)
+```py
+from flask import Flask, request, jsonify
+import hmac
+import hashlib
+
+app = Flask(__name__)
+WEBHOOK_SECRET = b"super_secret_signing_key"
+
+@app.route('/stripe-webhook', methods=['POST'])
+def handle_webhook():
+    payload = request.data
+    signature = request.headers.get('X-Stripe-Signature')
+
+    # QA Verification: Validate that the request actually came from Stripe
+    expected_sig = hmac.new(WEBHOOK_SECRET, payload, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(expected_sig, signature):
+        return jsonify({"error": "Invalid signature"}), 401
+
+    # Process the verified webhook event
+    data = request.json
+    if data['event'] == 'payment.succeeded':
+        # Trigger internal QA test steps for successful payment flow
+        return jsonify({"status": "processed"}), 200
+
+if __name__ == '__main__':
+    app.run(port=5000)
+```
+
+<br>
+
+### Message Queues / Event-Driven APIs (AMQP, MQTT, Kafka)
+#### What It Is
+In asynchronous distributed architectures, services communicate via event streams or message brokers rather than direct HTTP requests. Common protocols include **AMQP** (RabbitMQ), **MQTT** (IoT devices), and log-based streaming like **Apache Kafka**. A service publishes a message to a topic/queue, and other services consume it.
+
+#### Testing Strategy & Tools
+- **Validation**: You validate message publishing, consumption, message format schema, dead-letter queues (where failed messages go), and consumer lag under load.
+
+- **Tools**: Kafka-python, `pika` (RabbitMQ), MQTT Explorer, Jmeter.
+
+#### Code Example (Python for Apache Kafka)
+```py
+from kafka import KafkaProducer, KafkaConsumer
+import json
+
+# Setup Producer to simulate a system event
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                         value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+
+# Publish an event to the 'orders' topic
+producer.send('orders', {'order_id': '999', 'status': 'created'})
+producer.flush()
+
+# Setup Consumer to verify the system processed the event
+consumer = KafkaConsumer('orders', bootstrap_servers=['localhost:9092'],
+                         auto_offset_reset='earliest', value_deserializer=lambda x: json.loads(x.decode('utf-8')))
+
+# QA Assertion: Read the message back and verify correctness
+for message in consumer:
+    event_data = message.value
+    assert event_data['order_id'] == '999'
+    assert event_data['status'] == 'created'
+    break # Break loop after verifying the expected message
+```
+
+<br>
+
+### Server-Sent Events (SSE)
+#### What It Is
+SSE is a **one-way real-time protocol** where the client establishes a standard HTTP connection using the `EventSource` API, and the server keeps this connection open to continuously push text-based data stream updates down to the client. It is lighter than WebSockets and is used for notification feeds, live logs, or AI text-generation streams (like ChatGPT typing answers).
+
+#### Testing Strategy & Tools
+- **Validation**: Verify that the connection stays open (`Content-Type: text/event-stream`), validate line-by-line streaming chunks, and check automatic client reconnection behaviors.
+
+- **Tools**: Postman, curl, `sseclient` library.
+
+#### Code Example (Python)
+``` py
+import requests
+import sseclient  # pip install sseclient-py
+
+url = "http://localhost:8080/stream/notifications"
+# Connect to the stream with headers allowing streaming data
+response = requests.get(url, stream=True, headers={"Accept": "text/event-stream"})
+client = sseclient.SSEClient(response)
+
+# QA Assertion: Evaluate events as they stream in natively
+for event in client.events():
+    data = event.data
+    # Assert each incoming chunk meets schema expectations
+    assert "notification_id" in data
+    print(f"Received stream event: {data}")
+    break # Disconnect after verifying the initial data stream
+```
+
+<br>
+<br>
+<br>
+
 ## Python Environment Variables in QA Automation (with `uv`)
 - Environment variables keep sensitive data out of your source code. This prevents accidental leaks to public repositories and allows you to switch between testing environments easily.
 

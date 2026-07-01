@@ -16,6 +16,7 @@
 - JSON in Python - Read & Write
 - CSV in Python - Read & Write
 - API Requests in Python
+- Types of API
 - Python Environment Variables in QA Automation
 - Python Database Connections in QA Automation
 - Data Generation in QA Automation
