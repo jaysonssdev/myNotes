@@ -15,3 +15,11 @@
 ## chrome-devtools.md
 - Essential Panels and Workflows
 - How Automation Testers Use DevTools
+
+## auth.md
+- HTTP
+- Cookies
+- Session ID
+- API Keys
+- JSON Web Token (JWT)
+- Open Authorization (OAuth)

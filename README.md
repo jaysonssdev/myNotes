@@ -15,6 +15,7 @@
 - http.md
 - html-css.md
 - chrome-devtools.md
+- auth.md
 
 ## gemini-notes
 - basics.md
