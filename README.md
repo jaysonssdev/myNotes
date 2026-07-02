@@ -19,3 +19,6 @@
 
 ## gemini-notes
 - basics.md
+
+## data-engr-notes
+- fundamentals.md
