@@ -22,3 +22,6 @@
 
 ## data-engr-notes
 - fundamentals.md
+
+## sql-notes
+- sql-for-de.md
