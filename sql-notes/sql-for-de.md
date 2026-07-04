@@ -119,3 +119,208 @@
 <br>
 <br>
 <br>
+
+## 2. Operators & Functions
+
+### Where are operators used?
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_12-37.png)
+
+### Comparison Operators
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_12-25.png)
+
+#### `=`
+- Example: Show the jobs that are work from home.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_12-55.png)
+
+#### `!=` or `<>`
+- Example: Show all the jobs schedule type except for the 'Contractor'.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_13-04.png)
+
+#### `>` `<` / `>=` `<=`
+- Example: Show the salary year average that are greater than 100,000.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_13-08.png)
+
+#### `BETWEEN`
+- Example: Show the salary average between 100_000 and 200_000. 
+- Note: You can use underscore `_` to separate the zeros.
+- Note: 100_000 and 200_000 are included if you use `BETWEEN`
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_13-42.png)
+
+- This can be written with `>=` and `<=` but it is less readable so we usually use `BETWEEN`
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_13-46.png)
+
+#### `IN`
+- Instead of using a lot of `OR`, we can use `IN` instead.
+- Example: Show jobs that are 'Data Analyst' or 'Data Engineer' or 'Senior Data Engineer'
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_13-58.png)
+
+#### Example (Putting it all together)
+- Problem:
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_14-03.png)
+
+- Solution:
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_14-08.png)
+
+#### `LIKE` with wildcards `_` or `%`
+
+##### Underscore`_` wildcard
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_14-18.png)
+
+- Example: Show job locations in Columbus, and on any of its state. Since the data has 2 characters provided for the state, put 2 underscores `_ _` to match
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_14-55.png)
+
+##### Percentage `%` wildcard
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_15-00.png)
+
+- Example: Show jobs that have the 'Data Analyst' in it.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_15-05.png)
+
+#### ALIAS `AS`
+- To change a name of a column, or the name of the table.
+- Example: Change the column name 'job_title' to 'job_title_original'
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_15-10.png)
+
+#### Example (putting it all together)
+- Problem:
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_15-15.png)
+
+- Solution:
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_15-30.png)
+
+<br>
+
+### Logical Operators
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_12-35.png)
+
+#### `AND`
+- Example: Show 'Data Engineer' jobs that are work from home.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_13-24.png)
+
+#### `OR`
+- Example: Show 'Data Engineer' jobs or 'Senior Data Engineer' jobs.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_13-31.png)
+
+#### `NOT`
+- Example: Show the jobs that are not work from home. We can put `NOT` instead of putting `FALSE`.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_13-36.png)
+
+- Example: Use **parenthesis** if you want to use `NOT` on both conditions.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_13-38.png)
+
+<br>
+
+### Arithmetic Operators
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_20-30.png)
+
+#### Where else can we use these operators?
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_20-38.png)
+
+#### Addition & Subtraction
+- Example:
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_20-55.png)
+
+#### Multiplication
+- Example:
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_21-07.png)
+
+#### Division
+- Example:
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_21-09.png)
+
+#### Modulus
+- Example: Filter out all the values that are not ending with 3 zeros.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_21-25.png)
+
+<br>
+
+### Aggregate Functions
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_21-35.png)
+
+#### Used in conjunction with `GROUP BY` and/or `HAVING`
+- `GROUP BY` allows you to segment by a certain condition. 
+- `HAVING` allows you to filter.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_22-02.png)
+
+#### COUNT()
+- `COUNT(*)` Example:
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_22-38.png)
+
+- Example: Show the number of rows for 'Data Engineer'.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_22-40.png)
+
+- Example: If we wanted to find out what data engineer jobs have a yearly salary listed.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_22-47.png)
+
+#### COUNT(DISTINCT)
+- Example: Show the number of rows with unique job title (short).
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_22-51.png)
+
+#### SUM()
+- Example: Show the average salary.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_22-56.png)
+
+#### AVG()
+- Example: We can get the same result from the previous example by using `AVG()`
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_22-59.png)
+
+#### GROUP BY
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_23-00.png)
+
+- Example: Show the average salary grouped by country, and sort it from highest to lowest.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_23-16.png)
+
+#### MIN() / MAX()
+- Example: Show the minimum and maximum value for each average value.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_23-23.png)
+
+#### MEDIAN()
+- Example: Get the middle value (median) for each average salary.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_23-25.png)
+
+#### HAVING
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_23-31.png)
+
+- Example: Show the median of the average salary that is greater than 100_000.
+
+![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_23-53.png)
+
