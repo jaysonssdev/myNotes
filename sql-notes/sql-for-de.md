@@ -442,3 +442,132 @@ SELECT DISTINCT(job_title_short)
 - For example, run `duckdb md:data_jobs` to connect to your database in MotherDuck.
 - Once you're connected in duckdb, select all the code from your sql file, then press `Shift + Enter` to automatically run it in the terminal.
 
+<br>
+<br>
+<br>
+
+## 6. Data Modeling & JOINs
+
+### Database Hierarchy
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_12-19.png)
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_12-23.png)
+
+#### Tables
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_12-27.png)
+
+#### Schema
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_12-35.png)
+
+#### Database
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_12-38.png)
+
+<br>
+
+### Entity Relationship Diagram (ERD)
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_12-49.png)
+
+#### Table Diagram
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_12-50.png)
+
+#### Relationship Diagram
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_13-02.png)
+
+- **One-to-One**
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_13-03.png)
+
+- **One-to-Many** (Most Common)
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_13-05.png)
+
+- **Many-to-Many** (Least Common)
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_13-09.png)
+
+<br>
+
+### Database Metadata
+
+#### Information Schema
+- Information schema is basically a collection of read-only views that tells us information about the metadata inside of our database. We can look at things like tables, columns, views, or table constraints.
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_13-13.png)
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_13-31.png)
+
+- **DESCRIBE** - run `DESCRIBE <table_name>` to see the different columns associated with that table. Example:
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_13-42.png)
+
+<br>
+
+### JOINs
+- used to join the tables together and perform analysis with that.
+- most commonly used are **LEFT JOIN** and **INNER JOIN**
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_13-47.png)
+
+#### LEFT JOIN (most common)
+- Returns all rows from LEFT and only matching from RIGHT.
+- Example: 
+    - Table A: job_postings_fact
+    - Table B: company_dim
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_13-53.png)
+
+```sql
+SELECT
+    jpf.job_id,              -- get 'job_id' column from 'job_postings_fact' table
+    cd.name AS company_name, -- get 'name' column from 'company_dim' table
+    jpf.job_title_short      -- get 'job_title_short' column from 'job_postings_fact' table
+FROM
+    job_postings_fact AS jpf -- alias for 'job_postings_fact' table 
+LEFT JOIN company_dim AS cd
+    ON jpf.company_id = cd.company_id; -- joining them using their related columns 'company_id'
+```
+
+- Same query as above WITHOUT the aliases:
+```sql
+SELECT
+    job_postings_fact.job_id,
+    company_dim.name,
+    job_postings_fact.job_title_short
+FROM
+    job_postings_fact
+LEFT JOIN company_dim
+    ON job_postings_fact.company_id = company_dim.company_id;
+```
+
+#### RIGHT JOIN (least common)
+- Preserving or keeping all records from Table B.
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_19-31.png)
+
+#### INNER JOIN (also most common)
+- The original default join in SQL, so some people just use `JOIN` instead of `INNER JOIN`.
+- Returns only matching rows from both tables.
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_19-38.png)
+
+#### FULL OUTER JOIN
+- Some people just use `FULL JOIN`
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_19-42.png)
+
+<br>
+
+### SQL Clause Order 
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_22-05.png)
+
+### SQL Execution Order
+
+![alt text](images/sql-for-de/06-data-modeling-and-joins/2026-07-06_22-08.png)

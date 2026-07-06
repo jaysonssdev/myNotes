@@ -6,3 +6,4 @@
 3. Terminal Intro
 4. Local DuckDB Intro
 5. VS Code Intro
+6. Data Modeling & JOINs
