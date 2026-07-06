@@ -324,3 +324,121 @@
 
 ![alt text](images/sql-for-de/02-operators-and-functions/2026-07-04_23-53.png)
 
+<br>
+<br>
+<br>
+
+## 3. Terminal Intro
+
+### Shell Types by Operating System
+
+![alt text](images/sql-for-de/03-terminal-intro/2026-07-05_00-09.png)
+
+### Basic Commands
+
+![alt text](images/sql-for-de/03-terminal-intro/2026-07-05_00-11.png)
+![alt text](images/sql-for-de/03-terminal-intro/2026-07-05_00-17.png)
+
+<br>
+<br>
+<br>
+
+## 4. Local DuckDB Intro
+
+![alt text](images/sql-for-de/04-local-duckdb/2026-07-05_12-06.png)
+
+### Installation Website
+
+- Install duckdb from this website: https://motherduck.com/docs/getting-started/interfaces/connect-query-from-duckdb-cli/
+- The reason that we should install the version in this website is because it is the version that **MotherDuck** supports.
+- Or install it using https://github.com/NiclasHaderer/duckdb-version-manager to easily manage the versions.
+
+### Basic Commands (in Terminal)
+- `duckdb` - to run duckdb locally
+- `.quit` or `.exit` - to exit duckdb
+- `.help` - for usage hints
+- `-c` - is used so that we don't need to enter duckdb cli, and we can just run a command. Example: `duckdb -c "SELECT 42 as answer"`
+
+### Local DuckDB Databases
+- `duckdb <FILENAME>` - to create a database file. Make sure that you go to the folder first that you want your database file to be created in. Example:
+```bash
+cd ~/Desktop/Notes/QA/duckdb-practice/
+duckdb jobs.duckdb
+
+# Now you created a database and your inside a duckdb session
+# You can create a simple table named 'jobs' with 2 columns 'id' and 'job'
+CREATE TABLE jobs (
+       id INTEGER,
+       job VARCHAR
+       );
+
+# You can check and see your newly created table
+.tables
+
+# You can make a simple query
+SELECT * FROM jobs;
+
+# To insert values inside the columns
+INSERT INTO jobs VALUES
+(1, 'Data Analyst'),
+(2, 'Data Scientist'),
+(3, 'Data Engineer');
+
+# You can now exit and everything will be saved
+.quit
+
+# To open again this database file
+duckdb jobs.duckdb
+```
+
+### Local DuckDB UI
+- `duckdb -ui` - to open the duckdb UI in a new browser.
+- `duckdb -ui <FILENAME>` - to open a database file with UI. Example: `duckdb -ui jobs.duckdb`. Now you can create a new notebook then query. `SELECT * FROM jobs;`
+- **Sign In to MotherDuck** using the account that you created earlier.
+
+### Local DuckDB Connect to MotherDuck
+- `duckdb md:<DATABASE>` - run this in your terminal to open a database from your MotherDuck account. Example: `duckdb md:data_jobs`. Accept and confirm the token for now.
+- To test, run:
+```bash
+SELECT DISTINCT(job_title_short)
+    FROM job_postings_fact;
+```
+
+<br>
+<br>
+<br>
+
+## 5. VS Code Intro
+
+### Installation Website
+- Go to https://code.visualstudio.com/ to download the right installer for your OS.
+
+### VS Code SQL Setup
+#### Create a key binding
+- Press `ctrl + shift + P`
+- The select **Preferences: Open Keyboard Shortcuts**
+- Select **Terminal: Run Selected Text In Active Terminal**
+- Assign for Keybinding `shift + enter`
+
+#### Setting up DuckDB & MotherDuck
+- Go to your MotherDuck account (app.motherduck.com)
+- Click your 'Organization' on the top left corner then click **Settings**.
+- On the left side, under INTEGRATIONS, click **Access Tokens**
+- Click "**+ Create token**" to create a token that does not expire.
+- Click **Copy** to copy the characters, then click 'Close'.
+- Temporary Authentication (NOT RECOMMENDED):
+    - Go back to VS Code Terminal.
+    - Run `export motherduck_token="paste_your_token_here"`
+    - You can now run `duckdb md:<DATABASE>` and you will be authenticated. But if you close the terminal, you have to repeat the whole process again.
+- Permanent Authentication (RECOMMENDED):
+    - Open your `.bashrc` file in ~
+    - Put the `export motherduck_token="paste_your_token_here"`
+    - Save then run `source .bashrc`
+
+### How to run a SQL file in VS Code
+- Open VS Code, then open your project folder.
+- Open your sql file (*.sql) by clicking it.
+- Open a terminal inside VS Code (**ctrl + `**).
+- For example, run `duckdb md:data_jobs` to connect to your database in MotherDuck.
+- Once you're connected in duckdb, select all the code from your sql file, then press `Shift + Enter` to automatically run it in the terminal.
+
