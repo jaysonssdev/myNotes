@@ -208,6 +208,82 @@ Install the dependencies pytest and pytest-mock:
 - So if we do get an error, we can isolate where it comes from and fix it very easily
 - Aside from unit test, we can also make other test like integration test, system test, and end-to-end test that have their own purposes.
 
+### Folder Structure
+- The most conventional and robust way to structure a Python project when using `uv` and `pytest` is the src layout.
+- When you use `uv`, your code is typically managed as an editable package during development. This ensures `pytest` can seamlessly import your `main.py` and other modules without messy, brittle hacks like modifying `sys.path`.
+- The **conventional folder structure**
+```
+my-project/
+├── .venv/                  # Managed automatically by uv
+├── src/                    # The source directory
+│   └── my_project/         # Your actual package (snake_case)
+│       ├── __init__.py     # Makes this folder a package
+│       ├── main.py         # Your application entry point
+│       └── utils.py
+├── tests/                  # Your testing directory
+│   ├── __init__.py         # Optional, but helps pytest avoid name collisions
+│   ├── conftest.py         # Shared pytest fixtures (optional)
+│   └── test_main.py        # Tests targeting main.py
+├── .gitignore
+├── pyproject.toml          # Project configuration and metadata
+├── README.md
+└── uv.lock                 # Managed automatically by uv
+```
+
+#### Crucial Steps to Make this Work Perfectly
+
+1. Define your package in `pyproject.toml`
+    - Since you have a `src/` directory, `uv` needs to know your project is a buildable package. Your `pyproject.toml` should look like this:
+```
+[project]
+name = "pytest-practice"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pytest>=9.1.1",
+    "pytest-mock>=3.15.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+```
+Note: If you scaffolded your project using `uv init --package`, `uv` already generated this layout and the `build-system` configuration for you.
+
+2. Write the Import in your Test File
+    - Because `uv` installs your local package in "editable" mode inside the `.venv`, you import `main.py` inside `tests/test_main.py` using **absolute imports**:
+```py
+# tests/test_main.py
+from my_project.main import my_function
+
+def test_my_function():
+    assert my_function() == "expected_result"
+```
+3. Keep `main.py` import-safe
+    - When `pytest` imports `main.py`, you don't want your whole application to immediately execute. Ensure the code that actually runs your script is wrapped inside a standard boilerplate block:
+```py
+# src/my_project/main.py
+def my_function():
+    return "expected_result"
+
+def run():
+    print(my_function())
+
+if __name__ == "__main__":
+    run()
+```
+
+4. How to execute your tests
+    - Because `uv` isolates dependencies cleanly, you should run your test suite by prepending your test command with `uv run`:
+```
+uv run pytest
+```
+This forces `pytest` to run inside your virtual environment where your `src/` files are completely visible to your environment path.
+
+
+<br>
+
 ### Writing Your First Test & Assertion
 - Let's say we have a Python file named 'main.py'
 ```py
