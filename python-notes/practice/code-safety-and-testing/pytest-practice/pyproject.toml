@@ -10,4 +10,8 @@ dependencies = [
 ]
 
 [tool.pytest.ini_options]
+# This line tells pytest to add the root folder to the Python path
 pythonpath = ["."]
+# Common pytest flags (shows extra info, runs in headed mode by default if you want)
+addopts = "-v --tb=short"
+testpaths = ["tests"]
