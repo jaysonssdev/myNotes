@@ -21,7 +21,8 @@
 - basics.md
 
 ## playwright-notes
-- playwright-python-pytest.md
+- playwright-with-python-and-pytest
+    - 01-setup-env-and-writing-tests.md
 
 ## data-engr-notes
 - fundamentals.md
