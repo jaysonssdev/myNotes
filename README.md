@@ -20,6 +20,9 @@
 ## gemini-notes
 - basics.md
 
+## playwright-notes
+- playwright-python-pytest.md
+
 ## data-engr-notes
 - fundamentals.md
 
