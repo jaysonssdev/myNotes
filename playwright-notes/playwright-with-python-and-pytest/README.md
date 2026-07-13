@@ -19,7 +19,9 @@
 - page.get_by_test_id()
 
 ## 03. How to use CSS Locators in Playwright
-
+- Combinations of CSS Selector 
+- 2 Main Types of Selectors
+- How to Use the SelectorsHub extension
 
 ## 04. How to use XPath Locators in Playwright
 
