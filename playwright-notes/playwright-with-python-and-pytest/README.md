@@ -9,7 +9,14 @@
 - Synchronous vs Asynchronous
 
 ## 02. Playwright Built-In Locators
-
+- Elements and Attributes Basics
+- page.get_by_alt_text()
+- page.get_by_text()
+- page.get_by_role()
+- page.get_by_label()
+- page.get_by_placeholder()
+- page.get_by_title()
+- page.get_by_test_id()
 
 ## 03. How to use CSS Locators in Playwright
 

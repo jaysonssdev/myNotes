@@ -23,6 +23,7 @@
 ## playwright-notes
 - playwright-with-python-and-pytest
     - 01-setup-env-and-writing-tests.md
+    - 02-built-in-locators.md
 
 ## data-engr-notes
 - fundamentals.md

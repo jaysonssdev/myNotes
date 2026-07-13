@@ -1,5 +1,4 @@
 # 01. Setup Environment & Writing Tests
-- [Youtube Link: Playwright with Python & Pytest| Setup Environment & Writing Tests ( Session 1)](https://www.youtube.com/watch?v=7pgCLbX2sVM&list=PLUDwpEzHYYLtFprdVOrMLBJcqCJ-gRDYa&index=17)
 
 ## Introduction
 - **Python** - programming language
@@ -141,7 +140,7 @@ def test_verifyTitle(page: Page):
 
 - Here is a comprehensive breakdown to help you choose the right approach for your testing framework.
 
-![direct_comparison](images/playwright-python-pytest/01-setup-environment/2026-07-11_19-59.png)
+![direct_comparison](images/01-setup-environment/2026-07-11_19-59.png)
 
 ### Synchronous Testing (Sync)
 The synchronous API is the **easiest to write and read**. It behaves exactly like standard Python scripts. Each line of code must fully complete before the program moves to the next line.
