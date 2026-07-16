@@ -1,2 +1,2 @@
 FROM alpine
-ENTRYPOINT date
+ENTRYPOINT echo "Current date is --> $(date)"

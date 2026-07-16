@@ -3,3 +3,4 @@
 ## docker-hands-on-devops.md
 - Introduction
 - Crash Course
+- Build & Run Docker Image using Dockerfile

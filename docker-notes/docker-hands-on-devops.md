@@ -214,7 +214,7 @@ wget my-nginx # to get the 'index.html'
 ### Setup Editor for building the Dockerfile
 - Create a folder (example: simple_data) and open it using your editor (example: VS Code)
 - Open terminal inside the your editor.
-- For you to have an idea what we are building, run the following:
+- For you to have an idea with what we are building, run the following:
     - `docker run -it alpine`
     - Inside the alpine container, run `date`
     - This is what we are building, a simple application using docker image, that shows the current date.
@@ -223,6 +223,7 @@ wget my-nginx # to get the 'index.html'
 
 ![alt text](images/docker-hands-on-devops/2026-07-15_19-21.png)
 
+**Example:**
 - Inside the simple_date folder, create a 'Dockerfile'
 ```Dockerfile
 FROM alpine
@@ -237,12 +238,133 @@ ENTRYPOINT date
 
 ![alt text](images/docker-hands-on-devops/2026-07-15_20-25.png)
 
+**Example:**
+- Make sure you're logged in earlier when you ran: `docker login -u <your-username>`. You only need to do this once.
+- To push your image, run: `docker push jaysonssdev/getcurrentsystemdate`
+- Check you docker hub account. If successful, you should see your new repository there.
 
+![alt text](images/docker-hands-on-devops/2026-07-16_12-27.png)
 
+### Update Release Version (tag) of your Images to Docker Hub
 
+![alt text](images/docker-hands-on-devops/2026-07-16_12-47.png)
+
+**Example:**
+- Example you want to update the 'getcurrentsystemdate' that you created. Update the Dockerfile to:
+```Dockerfile
+FROM alpine
+ENTRYPOINT echo "Current date is --> $(date)"
+```
+- Build this image again with the new tag: `docker build -t=jaysonssdev/getcurrentsystemdate:v2 .`. Note: We added `:v2` tag here.
+- Run `docker images` to see your newly created docker image with the tag 'v2'.
+- You can run this docker image: `docker run jaysonssdev/getcurrentsystemdate:v2`
+- To push this image: `docker push jaysonssdev/getcurrentsystemdate:v2`
+- Notice that you still have 1 repository for the image 'getcurrentsystemdate', but there are 2 versions (tags):
+
+![alt text](images/docker-hands-on-devops/2026-07-16_13-32.png)
+
+### Create Java or Python based Docker Image
+#### Example 1: Java
+- 'Dockerfile':
+```Dockerfile
+# This is the image that you get in docker hub
+FROM alpine
+
+# This is the java that you will install in the alpine
+RUN apk add openjdk17
+
+# This is to fix the path of javac to make it executable
+ENV PATH=$PATH:/usr/lib/jvm/java-17-openjdk/bin/javac
+
+# This is to set the working directory
+WORKDIR /app
+
+# Add a file to be copied from the host to the container
+# In this example, 'HelloWorld.java' is in the same folder with the 'Dockerfile', and it will be copied to the /app directory that you set with WORKDIR
+ADD HelloWorld.java HelloWorld.java
+
+# Commands to execute the app
+ENTRYPOINT javac HelloWorld.java && java HelloWorld
+```
+- Build the image by running: `docker build -t=jaysonssdev/hellojava:v1 .`
+
+- Check your current docker images: `docker images`
+
+- To run the image: `docker run jaysonssdev/hellojava:v1`
+
+#### Example 2: Python
+- 'hello.py': (Should be the same directory with the 'Dockerfile')
+```py
+print("Hello Python from the container!!")
+```
+- 'Dockerfile':
+```Dockerfile
+FROM alpine
+RUN apk add --no-cache python3
+WORKDIR /app
+ADD hello.py hello.py
+ENTRYPOINT python3 hello.py
+```
+- `docker build -t=jaysonssdev/hellopython:v1 .`
+- `docker images`
+- `docker run jaysonssdev/hellopython:v1`
 
 <br>
-<br>
+
+### Passing Environment Variable to Docker
+- 'cube.py' - this is a simple python file that takes a number (argument) and multiply it 3 times to itself (cube).
+```py
+import sys
+
+# Get the argument from the command line
+input_arg = sys.argv[1]
+
+# Convert the text input into a number
+number = float(input_arg)
+
+# Check if the number is actually a whole integer
+if number.is_integer():
+    number = int(number)
+
+# Calculate the cube
+cube = number**3
+
+# Print the final result
+print(f"Number is: {number}. Its cube is: {cube}")
+```
+- to run this in your terminal: `python3 cube.py 2`, and the result will be "Number is: 2. Its cube is: 8"
+
+- 'Dockerfile' - now let us turn this cube.py into a docker image.
+```Dockerfile
+# Specifying a version prevents your image from breaking when Alpine updates.
+FROM alpine:3.20
+
+# Install python3
+RUN apk add --no-cache python3
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the script into the container
+COPY cube.py .
+
+# The bracket syntax allows the container to accept arguments at runtime.
+ENTRYPOINT ["python3", "cube.py"]
+```
+- `docker build -t jaysonssdev/cube-app:v1 .`
+- `docker run jaysonssdev/cube-app:v1 3`
+- The result will be "Number is: 3. Its cube is: 27".
+
 <br>
 
-## Build & Run Docker Image using docker-compose
+### Checking Docker Container Logs
+```bash
+# Check the list of your containers
+# And also to see the container ID or the container name
+docker ps -a
+
+# To check the logs
+docker logs <container ID>
+# or
+docker logs <container name>
+```
