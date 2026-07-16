@@ -72,7 +72,7 @@
 
 #### Practical - Docker Pull
 - Go to https://hub.docker.com/ then search for 'hello-world'
-- Click the first result
+- Click the first result.
 - Copy the command `docker pull hello-world`
 - Go to your terminal:
 ```bash
@@ -106,9 +106,143 @@ docker system prune -a
 - Docker can also run virtual machine, which means **a machine inside a machine**.
 - So to identify a 'Machine' and 'App' inside a machine, we need to map the **port**. If we will not map the port we can't identify an app hence can't execute.
 
-![alt text](images/docker-hands-on-devops/2026-07-14_23-43.png)
+![alt text](images/docker-hands-on-devops/2026-07-15_00-10.png)
 
-- Example: 
+- Example (Not related to the image above):
     - `docker run -p 8081:80 nginx` (-p means port)
-    - this will map the local port 8081 with 80 port of nginx
+    - this will map the **host(or external) port 8081** with **container(or internal) port 80** for nginx
     - You can run now this locally by `http://localhost:8081`
+
+#### Practical - Port Mapping
+- Go to https://hub.docker.com/ then search for 'nginx'
+- Click the result 'nginx: Docker Official Image'
+- Run this command: `docker run -p 8080:80 nginx` 
+
+![alt text](images/docker-hands-on-devops/2026-07-15_12-45.png)
+
+- In terminal, press `ctrl + c` to exit.
+
+<br>
+
+### Volume Mapping Concepts
+
+- **WITHOUT Volume Mapping**: if we run anything inside the container then **results will also be published inside the container only** and we can't see the reports, etc.
+
+- **WITH Volume Mapping**: we can **create a tunnel between host and container** so that we can share anything across.
+
+- **Note**: Before going through volume mapping please check the docker settings. `Settings > Resources > File Sharing`, then change the directory path that will be used for volume mapping. Example: /User/MyName/workspace
+
+![alt text](images/docker-hands-on-devops/2026-07-15_13-43.png)
+
+- **Volume Mapping Syntax**: `docker run -it -v /Users/MyName/practice_volume_mapping:/TestResults ubuntu`
+    - flags:
+        - `-it` - interactive mode
+        - `-v` - volume mapping
+        - `/Users/MyName/practice_volume_mapping` - the path in your host machine
+        - `/TestResults` - assign any folder name, this will be the volume mapping path that will be created in your container
+        - `:` - separator of the local path and container path
+        - `ubuntu` - container name
+
+<br>
+
+### Docker Network Concepts
+- Let's say we have 2 running containers, nginx and ubuntu.
+
+![alt text](images/docker-hands-on-devops/2026-07-15_15-39.png)
+
+- **WITHOUT network**, both containers will be running in isolation and can't communicate with each other.
+
+- **WITH network**, both containers can identify each other and can commnicate through this network.
+
+![alt text](images/docker-hands-on-devops/2026-07-15_15-45.png)
+
+#### Practical - WITHOUT network
+
+```bash
+# Pull 2 images:
+docker pull nginx
+docker pull alpine
+
+# Run nginx in 'background mode' by using `-d` flag, and name your container using the `--name=` flag
+docker run -d --name=my-nginx nginx
+
+# Then run alpine in 'interactive mode' by using `-it` flag
+docker run -it --name=my-alpine alpine
+
+# Now that you're inside the alpine container, ping nginx
+ping my-nginx
+# you'll get "ping: bad address 'nginx'"
+# because it can't connect, due to non-existing network
+
+# exit alpine container
+exit 
+
+# Delete the containers that you created, since alpine is not running when you exited it
+docker rm my-alpine
+# You can't delete a container if it still running, so stop nginx first
+docker stop my-nginx
+docker rm my-nginx
+```
+
+#### Practical - WITH network
+
+```bash
+# Create first the network
+docker network create my-network
+
+# Run nginx in 'background mode' by using `-d` flag and use `--network` flag to use the network that you just created
+docker run -d --network=my-network --name=my-nginx nginx
+
+# Then run alpine in 'interactive mode' by using `-it` flag with the `--network` flag
+docker run -it --network=my-network --name=my-alpine alpine
+
+# Now that you're inside the alpine container, ping nginx
+ping my-nginx
+# Notice that you can ping nginx, which means you can connect to it by the network that you created
+# press ctrl + c to stop pinging
+
+# Connect to nginx
+wget my-nginx # to get the 'index.html'
+```
+
+<br>
+<br>
+<br>
+
+## Build & Run Docker Image using Dockerfile
+
+### Setup Editor for building the Dockerfile
+- Create a folder (example: simple_data) and open it using your editor (example: VS Code)
+- Open terminal inside the your editor.
+- For you to have an idea what we are building, run the following:
+    - `docker run -it alpine`
+    - Inside the alpine container, run `date`
+    - This is what we are building, a simple application using docker image, that shows the current date.
+
+### Creating a Simple Docker Image using Dockerfile
+
+![alt text](images/docker-hands-on-devops/2026-07-15_19-21.png)
+
+- Inside the simple_date folder, create a 'Dockerfile'
+```Dockerfile
+FROM alpine
+ENTRYPOINT date 
+```
+- If you haven't logged in to your Docker Hub account yet, log in by running `docker login -u <your-username>`
+- To build the docker image using the Dockerfile that you created within the same folder, run `docker build -t=<username>/<nameofyourimage> .`. Example: `docker build -t=jaysonssdev/getcurrentsystemdate .` **Note:** Dot (.) means the Dockerfile is in the same folder.
+- Check your newly created image by running: `docker images`
+- You can run it by running `docker run jaysonssdev/getcurrentsystemdate`
+
+### Pushing Image to Docker Hub
+
+![alt text](images/docker-hands-on-devops/2026-07-15_20-25.png)
+
+
+
+
+
+<br>
+<br>
+<br>
+
+## Build & Run Docker Image using docker-compose
