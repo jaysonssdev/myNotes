@@ -368,3 +368,160 @@ docker logs <container ID>
 # or
 docker logs <container name>
 ```
+
+<br>
+<br>
+<br>
+
+## Build & Run Docker Image using docker-compose
+
+### Docker Compose
+- is a tool that helps you **define and manage multi-container Docker**
+- allows you to define all your containers in a single YAML configuration file (`docker-compose.yml`), making it easier to start, stop, and manage them all together.
+- it's a simple way to create a container, network, port/volume mapping & passing environment variable in a declarative way.
+- Example: Imagine you have a basic application with 2 components:
+    - a **web server** (e.g., a simple Nginx or Python Flask app)
+    - a **database** (e.g., MySQL)
+    - Instead of running each container separately, Docker Compose allows you to set both up in one file.
+- **Basic Commands:** - Note: You should run these commands in the same directory as the 'docker-compose.yaml' file.
+    - `docker-compose up` - Start the containers.
+    - `docker-compose down` - Stop and remove the containers.
+
+<br>
+
+### Creating a 'docker-compose.yaml' file
+
+#### Template:
+```yaml
+version: "3"
+services:
+[service-name]:
+image: [image-name]
+container_name: [some-name]
+entrypoint: ["command to invoke"]
+depends_on:
+- [any-other-service]
+working_dir: /a/b/c
+environment:
+- KEY1=value1
+- KEY2=value2
+ports:
+- 80:80
+- 1234:1234
+- 8080:3344
+volumes:
+- ./relative-path/host-path1:/a/b/c
+- /absolute-path/host-path234:/c/d/e
+```
+
+#### Example 1: simple 'docker-compose.yaml'
+```yaml
+version: "3"
+services:
+    cubefinder: # you can name the [service-name] whatever you want   
+        image: jaysonssdev/hellopython:v1  # better if you already 'push' this image to docker hub
+```
+- To create a container for this 'docker-compose.yaml' and to provide a 'project name' with the use of `-p` flag: `docker-compose -p mypython up`
+- To stop and remove: `docker-compose -p mypython down`
+
+#### Example 2: Providing port to be opened on browser
+```yaml
+version: "3"
+services:
+    nginx:
+        image: nginx
+        ports:
+            - 8080:80
+```
+- `docker-compose up`
+- Then you can open your browser, 'localhost:8080'
+- Press `ctrl + c` to exit the container
+- To stop the container: `docker-compose down`
+- To stop the image: `docker stop nginx`
+- To delete the image: `docker rm nginx`
+
+#### Example 3: Using 'depends_on'
+```yaml
+version: "3"
+services:
+    nginx1:
+        image: nginx
+        ports:
+            - 8085:80
+    alpine1:
+        image: alpine
+        entrypoint: "ping nginx1"
+        depends_on:
+            - nginx1 # means don't start pinging unless the 'nginx1' image has started
+```
+- `docker-compose up`
+- you can now see 'alpine1' pinging 'nginx1'
+- docker-compose created a default network that's why 'alpine1' can ping 'nginx1'.
+- You can see this default network by `docker network ls`
+
+#### Example 4: Using `-d` flag to run the servers on the background
+- Using 'Example 3', you can run the nginx and the alpine on the background by: `docker-compose up -d`
+- Now that they are both running on the background, you can't see the 'alpine1' pinging 'nginx1'.
+- To see both of their logs, run: `docker-compose logs`
+- To see a s specific server, run: `docker -compose logs nginx1` or `docker-compose logs alpine1`
+
+#### Example 5: Volume Mapping
+```yaml
+version: "3"
+services:
+    nginx1:
+        image: nginx
+        ports:
+            - 8085:80
+    alpine1:
+        image: alpine
+        entrypoint: "wget http://nginx1" # this command is to download the 'index.html' of nginx
+        depends_on:
+            - nginx1
+        working_dir: /app # folder where the index.html will be downloaded to
+        volumes:
+            - ./results:/app # this means it will create a shared folder 'results' in your current folder in vs code
+```
+- `docker-compose up`
+- the 'results' folder has been created and the 'index.html' is inside
+
+<br>
+
+### Why Dev/QA teams love Docker for Deployment
+
+![alt text](images/docker-hands-on-devops/2026-07-17_20-42.png)
+
+### Understanding Docker Infrastructure - For Dev/DevOps
+
+#### Developer Workflow
+
+![alt text](images/docker-hands-on-devops/2026-07-17_20-50.png)
+
+- **Simple Explanation:**
+
+1. **Developer writes code** on their laptop.
+2. They **push code to GitHub**, which stores it.
+3. **CI/CD robot wakes up**, checks the code, builds a Docker image.
+4. **Docker Image is created** - a full package of your app.
+5. AWS EC2 **downloads the image**.
+6. It **runs the image as a container**, and your app is live.
+
+- **One line summary:**
+Code -> stored -> auto-built -> packaged -> run on server.
+
+<br>
+
+#### Simple Kubernetes Flow
+
+![alt text](images/docker-hands-on-devops/2026-07-17_21-12.png)
+
+- **Simple Explanation:**
+
+1. Developer **builds a Docker Image** of the app.
+2. **Kubernetes takes the image** and decides where to run it.
+3. Kubernetes creates **Pods** (small boxes/rooms).
+4. Pods contain **containers running your app**.
+5. Kubernetes **keeps everything alive**, restarts if needed, scales up/down.
+
+- **One line summary:**
+Image -> Kubernetes -> Pods -> your app runs automatically and reliably.
