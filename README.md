@@ -22,6 +22,7 @@
     - 01-setup-env-and-writing-tests.md
     - 02-built-in-locators.md
     - 03-css-locators.md
+    - 04-xpath-locators.md
 
 ## docker-notes
 - docker-hands-on-devops.md

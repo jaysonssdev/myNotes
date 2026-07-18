@@ -24,7 +24,8 @@
 - How to Use the SelectorsHub extension
 
 ## 04. How to use XPath Locators in Playwright
-
+- XPath
+- Types of XPath
 
 ## 05. How to Handle Input Box, Radio Buttons And Checkboxes
 
