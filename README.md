@@ -37,4 +37,5 @@
 - sql-for-de.md
 
 ## osint-notes
-- osint-for-hackers
+- osint-for-hackers-and-investigators
+    - 01-introduction.md
