@@ -35,3 +35,6 @@
 
 ## sql-notes
 - sql-for-de.md
+
+## osint-notes
+- osint-for-hackers
