@@ -24,9 +24,14 @@
     - Joplin
     - Keeping your Data Safe
 - 04-advanced-searching.md
+    - The Ultimate OSINT Research Resource
     - Google Dorking
     - Google Maps
     - Google Images
     - Google Alerts
     - Geolocation
     - Greynoise
+- 05-reverse-searching.md
+    - Reverse Email
+    - Reverse Phone
+    - Deep Fake Detection

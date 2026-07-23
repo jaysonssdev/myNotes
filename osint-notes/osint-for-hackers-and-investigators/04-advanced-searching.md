@@ -1,5 +1,11 @@
 # Advanced Searching
 
+## The Ultimate OSINT Research Resource
+- As you continue your studies, the single best place to find up-to-date tools is the [⁠OSINT Framework](https://osintframework.com/).
+- It is a completely free, interactive mind map used by professional intelligence analysts. 
+
+<br>
+
 ## Google Dorking
 - Google Dorking utilizes advanced search operators to filter, isolate, and uncover publicly indexed data.
 

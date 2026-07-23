@@ -42,3 +42,4 @@
     - 02-sock-puppets.md
     - 03-data-collection.md
     - 04-advanced-searching.md
+    - 05-reverse-searching.md
