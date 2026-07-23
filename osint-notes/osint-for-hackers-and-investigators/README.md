@@ -2,5 +2,31 @@
 
 ## osint-for-hackers-and-investigators
 - 01-introduction.md
+    - What is OSINT?
+    - Mental Preparation
+    - OSINT Steps
+    - Your tools will break
+    - Ask...
+    - Crossing the line
+    - Documents
 - 02-sock-puppets.md
+    - Basics
+    - Sock Puppet Gmail
+    - MySudo
+    - textfree.com
+    - textnow.com
+    - Temp mail
+    - CSI Linux Sock Puppets
 - 03-data-collection.md
+    - Handling Data
+    - CherryTree
+    - Obsidian
+    - Joplin
+    - Keeping your Data Safe
+- 04-advanced-searching.md
+    - Google Dorking
+    - Google Maps
+    - Google Images
+    - Google Alerts
+    - Geolocation
+    - Greynoise
