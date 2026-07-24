@@ -43,3 +43,10 @@
     - Linkedin
     - Family Tree
     - Unmask Google Users Using Google Docs
+- 07-website-osint.md
+    - Spiderfoot
+    - wget and HTTrack
+    - Metagoofil
+    - Webpage Cache / History
+    - BetaMeta
+    - dotDB
