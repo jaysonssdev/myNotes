@@ -43,3 +43,4 @@
     - 03-data-collection.md
     - 04-advanced-searching.md
     - 05-reverse-searching.md
+    - 06-people-searching.md
