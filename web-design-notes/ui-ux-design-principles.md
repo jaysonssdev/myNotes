@@ -13,6 +13,9 @@
     - [UX Heuristics](#ux-heuristics)
     - [Research & Analysis](#research--analysis)
     - [Ideation, Personas, and Journeys](#ideation-personas-and-journeys)
+* [Basic UI in Practice](#basic-ui-in-practice)
+    - [Colors & Functionality](#colors--functionality)
+    - [Design Process](#design-process)
 
 <br>
 
@@ -125,3 +128,33 @@ UX is the **structural blueprint and internal framework** of the product. It enc
 ---
 
 <br>
+
+## Basic UI in Practice
+
+### Colors & Functionality
+
+#### UI/UX Design vs. Graphics Design
+
+![alt text](images/ui-ux-design-principles/2026-09-06_13-15.png)
+
+#### How to Use the Color Wheel to Build Color Schemes
+
+![alt text](images/ui-ux-design-principles/2026-09-06_13-16.png)
+
+<br>
+
+### Design Process
+
+![alt text](images/ui-ux-design-principles/2026-09-06_13-43.png)
+
+#### Sketching
+
+![alt text](images/ui-ux-design-principles/2026-09-06_13-44.png)
+
+#### Wireframing
+
+![alt text](images/ui-ux-design-principles/2026-09-06_13-45_1.png)
+
+#### Prototyping
+
+![alt text](images/ui-ux-design-principles/2026-09-06_13-45.png)
