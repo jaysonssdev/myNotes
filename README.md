@@ -73,6 +73,7 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 ## 🌐 Web Design Notes
 * [graphic-design-theory.md](./web-design-notes/graphic-design-theory.md)
 * [ui-ux-design-principles.md](./web-design-notes/ui-ux-design-principles.md)
+* [gimp-photo-editing.md](./web-design-notes/gimp-photo-editing.md)
 
 ---
 
