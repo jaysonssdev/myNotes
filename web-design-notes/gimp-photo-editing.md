@@ -16,6 +16,8 @@
 * [Color Balance Function to Fine-tune the Colors](#color-balance-function-to-fine-tune-the-colors)
 * [Healing Tool to Retouch the Skin](#healing-tool-to-retouch-the-skin)
 * [Unsharp Mask Function to Sharpen Texture](#unsharp-mask-function-to-sharpen-texture)
+* [Layer Masking to do Localized Editing](#layer-masking-to-do-localized-editing)
+* [Selections](#selections)
 
 ---
 
@@ -181,5 +183,67 @@ We use layer masking **to edit just a part of the image** (to avoid editing the 
 ![alt text](images/gimp-photo-editing/2026-09-11_15-41.png)
 
 6. Use paintbrush (white color) to paint the parts that you want to reveal (in this example, the eyes).
+
+---
+
+## Selections
+* Select: `Tools -> Selection Tools ->`
+* Unselect: `shift + ctrl + A`
+
+
+### Selecting / removing the background
+
+#### Using a 3rd party tool
+* Free 3rd party background remover: https://www.adobe.com/products/firefly/features/remove-background.html
+
+#### Using a downscaled image background remover
+Sometimes you will use a free background remover tool like https://clipdrop.co/ that will downscale your image. Follow these steps to trace it:
+
+1. Open your original image in Gimp.
+2. Paste here the downscaled image (new layer)
+3. Scale: `Tools -> Transform Tools -> Scale` or press `shift + S`, then adjust it with the size of the orginal image (you can see the size on the topmost)
+4. Long press the **Move tool** to pick the **Alignment tool**, or simply press `Q`
+5. Click first the image then click the 2 buttons (see below):
+
+![alt text](images/gimp-photo-editing/2026-09-12_12-48.png)
+
+6. Right-click the layer of the downscaled image then select **Alpha to Selection**. Now the background is selected.
+7. Click the layer of the original image.
+8. Add a layer mask (click the icon on the lower right corner beside the X), then select the **Selection** radio button. Click **Add** button.
+9. Now you can hide or delete the layer of the downscaled image.
+
+<br>
+
+#### Using the Fuzzy Select Tool
+The **Fuzzy Select Tool** is used if the object is NOT complex (example: bald person, plain background):
+1. Open the **Selection Editor** if not yet opened - `Windows -> Dockable Dialogs -> Selection Editor`
+2. Select the **Fuzzy Select Tool** or press `U`
+3. On the options, start with **Threshold** around 8 to 12, and make sure the default checked selected radio buttons.
+
+![alt text](images/gimp-photo-editing/2026-09-12_13-20.png)
+
+4. Click the background. Hold `shift` to add more selections. Hold `ctrl` to subtract selections (Note: You can use the **Free Select Tool** to get the ones that you want to subtract)
+5. Right-click the layer then select **Add Alpha Channel**, then hit `Delete`
+6. `shift + ctrl + A` to deselect.
+
+<br>
+
+#### Using the Foreground Select
+The **Foreground Select** is used if the object is complex (example: lot of hair, strands, uneven background):
+1. Select the **Foreground Select**.
+
+![alt text](images/gimp-photo-editing/2026-09-12_17-40.png)
+
+2. Under Options, make sure that **Feather edges** is checked.
+3. Draw a selection around the subject, then hit Enter (your cursor will change into a brush)
+4. Start painting the subject, you need to be careful and patient here. (Note; If you made a mistake and exceeded, change the **Draw Mode** to **Draw background** then paint the exceeded part)
+5. Click the **Preview mask** to see the preview, if you're happy with the selection, click the **Select** button.
+6. Add a layer mask (click the icon on the lower right corner beside the X), then select the **Selection** radio button. Click **Add** button. We do this so that we could still edit the selection in the future if needed.
+9. `shift + ctrl + A` to deselect.
+10. Right-click on the layer mask that you created, then select **Show Layer Mask**
+
+![alt text](images/gimp-photo-editing/2026-09-12_18-15.png)
+
+11. Use **Paintbrush Tool** (Mode: Overlay) then paint **black** the imperfections on the background, if there are any. Then paint **white** to the subject's imperfections.
 
 ---
