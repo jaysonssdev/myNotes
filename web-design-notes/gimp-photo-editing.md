@@ -18,6 +18,7 @@
 * [Unsharp Mask Function to Sharpen Texture](#unsharp-mask-function-to-sharpen-texture)
 * [Layer Masking to do Localized Editing](#layer-masking-to-do-localized-editing)
 * [Selections](#selections)
+* [Frequency Separation to Make the Skin Smooth](#frequency-separation-to-make-the-skin-smooth)
 
 ---
 
@@ -245,5 +246,34 @@ The **Foreground Select** is used if the object is complex (example: lot of hair
 ![alt text](images/gimp-photo-editing/2026-09-12_18-15.png)
 
 11. Use **Paintbrush Tool** (Mode: Overlay) then paint **black** the imperfections on the background, if there are any. Then paint **white** to the subject's imperfections.
+
+---
+
+## Frequency Separation to Make the Skin Smooth
+1. Duplicate the layer: `ctrl + shift + D`
+2. `Filters -> Blur -> Gaussian Blur...`
+3. Increase the **Size X and Size Y** options just enough to blur the textures. (Note: Don't make the image too blurry)
+4. Select this layer (Color and Tone) then change its Mode to **Grain extract**.
+
+![alt text](images/gimp-photo-editing/2026-09-13_00-40.png)
+
+5. Right-click this layer then select **New from Visible** to create a new layer, name it **Texture**
+6. Select the **Color and Tone** layer and return its Mode to **Normal**
+7. Select the **Texture** layer then change its Mode to **Grain merge**
+
+![alt text](images/gimp-photo-editing/2026-09-13_00-49.png)
+
+8. Go to the **Color and Tone** layer again. We figure out first which part needs smoothing. Use a selection tool (example: **Free Select**) to select the part needs softening. (Note: In the Tool Options of the Free Select tool, make sure that the **Feather edges** is checked and set to a high value like **50**)
+9. `Filters -> Blur -> Gaussian Blur...`, then increase the **Size X and Size Y** options just enough to smoothen the skin.
+10. `shift + ctrl + A` to deselect.
+11. If you want to soften more parts, select that part by using a selection tool again, then press `ctrl + F` which is a shortcut to repeat the **Gaussian Blur** values. (Note: Don't use `ctrl + F` if you want to input a different Size X & Y values)
+12. Create a new **layer group** and put the **Texture** and **Color and Tone** layers in this group. Minimize the folder by clicking the `-`
+
+![alt text](images/gimp-photo-editing/2026-09-13_01-25.png)
+
+13. Now you can adjust the opacity if you want to lessen the smoothness.
+
+![alt text](images/gimp-photo-editing/2026-09-13_01-37.png)
+14. If you want to adjust just a part, you could create a **Layer mask -> White**, then paint (lessen the opacty of the paintbrush) the parts with **black**.
 
 ---
