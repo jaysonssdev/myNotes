@@ -19,6 +19,8 @@
 * [Layer Masking to do Localized Editing](#layer-masking-to-do-localized-editing)
 * [Selections](#selections)
 * [Frequency Separation to Make the Skin Smooth](#frequency-separation-to-make-the-skin-smooth)
+* [How to Merge Different Exposures](#how-to-merge-different-exposures)
+* [Changing the Color of the Background](#changing-the-color-of-the-background)
 
 ---
 
@@ -274,6 +276,67 @@ The **Foreground Select** is used if the object is complex (example: lot of hair
 13. Now you can adjust the opacity if you want to lessen the smoothness.
 
 ![alt text](images/gimp-photo-editing/2026-09-13_01-37.png)
+
 14. If you want to adjust just a part, you could create a **Layer mask -> White**, then paint (lessen the opacty of the paintbrush) the parts with **black**.
 
 ---
+
+## How to Merge Different Exposures
+We use **exposure blending** to merge pictures with different exposures to get the parts that have correct exposures. This works perfectly with aligned images (photos taken with a tripod).
+
+1. Open the overexposed image.
+2. Open the underexposed image.
+3. Drag the underexposed image's tab on top of the 1st image (overexposed), so that it will automatically creates a new layer above it. Name this new layer to **underexposed**.
+
+#### Manual Method:
+
+4. Create a layer mask on this **underexposed** layer. (select **black** if you are just getting a small part from the underexposed).
+5. Use the **paintbrush tool** then paint **white** all the parts that you want to reveal.
+
+#### Automatic Method:
+4. Create a layer mask on this **underexposed** layer. Select **Grayscale copy of layer**. Hit **Add**.
+5. Just use the **paintbrush tool** then paint **white** all the parts that you still want to fix.
+
+#### Merging into 1 new layer.
+6. If you like the output, right-click this **underexposed** layer then select **New from Visible**.
+
+---
+
+## Changing the Color of the Background
+1. Remove your image background using: https://www.pixelcut.ai/background-remover or https://www.adobe.com/products/firefly/features/remove-background.html
+2. If you used **pixelcut.ai**, sometimes they change your image's size.
+    - Check your image's original size -- right-click your image then select **properties**.
+    - In **pixelcut.ai**, before downloading, hit the **Resize** button then input the original size.
+3. In Gimp, open the original image.
+4. Make the downloaded png a layer -- `File -> Open as Layers...` then select the downloaded png image.
+5. Right-click this new layer then select **Alpha to Selection**. You can now hide this layer by clicking the **Eye**
+
+![alt text](images/gimp-photo-editing/2026-09-14_14-18.png)
+
+6. Click the original image layer, notice that the subject remains selected. 
+7. To select the background -- `Select -> Invert` or press `ctrl + I`
+8. Select the foreground color that you want.
+
+![alt text](images/gimp-photo-editing/2026-09-14_14-25.png)
+
+9. Create a new layer.
+
+![alt text](images/gimp-photo-editing/2026-09-14_14-23.png)
+
+10. Create a new layer mask, choose **Selection**.
+11. `ctrl + shift + A` to deselect it.
+12. Change the Mode from Normal to **LCh Color** for us to get the shadows from the original image.
+
+![alt text](images/gimp-photo-editing/2026-09-14_14-35.png)
+
+13. Now you can change the background color whenever you want.
+    - Change the foreground color.
+    - Click the existing color from the layer.
+
+    ![alt text](images/gimp-photo-editing/2026-09-14_14-39.png)
+
+    - `Edit -> Fill with FG Color`
+
+Note: To edit the selection, `alt + click` the layer mask, then use the **paintbrush** tool.
+
+![alt text](images/gimp-photo-editing/2026-09-14_14-41.png)
