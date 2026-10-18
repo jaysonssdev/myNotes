@@ -78,6 +78,9 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 * [ui-ux-design-principles.md](./web-design-notes/ui-ux-design-principles.md)
 * [gimp-photo-editing.md](./web-design-notes/gimp-photo-editing.md)
 
+## 🖥️ Linux Notes
+* [complete-linux-training.md](./linux-notes/complete-linux-training.md)
+
 ---
 
 ## ⚠️ Disclaimer & Copyright Notice
