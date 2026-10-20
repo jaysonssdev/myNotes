@@ -38,6 +38,10 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 * [auth.md](./web-fundamentals-notes/auth.md)
 
 ## 🎭 Playwright Notes
+
+### TypeScript Automation Testing
+* [basic-js-for-automation.md](./playwright-notes/typescript-automation-testing/basic-js-for-automation.md)
+
 ### Playwright with Python and Pytest
 * [01-setup-env-and-writing-tests.md](./playwright-notes/playwright-with-python-and-pytest/01-setup-env-and-writing-tests.md)
 * [02-built-in-locators.md](./playwright-notes/playwright-with-python-and-pytest/02-built-in-locators.md)
