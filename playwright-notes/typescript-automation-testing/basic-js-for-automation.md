@@ -6,7 +6,7 @@
 * [Hello World Program](#hello-world-program)
 * [Declaring the variables](#declaring-the-variables)
 * [Understanding the Datatypes](#understanding-the-datatypes)
-* [Loops and Conditions](#loops-and-conditions)
+* [Conditions and Loops](#conditions-and-loops)
 * [Logical operators and Assignments](#logical-operators-and-assignments)
 * [Arrays and its methods](#arrays-and-its-methods)
 * [Functions](#functions)
@@ -47,12 +47,24 @@ lines
 
 ![alt text](images/basic-js-for-automation/2026-10-21_12-49.png)
 
-#### Important Note:
+#### Important Notes:
 * **Use `const` by default**: It prevents accidental reassignment and makes your code easier to reason about. Note that while you cannot reassign a `const` object or array, you can still modify its internal properties or elements.
 
 * **Use `let` for variables that must change**: Perfect for loops, counters, or values you know you will reassign later.
 
 * **Avoid `var` in modern JavaScript**: Its lack of block scoping and loose rules around redeclaration often lead to bugs.
+
+#### Naming Style Guide
+
+![alt text](images/basic-js-for-automation/2026-10-21_13-25.png)
+
+#### Naming Rules
+1. **No Reserved Words**: You cannot name a variable after keywords like `const, let, if, class, function`
+
+2. **First Character Constraints**: A name must start with a letter, an underscore (_), or a dollar sign ( $ ). **It cannot start with a number**.
+
+3. **No Hyphens or Spaces**
+
 
 #### Examples:
 
@@ -72,12 +84,12 @@ const e = "You cannot use the 'e' again as a variable name!"
 // e = 5 will cause an error
 
 // string variable
-let name = "John Smith"
+let userName = "John Smith"
 
 // boolean variable
-let required = true
+let isRequired = true
 // to reverse boolean, use "!"
-console.log(!required)
+console.log(!isRequired)
 
 // null and undefined variable
 let d = null
@@ -91,7 +103,135 @@ let d = null
 
 ---
 
-## Loops and Conditions
+## Conditions and Loops
+
+### Conditions — Making decisions
+* How it works:
+    - `if` checks whether the condition is true.
+
+    - `else if` checks another condition if the previous one is false.
+
+    - `else` runs when none of the previous conditions are true.
+
+#### Example:
+
+```js
+const score = 85;
+
+if (score >= 90) {
+  console.log("Excellent!");
+} else if (score >= 75) {
+  console.log("Passed!");
+} else {
+  console.log("Try again.");
+}
+```
+**Output:** Passed!
+
+<br>
+
+### Loops — Repeating tasks
+
+#### A. `for` loop
+Use a `for` loop **when you know how many times** you want to repeat something.
+
+```js
+for (let i = 1; i <= 4; i++) {
+  console.log(i);
+}
+```
+**Output:**
+```
+1
+2
+3
+4
+```
+* How it works:
+    - let i = 1 — starts the counter at 1.
+    - i <= 4 — continues while the condition is true.
+    - i++ — increases the counter by 1 after each iteration.
+
+#### B. `for...of` loop
+A modern and readable way **to loop through arrays**.
+
+```js
+const fruits = ["Apple", "Mango", "Banana"];
+
+for (const fruit of fruits) {
+  console.log(fruit);
+}
+```
+**Output:**
+```
+Apple
+Mango
+Banana
+```
+
+#### C. `while` loop
+Use a `while` loop when you want to repeat something **as long as a condition remains true**.
+
+```js
+let count = 1;
+
+while (count <= 3) {
+  console.log(count);
+  count++;
+}
+```
+**Output:**
+```
+1
+2
+3
+```
+
+#### D. `do...while` loop
+Use a `do while` loop when you want the code to **run at least once, even if the condition is initially false**.
+
+```js
+let count = 1;
+
+do {
+  console.log(count);
+  count++;
+} while (count <= 3);
+```
+**Output:**
+```
+1
+2
+3
+```
+
+### Combining loops and conditions
+You can use an `if` statement inside a loop to make decisions for each item.
+
+```js
+const numbers = [1, 2, 3, 4, 5];
+
+for (const number of numbers) {
+  if (number % 2 === 0) {
+    console.log(`${number} is even`);
+  } else {
+    console.log(`${number} is odd`);
+  }
+}
+```
+**Output:**
+```
+1 is odd
+2 is even
+3 is odd
+4 is even
+5 is odd
+```
+
+### Loop Control Statements
+
+* `break`: stops the loop completely.
+* `continue`: skips the current iteration and proceeds to the next one.
 
 ---
 
