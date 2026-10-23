@@ -7,7 +7,7 @@
 * [Declaring the variables](#declaring-the-variables)
 * [Understanding the Datatypes](#understanding-the-datatypes)
 * [Conditions and Loops](#conditions-and-loops)
-* [Logical operators and Assignments](#logical-operators-and-assignments)
+* [Logical Operators and Assignments](#logical-operators-and-assignments)
 * [Arrays and its methods](#arrays-and-its-methods)
 * [Functions](#functions)
 * [String and its related functions](#string-and-its-related-functions)
@@ -235,7 +235,31 @@ for (const number of numbers) {
 
 ---
 
-## Logical operators and Assignments
+## Logical Operators and Assignments
+
+### Logical Operators
+
+![alt text](images/basic-js-for-automation/2026-10-22_13-29.png)
+
+#### More Examples:
+
+```js
+// AND (&&)
+console.log(5 > 3 && 10 > 7); // true
+
+// OR (||)
+console.log(5 > 3 || 10 < 7); // true
+
+// NOT (!)
+console.log(!true); // false
+
+// Nullish coalescing (??)
+console.log(null ?? "Default"); // "Default"
+```
+
+### Logical Assignment Operators
+
+![alt text](images/basic-js-for-automation/2026-10-22_13-30.png)
 
 ---
 
