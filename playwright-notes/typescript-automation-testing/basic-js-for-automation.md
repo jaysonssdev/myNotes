@@ -265,6 +265,35 @@ console.log(null ?? "Default"); // "Default"
 
 ## Arrays and its methods
 
+An array is a variable that stores multiple values in a single list.
+
+```js
+let fruits = ["Apple", "Banana", "Mango"];
+
+console.log(fruits[0]); // Apple
+console.log(fruits[1]); // Banana
+console.log(fruits[2]); // Mango
+```
+
+### 1. Common Array Methods
+
+![alt text](images/basic-js-for-automation/2026-10-22_13-59.png)
+
+**Note:** These examples assume each method starts with a fresh `nums = [1, 2, 3]`. Some methods modify the original array, while others do not.
+
+### 2. Methods for working with array items
+
+![alt text](images/basic-js-for-automation/2026-10-22_14-01.png)
+
+### 3. Other useful array features
+
+![alt text](images/basic-js-for-automation/2026-10-22_14-05.png)
+
+### 4. The most important difference to remember
+Some methods **modify the original array**, while others return a new value.
+
+![alt text](images/basic-js-for-automation/2026-10-22_14-06.png)
+
 ---
 
 ## Functions
