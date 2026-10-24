@@ -13,7 +13,6 @@
 * [String and its related methods](#string-and-its-related-methods)
 * [Objects](#objects)
 * [Classes and its Properties](#classes-and-its-properties)
-* [Methods](#methods)
 
 ---
 
@@ -749,6 +748,231 @@ console.log(`My name is ${name} and I am ${age}.`);
 
 ## Objects
 
+### 1. What is an Object in JavaScript?
+An **object** stores related data and functionality using `key: value` pairs. It is useful for representing real-world things such as a person, a car, or a product.
+```js
+const person = {
+  name: "Alex",
+  age: 25,
+  city: "Manila"
+};
+
+console.log(person);
+```
+
+<br>
+
+### 2. Accessing Object Properties
+
+#### 2.1. Dot notation (`.`)
+Access a property by its name.
+```js
+console.log(person.name); // "Alex"
+console.log(person.age);  // 25
+```
+#### 2.2. Bracket notation (`[]`)
+Access a property using a string or a variable. This is useful when property names contain spaces or are stored in variables.
+```js
+console.log(person["city"]); // "Manila"
+
+const key = "name";
+console.log(person[key]); // "Alex"
+```
+
+<br>
+
+### 3. Adding, Updating, and Deleting Properties
+You can modify objects after creating them, even when they are declared with `const`.
+```js
+const person = {
+  name: "Alex",
+  age: 25
+};
+
+// Add a property
+person.city = "Manila";
+
+// Update a property
+person.age = 26;
+
+// Delete a property
+delete person.city;
+
+console.log(person);
+// { name: "Alex", age: 26 }
+```
+Remember: `const` prevents reassignment of the object variable, but it does not prevent changes to the object's properties.
+
+<br>
+
+### 4. Object Methods
+An object can contain functions. A function stored in an object is commonly called a **method**.
+```js
+const person = {
+  name: "Alex",
+
+  greet() {
+    return `Hello, I'm ${this.name}!`;
+  }
+};
+
+console.log(person.greet());
+// "Hello, I'm Alex!"
+```
+* `greet()` is a method.
+* `this.name` refers to the name property of the object when called this way.
+
+<br>
+
+### 5. Important Object Methods and Utilities
+JavaScript provides built-in methods that help you inspect, copy, and work with objects.
+
+#### 5.1. `Object.keys()`
+Returns an array of an object's own enumerable property names.
+```js
+const user = { name: "Alex", age: 25 };
+
+console.log(Object.keys(user));
+// ["name", "age"]
+```
+#### 5.2. `Object.values()`
+Returns an array of the object's property values.
+```js
+console.log(Object.values(user));
+// ["Alex", 25]
+```
+#### 5.3. `Object.entries()`
+Returns an array of key-value pairs, with each pair represented as an array.
+```js
+console.log(Object.entries(user));
+// [["name", "Alex"], ["age", 25]]
+```
+#### 5.4. `Object.assign()`
+Copies enumerable own properties from one or more source objects into a target object.
+```js
+const extra = { city: "Manila" };
+const result = Object.assign({}, user, extra);
+
+console.log(result);
+// { name: "Alex", age: 25, city: "Manila" }
+```
+#### 5.5. `Object.hasOwn()`
+Checks whether an object has a property directly on itself, rather than inheriting it.
+```js
+console.log(Object.hasOwn(user, "name")); // true
+console.log(Object.hasOwn(user, "city")); // false
+```
+#### 5.6. `Object.freeze()`
+Prevents properties from being added, removed, or reassigned on the object itself.
+```js
+const settings = { theme: "dark" };
+
+Object.freeze(settings);
+settings.theme = "light";
+
+console.log(settings.theme); // "dark"
+```
+
+<br>
+
+### 6. Modern JavaScript Object Features (ES6+)
+These features are especially useful in everyday JavaScript.
+
+#### 6.1. Property shorthand
+When the variable name and property name are the same, you can write the name once.
+```js
+const name = "Alex";
+const age = 25;
+
+const user = { name, age };
+```
+#### 6.2. Destructuring
+Extract properties into variables.
+```js
+const user = {
+  name: "Alex",
+  age: 25
+};
+
+const { name, age } = user;
+
+console.log(name); // "Alex"
+```
+#### 6.3. Spread syntax (`...`)
+Copies an object's enumerable own properties into a new object. Later properties override earlier ones.
+```js
+const user = { name: "Alex", age: 25 };
+
+const updated = { ...user, age: 26 };
+
+console.log(updated);
+// { name: "Alex", age: 26 }
+```
+#### 6.4. Optional chaining (`?.`)
+Safely accesses a property when an intermediate value might be `null` or `undefined`.
+```js
+const user = {};
+
+console.log(user.address?.city);
+// undefined
+```
+#### 6.5. Nullish coalescing (`??`)
+Provides a default value only when the left side is null or undefined.
+```js
+const user = { name: null };
+
+console.log(user.name ?? "Guest");
+// "Guest"
+```
+#### 6.6. Computed property names
+Create a property name dynamically using an expression inside square brackets.
+```js
+const key = "favoriteColor";
+
+const user = {
+  [key]: "blue"
+};
+
+console.log(user.favoriteColor); // "blue"
+```
+
+<br>
+
+### 7. Looping Through Objects
+Use `Object.entries()` with `for...of` to access each key and value.
+```js
+const user = {
+  name: "Alex",
+  age: 25,
+  city: "Manila"
+};
+
+for (const [key, value] of Object.entries(user)) {
+  console.log(`${key}: ${value}`);
+}
+```
+**Output:**
+```
+name: Alex
+age: 25
+city: Manila
+```
+You can also use `for...in` to iterate over enumerable string-keyed properties, including inherited ones.
+```js
+for (const key in user) {
+  console.log(key, user[key]);
+}
+```
+For ordinary objects, prefer `Object.keys()`, `Object.values()`, or `Object.entries()` when you want to work specifically with the object's own properties.
+
+<br>
+
+### 8. Object vs. Array
+
+![alt text](images/basic-js-for-automation/2026-10-24_14-34.png)
+
+An array is also a type of object in JavaScript, but it is designed specifically for ordered collections.
+
 <br>
 
 ---
@@ -756,14 +980,6 @@ console.log(`My name is ${name} and I am ${age}.`);
 <br>
 
 ## Classes and its Properties
-
-<br>
-
----
-
-<br>
-
-## Methods
 
 <br>
 
