@@ -10,12 +10,14 @@
 * [Logical Operators and Assignments](#logical-operators-and-assignments)
 * [Arrays and its methods](#arrays-and-its-methods)
 * [Functions](#functions)
-* [String and its related functions](#string-and-its-related-functions)
-* [What are JavaScript Objects?](#what-are-javascript-objects)
+* [String and its related methods](#string-and-its-related-methods)
+* [Objects](#objects)
 * [Classes and its Properties](#classes-and-its-properties)
 * [Methods](#methods)
 
 ---
+
+<br>
 
 ## Hello World Program
 * To simply print on the console/terminal:
@@ -37,7 +39,11 @@ lines
     - `node <js file name>`
     - Example: `node basics1.js`
 
+<br>
+
 ---
+
+<br>
 
 ## Declaring the variables
 * You can use var, let, or const:
@@ -95,13 +101,21 @@ console.log(!isRequired)
 let d = null
 ```
 
+<br>
+
 ---
+
+<br>
 
 ## Understanding the Datatypes
 
 ![alt text](images/basic-js-for-automation/2026-10-21_12-46.png)
 
+<br>
+
 ---
+
+<br>
 
 ## Conditions and Loops
 
@@ -233,7 +247,11 @@ for (const number of numbers) {
 * `break`: stops the loop completely.
 * `continue`: skips the current iteration and proceeds to the next one.
 
+<br>
+
 ---
+
+<br>
 
 ## Logical Operators and Assignments
 
@@ -261,7 +279,11 @@ console.log(null ?? "Default"); // "Default"
 
 ![alt text](images/basic-js-for-automation/2026-10-22_13-30.png)
 
+<br>
+
 ---
+
+<br>
 
 ## Arrays and its methods
 
@@ -294,7 +316,11 @@ Some methods **modify the original array**, while others return a new value.
 
 ![alt text](images/basic-js-for-automation/2026-10-22_14-06.png)
 
+<br>
+
 ---
+
+<br>
 
 ## Functions
 
@@ -564,20 +590,181 @@ console.log(increment()); // 2
 
 ![alt text](images/basic-js-for-automation/2026-10-23_15-31.png)
 
----
-
-## String and its related functions
+<br>
 
 ---
 
-## What are JavaScript Objects?
+<br>
+
+## String and its related methods
+
+### 1. What is a String?
+A **string** is a data type used to represent text. You can create strings using single quotes (`' '`), double quotes (`" "`), or backticks (``).
+
+```js
+const firstName = "John";
+const greeting = 'Hello!';
+const message = `Welcome, ${firstName}!`;
+
+console.log(message); // Welcome, John!
+```
+Backticks allow you to insert variables or expressions using **template literals** (`${...}`).
+
+<br>
+
+### 2. Common String Properties and Methods
+Here are the most useful string methods to learn first.
+
+#### 2.1. `length`
+Returns the number of UTF-16 code units in a string.
+```js
+const text = "Hello";
+console.log(text.length); // 5
+```
+#### 2.2. `toUpperCase()` and `toLowerCase()`
+Convert text to uppercase or lowercase.
+```js
+"hello".toUpperCase(); // "HELLO"
+"HELLO".toLowerCase(); // "hello"
+```
+#### 2.3. `includes()`
+Checks whether a string contains specific text. Returns `true` or `false`.
+```js
+"JavaScript".includes("Script"); // true
+"JavaScript".includes("Python"); // false
+```
+#### 2.4. `indexOf()`
+Returns the index of the first occurrence of a value, or `-1` if it is not found.
+```js
+"banana".indexOf("a"); // 1
+"banana".indexOf("z"); // -1
+```
+#### 2.5. `slice()`
+Extracts part of a string using a start index and an optional end index (exclusive).
+```js
+"JavaScript".slice(0, 4); // "Java"
+"JavaScript".slice(4);    // "Script"
+```
+#### 2.6. `replace()` and `replaceAll()`
+Replace matching text with new text. `replace()` normally replaces the first matching occurrence; `replaceAll()` replaces all occurrences.
+```js
+"cat cat".replace("cat", "dog");
+// "dog cat"
+
+"cat cat".replaceAll("cat", "dog");
+// "dog dog"
+```
+#### 2.7. `split()`
+Splits a string into an array using a separator.
+```js
+"red,green,blue".split(",");
+// ["red", "green", "blue"]
+
+"hello".split("");
+// ["h", "e", "l", "l", "o"]
+```
+#### 2.8. `trim()`
+Removes whitespace from both ends of a string.
+```js
+"  hello  ".trim(); // "hello"
+```
+Related methods: `trimStart()` removes whitespace at the beginning; `trimEnd()` removes it at the end.
+#### 2.9. `startsWith()` and `endsWith()`
+Check whether a string starts or ends with particular text.
+```js
+"hello.js".startsWith("hello"); // true
+"hello.js".endsWith(".js");    // true
+```
+#### 2.10. `repeat()`
+Repeats a string a specified number of times.
+```js
+"Ha".repeat(3); // "HaHaHa"
+```
+#### 2.11. `at()`
+Returns the character at an index. Negative indexes count backward from the end.
+```js
+"JavaScript".at(0);  // "J"
+"JavaScript".at(-1); // "t"
+```
+#### 2.12. `match()`
+Finds matches in a string using a regular expression (regex).
+```js
+"Order 123".match(/\d+/);
+// ["123"]
+```
+Here, `\d+` matches one or more digits.
+
+<br>
+
+### 3. Other useful string methods
+
+![alt text](images/basic-js-for-automation/2026-10-24_12-30.png)
+
+<br>
+
+### 4. Important concepts to remember
+#### 4.1. Strings are immutable.
+This means string methods do not modify the original string; they return a new string or another value.
+```js
+let text = "hello";
+
+text.toUpperCase();
+
+console.log(text); // "hello"
+
+text = text.toUpperCase();
+
+console.log(text); // "HELLO"
+```
+#### 4.2. String indexes start at zero.
+```js
+const word = "CODE";
+
+// Index:  0 1 2 3
+// Letter: C O D E
+
+console.log(word[0]); // "C"
+console.log(word[3]); // "E"
+```
+#### 4.3. String comparisons are case-sensitive.
+```js
+console.log("hello" === "Hello"); // false
+console.log("JavaScript".includes("java")); // false
+```
+#### 4.4. Template literals
+are useful for combining strings and variables.
+```js
+const name = "Alex";
+const age = 20;
+
+console.log(`My name is ${name} and I am ${age}.`);
+// My name is Alex and I am 20.
+```
+
+<br>
 
 ---
+
+<br>
+
+## Objects
+
+<br>
+
+---
+
+<br>
 
 ## Classes and its Properties
 
+<br>
+
 ---
 
+<br>
+
 ## Methods
+
+<br>
 
 ---
