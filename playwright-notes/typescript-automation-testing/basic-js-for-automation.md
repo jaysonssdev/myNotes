@@ -298,6 +298,272 @@ Some methods **modify the original array**, while others return a new value.
 
 ## Functions
 
+### 1. What is a function in JavaScript?
+
+A **function** is a reusable block of code designed to perform a specific task.
+
+```js
+function greet() {
+  console.log("Hello, world!");
+}
+
+greet(); // Hello, world!
+greet(); // Hello, world!
+```
+* **How it works:**
+    - `function` — keyword used to declare a function.
+    - `greet` — the function's name.
+    - `()` — parentheses that can hold parameters.
+    - `{}` — the function body, where the code goes.
+    - `greet()` — calls or executes the function.
+
+* **Remember:** Declaring a function doesn't automatically run it. You need to call it.
+
+<br>
+
+### 2. The main types of functions
+
+#### A. Function declaration
+* This is the traditional way to create a function.
+```js
+function add(a, b) {
+  return a + b;
+}
+
+console.log(add(5, 3)); // 8
+```
+
+#### B. Function expression
+* A function is stored inside a variable.
+```js
+const add = function(a, b) {
+  return a + b;
+};
+
+console.log(add(5, 3)); // 8
+```
+
+#### C. Arrow function
+* A shorter way to write a function, introduced in ES6. **Arrow functions are especially common in modern JavaScript.**
+```js
+const add = (a, b) => {
+  return a + b;
+};
+
+console.log(add(5, 3)); // 8
+
+// For a single expression, you can shorten it further:
+const add = (a, b) => a + b;
+```
+
+#### Quick comparison
+
+![alt text](images/basic-js-for-automation/2026-10-23_14-51.png)
+
+<br>
+
+### 3. Parameters vs. arguments
+* These two terms are closely related but have different meanings.
+```js
+function greet(name) {
+  console.log("Hello, " + name);
+}
+
+greet("Alex");
+```
+* **Parameter:** `name` — the variable in the function definition.
+* **Argument:** `"Alex"` — the actual value passed when calling the function.
+
+You can use multiple parameters:
+```js
+function introduce(name, age) {
+  console.log(`I'm ${name} and I'm ${age} years old.`);
+}
+
+introduce("Alex", 22);
+```
+**Output:** I'm Alex and I'm 22 years old.
+
+#### Default parameters
+You can provide a fallback value if an argument is omitted.
+```js
+function greet(name = "Guest") {
+  console.log(`Hello, ${name}!`);
+}
+
+greet();       // Hello, Guest!
+greet("Mia");  // Hello, Mia!
+```
+
+<br>
+
+### 4. The `return` statement
+`return` sends a value back to the code that called the function.
+```js
+function multiply(a, b) {
+  return a * b;
+}
+
+const result = multiply(4, 5);
+
+console.log(result); // 20
+```
+Compare `return` with `console.log()`:
+```js
+function first() {
+  console.log(10);
+}
+
+function second() {
+  return 10;
+}
+```
+* `console.log()` displays a value in the console.
+* `return` gives a value back so it can be stored, reused, or passed to another function.
+* A function without a `return` statement returns `undefined` by default.
+* Once `return` executes, the function stops running.
+
+<br>
+
+### 5. Scope: where variables can be accessed
+Scope determines where a variable is available.
+
+#### Global scope
+```js
+const name = "Alex";
+
+function greet() {
+  console.log(name);
+}
+
+greet(); // Alex
+```
+The variable `name` is accessible inside the function because it was declared outside it in the global scope.
+
+#### Local or function scope
+```js
+function greet() {
+  const message = "Hello!";
+  console.log(message);
+}
+
+greet();
+
+// console.log(message); // ReferenceError
+```
+The variable `message` is only accessible inside the function.
+
+#### Block scope
+Variables declared with let and const inside a block are limited to that block.
+```js
+if (true) {
+  let age = 20;
+}
+
+// console.log(age); // ReferenceError
+```
+
+<br>
+
+### 6. Anonymous functions and callbacks
+
+#### Anonymous function
+- is a function without a name.
+```js
+const greet = function() {
+  console.log("Hello!");
+};
+```
+
+#### Callback function
+- is a function passed to another function as an argument.
+```js
+function processUser(callback) {
+  callback();
+}
+
+processUser(function() {
+  console.log("User processed!");
+});
+```
+Callbacks are commonly used with event listeners, timers, and array methods.
+
+For example, in the DOM:
+```js
+const button = document.querySelector("button");
+
+button.addEventListener("click", () => {
+  console.log("Button clicked!");
+});
+```
+The arrow function is the callback. It runs when the button is clicked.
+
+<br>
+
+### 7. Higher-order functions
+A higher-order function is a function that **accepts another function as an argument or returns a function**.
+
+Array methods such as `map()`, `filter()`, and `forEach()` are common examples.
+```js
+const numbers = [1, 2, 3, 4];
+
+const doubled = numbers.map(number => number * 2);
+
+console.log(doubled); // [2, 4, 6, 8]
+```
+
+<br>
+
+### 8. Other important function concepts
+
+**Recursion:** A function calls itself to solve a problem in smaller steps.
+```js
+function countDown(n) {
+  if (n <= 0) return;
+  console.log(n);
+  countDown(n - 1);
+}
+
+countDown(3); // 3, 2, 1
+```
+**Asynchronous functions:** Used when work takes time, such as fetching data from an API.
+```js
+async function getData() {
+  const response = await fetch(
+    "https://jsonplaceholder.typicode.com/users"
+  );
+
+  const data = await response.json();
+  console.log(data);
+}
+
+getData();
+```
+`async` allows a function to return a **Promise**, while `await` waits for a **Promise to settle**.
+
+**Closures:** A function can remember variables from the scope where it was created, even after the outer function has finished.
+```js
+function counter() {
+  let count = 0;
+
+  return function() {
+    count++;
+    return count;
+  };
+}
+
+const increment = counter();
+
+console.log(increment()); // 1
+console.log(increment()); // 2
+```
+
+<br>
+
+### 9. Common mistakes to avoid
+
+![alt text](images/basic-js-for-automation/2026-10-23_15-31.png)
+
 ---
 
 ## String and its related functions
