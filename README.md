@@ -39,8 +39,9 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 
 ## 🎭 Playwright Notes
 
-### TypeScript Automation Testing
-* [01-basic-js-for-automation.md](./playwright-notes/typescript-automation-testing/01-basic-js-for-automation.md)
+### JavaScript/TypeScript Automation Testing
+* [01-basic-js-for-automation.md](./playwright-notes/javascript-typescript-automation-testing/01-basic-js-for-automation.md)
+* [02-playwright-fundamentals.md](./playwright-notes/javascript-typescript-automation-testing/02-playwright-fundamentals.md)
 
 ### Playwright with Python and Pytest
 * [01-setup-env-and-writing-tests.md](./playwright-notes/playwright-with-python-and-pytest/01-setup-env-and-writing-tests.md)
