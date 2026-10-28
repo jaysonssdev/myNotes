@@ -5,6 +5,7 @@
 ## Table of Contents
 * [Getting Started with Playwright Automation Core Concepts](#getting-started-with-playwright-automation-core-concepts)
 * [Playwright Basic Methods for Web Automation Testing](#playwright-basic-methods-for-web-automation-testing)
+* [Handling UI Components](#handling-ui-components)
 
 ---
 
@@ -218,6 +219,142 @@ await page.locator(".card—body b").nth(7).waitFor();
 
 const titles = await page. locator(".card—body b").allTextContents();
 console.log(titles);
+```
+
+<br>
+
+---
+
+<br>
+
+## Handling UI Components
+
+### Selecting an Option from a Static Dropdown List
+1. Get the **locator** of the dropdown.
+2. Get the value of the option that you want, then put it in the `selectOption()` method.
+3. Assert the value by using the `toHaveValue()` method.
+
+![alt text](images/02-playwright-fundamentals/2026-10-27_17-55.png)
+
+```js
+const { test, expect } = require('@playwright/test');
+
+test('UI Dropdown', async ({ page }) => {
+    const url = "https://practice.expandtesting.com/dropdown";
+    const dropdownSimple = page.locator("#dropdown");
+
+    await page.goto(url);
+
+    // Select dropdown
+    await dropdownSimple.selectOption("2"); // put here the option value
+    // Assert if option value 2 is selected
+    await expect(dropdownSimple).toHaveValue("2");
+    // Just to see what's happening if you are in headed mode
+    await page.pause();
+});
+```
+
+### Selecting a Radio Button
+1. Get the **locator** of the radio button.
+2. Use the `click()` method to select.
+3. Assert it by using `toBeChecked()` method.
+
+![alt text](images/02-playwright-fundamentals/2026-10-27_18-09.png)
+
+```js
+const { test, expect } = require('@playwright/test');
+
+test('UI Radio Button - Select black color', async ({ page }) => {
+    const url = "https://practice.expandtesting.com/radio-buttons";
+    const radioButtonColor = page.locator("#black");
+
+    await page.goto(url);
+
+    // Select radio button black
+    await radioButtonColor.click();
+    // Assert if black is selected
+    await expect(radioButtonColor).toBeChecked();
+});
+```
+
+### Selecting / deselecting on Check Boxes
+In this example, checkbox 2 is already selected by default. We want to select checkbox 1, and deselect checkbox 2:
+1. Get the **locators** of both checkboxes.
+2. Use the `click()` method to put check on the first one.
+3. Use also the `click` method to uncheck the second one.
+4. To assert the first one if checked, use `toBeChecked()`.
+5. To assert the second one if unchecked, use `not.toBeChecked()` method.
+
+![alt text](images/02-playwright-fundamentals/2026-10-27_18-16.png)
+
+```js
+test('UI Check Boxes', async ({ page }) => {
+    const url = "https://practice.expandtesting.com/checkboxes";
+    const checkBox1 = page.locator("#checkbox1");
+    const checkBox2 = page.locator("#checkbox2");
+
+    await page.goto(url); // Checkbox 2 is checked by default
+
+    // Click the first checkbox to check it
+    await checkBox1.click();
+    // Click the second checkbox to uncheck it
+    await checkBox2.click();
+    // Assert if checkbox 1 is checked and checkbox 2 is not selected anymore
+    await expect(checkBox1).toBeChecked();
+    await expect(checkBox2).not.toBeChecked();
+});
+```
+
+### Redirect Link opens on the same page
+In this example, you will click the **redirect link text** that opens on the same page, and assert that this page has the text title "Status Codes".
+```js
+test('UI Redirect Link - Same page window', async ({ page }) => {
+    const url1 = "https://practice.expandtesting.com/redirector";
+    const url2 = "https://practice.expandtesting.com/status-codes";
+    const redirectLink = page.locator("#redirect");
+    const textTitle = page.locator("//h1[contains(text(),'Status Codes')]");
+
+    await page.goto(url1);
+
+    // Click the redirect link
+    await redirectLink.click();
+
+    // Assert we are now on url2 and the "Status Codes" title is present
+    await expect(page).toHaveURL(url2);
+    await expect(textTitle).toBeVisible();
+    await expect(textTitle).toHaveText("Status Codes");
+});
+```
+
+### Redirect Link opens on a new browser window
+In this example, you will click the **redirect link text** that opens on a new browser window, and assert that this page has the text title "Status Codes".
+* **Note:** Aside from the **page** fixture, we also need to add the **context** fixture.
+```js
+test('UI Redirect Link - New Tab', async ({ page, context }) => {
+    const url1 = "https://practice.expandtesting.com/redirector";
+    const url2 = "https://practice.expandtesting.com/status-codes";
+    const redirectLink = page.locator("#redirect");
+
+    await page.goto(url1);
+
+    // Wait for the new page to open while clicking the link
+    const newPagePromise = context.waitForEvent('page');
+
+    await page.locator("#redirect").click();
+
+    const newPage = await newPagePromise;
+
+    // Wait for the new page to load
+    await newPage.waitForLoadState();
+
+    // Verify the destination URL and title
+    await expect(newPage).toHaveURL(url2);
+
+    const textTitle = newPage.locator("//h1[contains(text(),'Status Codes')]");
+
+    await expect(textTitle).toBeVisible();
+    await expect(textTitle).toHaveText("Status Codes");
+});
 ```
 
 <br>

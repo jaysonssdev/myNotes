@@ -25,7 +25,7 @@ test('Login test - Correct Credentials', async ({ page }) => {
 
 });
 
-test.only('Login test - Wrong Credentials', async ({ page }) => {
+test('Login test - Wrong Credentials', async ({ page }) => {
 
     await page.goto("https://practice.expandtesting.com/login");
 
