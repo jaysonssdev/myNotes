@@ -9,7 +9,6 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 * [VS Code Notes](#-vscode-notes)
 * [Python Notes](#-python-notes)
 * [Web Fundamentals Notes](#-web-fundamentals-notes)
-* [Playwright Notes](#-playwright-notes)
 * [Docker Notes](#-docker-notes)
 * [Data Engineering Notes](#-data-engr-notes)
 * [SQL Notes](#-sql-notes)
@@ -34,20 +33,9 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 ## 🌐 Web Fundamentals Notes
 * [http.md](./web-fundamentals-notes/http.md)
 * [html-css.md](./web-fundamentals-notes/html-css.md)
+* [basic-javascript.md](./web-fundamentals-notes/basic-javascript.md)
 * [chrome-devtools.md](./web-fundamentals-notes/chrome-devtools.md)
 * [auth.md](./web-fundamentals-notes/auth.md)
-
-## 🎭 Playwright Notes
-
-### JavaScript/TypeScript Automation Testing
-* [01-basic-js-for-automation.md](./playwright-notes/javascript-typescript-automation-testing/01-basic-js-for-automation.md)
-* [02-playwright-fundamentals.md](./playwright-notes/javascript-typescript-automation-testing/02-playwright-fundamentals.md)
-
-### Playwright with Python and Pytest
-* [01-setup-env-and-writing-tests.md](./playwright-notes/playwright-with-python-and-pytest/01-setup-env-and-writing-tests.md)
-* [02-built-in-locators.md](./playwright-notes/playwright-with-python-and-pytest/02-built-in-locators.md)
-* [03-css-locators.md](./playwright-notes/playwright-with-python-and-pytest/03-css-locators.md)
-* [04-xpath-locators.md](./playwright-notes/playwright-with-python-and-pytest/04-xpath-locators.md)
 
 ## 🐳 Docker Notes
 * [docker-hands-on-devops.md](./docker-notes/docker-hands-on-devops.md)

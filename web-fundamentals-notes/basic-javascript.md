@@ -1,4 +1,4 @@
-# 01 - Basic JavaScript for Automation Testing
+# Basic JavaScript
 
 ---
 
@@ -50,7 +50,7 @@ lines
     - `let`: you won't be able to repeat a variable name again if declared using **let**. Don't put "let" to re-assign the same variable name.
     - `const`: strictly NO re-assigning of the same variable name.
 
-![alt text](images/01-basic-js-for-automation/2026-10-21_12-49.png)
+![alt text](./images/basic-javascript/2026-10-21_12-49.png)
 
 #### Important Notes:
 * **Use `const` by default**: It prevents accidental reassignment and makes your code easier to reason about. Note that while you cannot reassign a `const` object or array, you can still modify its internal properties or elements.
@@ -61,7 +61,7 @@ lines
 
 #### Naming Style Guide
 
-![alt text](images/01-basic-js-for-automation/2026-10-21_13-25.png)
+![alt text](./images/basic-javascript/2026-10-21_13-25.png)
 
 #### Naming Rules
 1. **No Reserved Words**: You cannot name a variable after keywords like `const, let, if, class, function`
@@ -108,7 +108,7 @@ let d = null
 
 ## Understanding the Datatypes
 
-![alt text](images/01-basic-js-for-automation/2026-10-21_12-46.png)
+![alt text](./images/basic-javascript/2026-10-21_12-46.png)
 
 <br>
 
@@ -256,7 +256,7 @@ for (const number of numbers) {
 
 ### Logical Operators
 
-![alt text](images/01-basic-js-for-automation/2026-10-22_13-29.png)
+![alt text](./images/basic-javascript/2026-10-22_13-29.png)
 
 #### More Examples:
 
@@ -276,7 +276,7 @@ console.log(null ?? "Default"); // "Default"
 
 ### Logical Assignment Operators
 
-![alt text](images/01-basic-js-for-automation/2026-10-22_13-30.png)
+![alt text](./images/basic-javascript/2026-10-22_13-30.png)
 
 <br>
 
@@ -298,22 +298,22 @@ console.log(fruits[2]); // Mango
 
 ### 1. Common Array Methods
 
-![alt text](images/01-basic-js-for-automation/2026-10-22_13-59.png)
+![alt text](./images/basic-javascript/2026-10-22_13-59.png)
 
 **Note:** These examples assume each method starts with a fresh `nums = [1, 2, 3]`. Some methods modify the original array, while others do not.
 
 ### 2. Methods for working with array items
 
-![alt text](images/01-basic-js-for-automation/2026-10-22_14-01.png)
+![alt text](./images/basic-javascript/2026-10-22_14-01.png)
 
 ### 3. Other useful array features
 
-![alt text](images/01-basic-js-for-automation/2026-10-22_14-05.png)
+![alt text](./images/basic-javascript/2026-10-22_14-05.png)
 
 ### 4. The most important difference to remember
 Some methods **modify the original array**, while others return a new value.
 
-![alt text](images/01-basic-js-for-automation/2026-10-22_14-06.png)
+![alt text](./images/basic-javascript/2026-10-22_14-06.png)
 
 <br>
 
@@ -383,7 +383,7 @@ const add = (a, b) => a + b;
 
 #### Quick comparison
 
-![alt text](images/01-basic-js-for-automation/2026-10-23_14-51.png)
+![alt text](./images/basic-javascript/2026-10-23_14-51.png)
 
 <br>
 
@@ -587,7 +587,7 @@ console.log(increment()); // 2
 
 ### 9. Common mistakes to avoid
 
-![alt text](images/01-basic-js-for-automation/2026-10-23_15-31.png)
+![alt text](./images/basic-javascript/2026-10-23_15-31.png)
 
 <br>
 
@@ -705,7 +705,7 @@ console.log(diff) // 4
 
 ### 3. Other useful string methods
 
-![alt text](images/01-basic-js-for-automation/2026-10-24_12-30.png)
+![alt text](./images/basic-javascript/2026-10-24_12-30.png)
 
 <br>
 
@@ -977,7 +977,7 @@ For ordinary objects, prefer `Object.keys()`, `Object.values()`, or `Object.entr
 
 ### 8. Object vs. Array
 
-![alt text](images/01-basic-js-for-automation/2026-10-24_14-34.png)
+![alt text](./images/basic-javascript/2026-10-24_14-34.png)
 
 An array is also a type of object in JavaScript, but it is designed specifically for ordered collections.
 
@@ -1161,7 +1161,7 @@ const person1 = new Person('Alex');
 
 ##### Quick Comparison
 
-![alt text](images/01-basic-js-for-automation/2026-10-24_21-14.png)
+![alt text](./images/basic-javascript/2026-10-24_21-14.png)
 
 ##### One important thing
 To use ES Modules in a browser, include your main JavaScript file in HTML with `type="module"`:
@@ -1173,7 +1173,7 @@ To use ES Modules in a browser, include your main JavaScript file in HTML with `
 
 ### 3. Quick summary
 
-![alt text](images/01-basic-js-for-automation/2026-10-24_15-33.png)
+![alt text](./images/basic-javascript/2026-10-24_15-33.png)
 
 <br>
 
