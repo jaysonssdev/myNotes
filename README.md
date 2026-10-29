@@ -5,6 +5,7 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 ---
 
 ## 🗺️ Table of Contents
+* [IT Foundation Review Notes](#️-it-foundation-review-notes)
 * [Git Notes](#-git-notes)
 * [VS Code Notes](#-vscode-notes)
 * [Python Notes](#-python-notes)
@@ -18,6 +19,9 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 * [Web Design Notes](#-web-design-notes)
 
 ---
+
+## 🖥️ IT Foundation Review Notes
+* [practical-helpdesk.md](./it-foundation-review-notes/practical-helpdesk.md)
 
 ## 🛠️ Git Notes
 * [essentials.md](./git-notes/essentials.md)
