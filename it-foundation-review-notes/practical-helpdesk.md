@@ -5,6 +5,7 @@
 * [Intro to Computing](#intro-to-computing)
 * [Computer Components and Repair](#computer-components-and-repair)
 * [Operating Systems](#operating-systems)
+* [Virtualization](#virtualization)
 ---
 
 <br>
@@ -138,6 +139,29 @@
 
 ### File Types / Extensions
 - is a short suffix (usually 2 to 4 letters) at the end of a computer file name—separated by a period—that identifies the file's format and tells the operating system which program to use to open it.
+
+<br>
+
+---
+
+<br>
+
+## Virtualization
+We will virtualize an entire computer, which are often referred to as **virtual machines (VM)**.
+
+### Hypervisor
+Its responsibility is to partition up and allocate out the resources to the virtual machines.
+
+- **Type 1**: is directly installed on the bare metal. It is more efficient than Type 2 because we're **not wasting any resources to run a base OS**.
+
+    ![alt text](images/practical-helpdesk/2026-10-31_22-49.png)
+
+- **Type 2**: is for personal use only. It is installed on top of a base OS.
+
+    ![alt text](images/practical-helpdesk/2026-10-31_22-41.png)
+
+### Containers
+The main difference between a container and a virtual machine is that **a virtual machine is intended to virtualize an entire computer**, where a **container is intended to virtualize just a single application**. And inside of that container, we only contain the things that are needed to actually run that application.
 
 <br>
 
