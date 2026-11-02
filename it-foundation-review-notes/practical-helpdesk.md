@@ -6,6 +6,7 @@
 * [Computer Components and Repair](#computer-components-and-repair)
 * [Operating Systems](#operating-systems)
 * [Virtualization](#virtualization)
+* [Windows](#windows)
 ---
 
 <br>
@@ -162,6 +163,130 @@ Its responsibility is to partition up and allocate out the resources to the virt
 
 ### Containers
 The main difference between a container and a virtual machine is that **a virtual machine is intended to virtualize an entire computer**, where a **container is intended to virtualize just a single application**. And inside of that container, we only contain the things that are needed to actually run that application.
+
+<br>
+
+---
+
+<br>
+
+## Windows
+
+### Local and Domain Accounts
+
+#### Local Accounts
+* exists and is managed on a single, specific machine.
+
+#### Domain Accounts
+* is stored centrally on a network server (such as Active Directory) and works across multiple computers joined to that domain.
+
+![alt text](images/practical-helpdesk/2026-11-01_14-28.png)
+
+<br>
+
+### Administering Local User Accounts
+
+* Go to **Settings -> Accounts** 
+* or **Control Panel -> User Accounts -> User Accounts**
+* or **run -> lusrmgr.msc**
+
+#### Users
+
+![alt text](images/practical-helpdesk/2026-11-01_15-02.png)
+
+- **Administrator:** by default, this account actually gets disabled after Windows installs itself
+- **andrew:** Windows actually sets the user account that we create first as an administrative account (in this example it was andrew)
+- **Properties**: Double-clicking these users shows their **Properties**
+    - General tab: You can do some password related options here.
+    - MemberOf tab: You can see and add the group/s where this user belongs to.
+- **New User**: you can right-click here and choose a **New User**
+
+#### Groups
+
+![alt text](images/practical-helpdesk/2026-11-01_15-34.png)
+
+* There are groups here that have certain sets of permissions for specific tasks, and then just add our users to those groups.
+
+<br>
+
+### Local File Permissions
+
+#### Folder Permission
+
+* Note: In Windows by default when we create folders they're going to inherit the properties of their parent (ex. C: drive) and same with if we add any files to those folders. To disable this, click the **Advanced** button to **Disable Inheritance** -> **Remove all inherited permissions from this object.** -> **Apply**
+
+1. Right-click the folder -> Properties.
+2. Go to Security tab.
+3. To change the permissions on a group, click **Edit**.
+
+![alt text](images/practical-helpdesk/2026-11-01_19-52.png)
+
+4. Or add or remove users/groups for this folder.
+
+<br>
+
+### Windows Logs and Event Viewer
+* Start Menu -> then type `Event Viewer`
+* **Critical** and **Error** are going to be probably the most important ones that we will want to take a look at.
+    - Click the `+` then double-click the event to see more details about it.
+
+    ![alt text](images/practical-helpdesk/2026-11-02_13-48.png)
+
+* **Windows Logs**
+    - You can filter these logs if you're looking for something in particular.
+
+    ![alt text](images/practical-helpdesk/2026-11-02_14-24.png)
+
+<br>
+
+### Device Manager
+* Start Menu -> then type `Device Manager`
+* Example task: Add a printer that is accessible from the network:
+    - In Device Manager -> Action tab -> **Devices and Printers**
+    - Click the **Add a printer** (located beside the 'Add a device')
+    - Double-click the detected printer that you want to add. 
+
+<br>
+
+### Windows Services
+* We access it thru Task Manager -> Services tab -> `Open Services`
+* or Start Menu -> then type `Services`
+* **Windows Services** is a program that runs in the background and it operates without any user interaction or having a user interface.
+* Sometimes developers will want certain processes or applications to just automatically run that don't need user interaction to take care of their task.
+* Can set a task to run automatically, or manually, or start or stop it, etc.
+
+<br>
+
+### Windows Registry
+* Start Menu -> Registry Editor
+* The **registry** is actually just **a database that stores configuration settings for the operating system and applications that are installed**.
+* A lot of settings in Windows and applications actually have user interfaces that allow us to easily make changes to the configuration of the application.
+* It is organized by **KEYS** (that has subkeys) and **VALUES**.
+
+<br>
+
+### Windows Cmd Prompt
+* Start Menu -> `cmd`
+* **Batch scripting**: is the scripting language that Windows cmd uses.
+* Some common commands:
+    - `dir`: lists the content of the current directory
+    - `cls`: clear screen
+    - `cd`: change directory
+    - `ipconfig`: shows your network configuration
+    - `/?`: shows the help menu of a command. Example: `ipconfig /?`
+    - `/` or `-`: adds options to a command. Eaxmple: `ipconfig /all`, `ping -n 12 8.8.8.8`
+    - `ctrl + C`: halts an operation or a command
+* If you open cmd as a standard user only you won't be able to access some files/directories due to permissions, even if your current user has admin priviledges. **Run as administrator** so that you'll have admin priviledges in cmd.
+
+<br>
+
+### Windows Task Scheduler
+* Start Menu -> `Task Scheduler`
+
+![alt text](images/practical-helpdesk/2026-11-02_19-20.png)
+
+* On the right side panel you can see the **Actions** that you can do, like **Create Task...**
+* You can add new tasks to automate like Disk Clean Up, etc.
 
 <br>
 
