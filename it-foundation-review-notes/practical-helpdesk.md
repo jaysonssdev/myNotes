@@ -7,6 +7,7 @@
 * [Operating Systems](#operating-systems)
 * [Virtualization](#virtualization)
 * [Windows](#windows)
+* [Linux](#linux)
 ---
 
 <br>
@@ -287,6 +288,162 @@ The main difference between a container and a virtual machine is that **a virtua
 
 * On the right side panel you can see the **Actions** that you can do, like **Create Task...**
 * You can add new tasks to automate like Disk Clean Up, etc.
+
+<br>
+
+---
+
+<br>
+
+## Linux
+
+### GNU/Linux and Distros
+* **Kernel** is responsible for **interfacing between the hardware and the applications** and software that actually run on top of it.
+
+* **Full operating system** need the things like the applications, the software, the file system, and some sort of desktop user interface **that runs on top of the kernel**.
+
+* **Linux** is only the kernel of the operating system. The **GNU** accounts for the other parts of the OS, like the applications and file system that **run on top of the kernel** to make it a complete OS.
+
+* **Distros** are different variations of Linux. A Linux distro is generally made up of:
+    - **Linux kernel**
+    - **Packages** which are the software or application that run on top of it
+    - **Package Manager** which is used to install, update, or otherwise manage the packages
+    - **Desktop UI** so that users can interact with it.
+        - Gnome
+
+
+<br>
+
+### Linux Filesystem Hierarchy
+
+![alt text](images/practical-helpdesk/2026-11-03_11-56.png)
+
+* **bin**: short for *binaries*, this folder contains the majority of the binaries or as they're sometimes referred
+to **executables commands**.
+
+* **sbin**: short for *system binaries*, these are binaries that are only expected **to be used by the root or super user**.
+
+* **lib**; short for *libraries*, this contains all of the libraries that those binaries are going to make use of (these are the dependencies or external code that those binaries require)
+
+* **usr**: these are user files or executables that are not required for the operation of the operating system itself but are to be used by the end user.
+
+* **etc**: short for *editable text configuration*, this conatin files to configure the various binaries and even things in the operating system.
+
+* **home**: this has the users' home directories, which contains the user's config files, etc.
+
+* **dev**: this contain files that represent devices.
+
+* **boot**: this contain all the required files of linux to boot up.
+
+* **opt**: this is designed to be a folder where we could install optional softwares
+
+* **tmp**: this is where both the OS or user can write temporary files, which does not persist after a reboot.
+
+* **var**: short for *variables*,this folder is going to store variables that the operating system needs while it's in use.
+
+* **proc**: short for *process*, what it is for is actually for the OS to keep track of all of the processes that are running so that's why you'll see a bunch of numbers.
+
+<br>
+
+### Linux File Permissions
+
+![alt text](images/practical-helpdesk/2026-10-20_12-36.png)
+
+![alt text](images/practical-helpdesk/2026-10-20_14-13.png)
+
+![alt text](images/practical-helpdesk/2026-11-03_14-20.png)
+
+### Common Commands
+
+#### `adduser`
+- to add a new user
+- Example: `sudo adduser jayson`
+
+#### `addgroup`
+- to create a new group
+- Example: `sudo addgroup confidential`
+
+#### `usermod`
+- to add a user to a group
+- Example: `sudo usermod -a -G confidential jayson`
+
+#### `passwd`
+- to change or expire the password
+- Example: `sudo passwd --expire jayson` to make jayson's password expire and will require him to give a new one
+
+#### `chmod`
+* to change file permission 
+* Example: `sudo chmod 700 test.txt` means that the **owner** will have all the permissions on the file (read, write, execute) (4 + 2 + 1), while the **group** and **world** has none (0 + 0 + 0), resulting to `-rwx------`
+
+#### `chown`
+* to change the owner of the file
+* Example: `sudo chown root test.txt`
+
+#### `chgrp`
+* to change the group of the file
+* Example: `sudo chgrp root test.txt`
+
+#### Note: Directories are generally executable
+
+![alt text](images/practical-helpdesk/2026-11-03_14-38.png)
+
+<br>
+
+### Scheduling Tasks with Cronjobs
+* `crontab -l`: to list all the cronjobs of the current user 
+* `crontab -e`: to edit the cron config file of the current user
+
+![alt text](images/practical-helpdesk/2026-11-03_19-13.png)
+
+#### Cron Syntax
+
+![alt text](images/practical-helpdesk/2026-11-03_19-24.png)
+
+#### Cron Characters
+
+![alt text](images/practical-helpdesk/2026-11-03_19-25.png)
+
+#### Cron examples:
+
+![alt text](images/practical-helpdesk/2026-11-03_19-26_1.png)
+
+![alt text](images/practical-helpdesk/2026-11-03_19-26.png)
+
+![alt text](images/practical-helpdesk/2026-11-03_19-27_1.png)
+
+![alt text](images/practical-helpdesk/2026-11-03_19-27_2.png)
+
+![alt text](images/practical-helpdesk/2026-11-03_19-27.png)
+
+![alt text](images/practical-helpdesk/2026-11-03_19-28_1.png)
+
+![alt text](images/practical-helpdesk/2026-11-03_19-28.png)
+
+#### Run a cronjob as root for another user
+* while logged in on your target user, run: `sudo crontab -u root -e`
+
+![alt text](images/practical-helpdesk/2026-11-03_19-36.png)
+
+<br>
+
+### Upgrading and Installing Packages (also known as softwares)
+
+* `sudo apt update`
+    - **apt** is the package manager for debian and debian-based distros 
+    - **dnf** is the standard package manager for Fedora, Red Hat Enterprise Linux (RHEL), Rocky Linux, and AlmaLinux
+    - does not install or upgrade any software. It only refreshes your computer's local list of available packages and versions from the internet.
+
+* `sudo apt upgrade`
+    - installs the newer versions of the software you already have installed, based on that refreshed catalog. If an update requires removing something else, it skips it.
+
+* `sudo apt full-upgrade`
+    - performs a complete system upgrade. Like a standard upgrade, it installs new versions, but **it is smart enough to handle complex changes**.
+
+* `sudo apt install <software name>`
+    - used to install a new software that should be available from that package.
+
+* `sudo apt remove <software name>`
+    - used to uninstall a software.
 
 <br>
 
