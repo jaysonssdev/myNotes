@@ -8,6 +8,8 @@
 * [Virtualization](#virtualization)
 * [Windows](#windows)
 * [Linux](#linux)
+* [Networking](#networking)
+
 ---
 
 <br>
@@ -444,6 +446,238 @@ to **executables commands**.
 
 * `sudo apt remove <software name>`
     - used to uninstall a software.
+
+<br>
+
+---
+
+<br>
+
+## Networking
+
+### Intro to Networking
+
+![alt text](images/practical-helpdesk/2026-11-04_13-29.png)
+
+* `ipconfig`: a Windows command to view all IP addresses and interfaces.
+* `ip a` or `ifconfig`: a Linux command to view all IP addresses and interfaces.
+
+#### Private IP Addresses
+* 10.0.0.0 - 10.255.255.255 - usually used on commercial local networks
+* 172.16.0.0 - 172.31.255.255
+* 192.168.0.0 - 192.168.255.255 - usually used on home networks
+
+#### DNS Look Up
+* `nslookup`: a linux/windows command to see the public ip address/es of a domain name. Example: `nslookup www.google.com`
+
+<br>
+
+### The OSI Model 
+* OSI stands for **Open Systems Interconnection**
+* Not a protocol itself, more of a guide
+* Useful for communication between IT professionals and
+troubleshooting (shared understanding of complex system)
+
+![alt text](images/practical-helpdesk/2026-11-04_14-49.png)
+
+#### Layer 1: Physical
+* Refers to the **actual signals** being used to transmit the data
+* Voltage (bits on the wire), Light, Radio Frequency (RF)
+* Layer 1 issues include **unplugged/damaged cable** or connectors or **weak wireless signal**
+
+
+![alt text](images/practical-helpdesk/2026-11-04_15-02.png)
+
+#### Layer 2: Data Link
+* Transmit data directly **between two devices**
+* Sometimes referred to as the **switching layer**
+* Data Unit: **Frame**
+* This layer is responsible for getting frames (the data) between two devices
+* **Performs collision detection and prevention**
+* Uses **MAC addresses** to communicate
+* Networking Eguipment: **NIC** and **Switch**
+
+#### Layer 3: Network
+* Responsible for **getting data throughout a network(s)** from one destination to another
+* Networking layer addresses **segments of data with IP addresses to create a packet**
+* Responsible for **actual routing of data** through the network
+* Determining **best path** (routing) for data.
+* Data Unit: **packet**
+* Uses **IP addresses**.
+* Networking eguipment: **Router** and **NIC**
+
+#### Layer 4: Transport
+* Responsible for **breaking data streams down into segments** that can be transmitted
+* Handles **flow control** so data is not sent too fast (or too slow)
+* Performs **error checking via a checksum to receiver** can verify segment integrity
+* Data unit: **Segment**
+* Uses **UDP** or **TCP**
+    - UDP (User Datagram Protocol): 
+        - Connectionless protocol that **doesn't use acknowledgements**
+        - Sends traffic out and doesn't care if receiver gets it (**faster**)
+        - **Good for time-sensitive applications like gaming or streaming**
+    - TCP (Transmission Control Protocol):
+        - Connection based protocol that **checks data if received**
+        - Uses a **3-way handshake** to acknowledge data is received correctly
+        - Is **slower** than UDP but **better suited when integrity is important**, like **downloading a file**
+
+#### Layer 5: Session
+* Responsible for **creating and managing separate communication channels between devices aka sessions**
+* When communicating with a server **multiple sessions may be opened** to receive files in parallel
+* Can be used to **resume interrupted communication**
+* Handled by the **web browser**
+
+#### Layer 6: Presentation
+* Responsible for **translating data between human readable formats and computer readable**
+* Performs **compression**
+* Responsible for **encryption of data**
+* Also handled by **web browser** 
+
+#### Layer 7: Application
+* Comprised of the protocols that we interact with or the **“applications” we use interact with HTTP, POP3, SSH, Telnet**
+* If you're interacting with it or see it on your screen it's most likely layer 7
+* Also handled by the **web browser**
+
+<br>
+
+### Network Addresses and Subnet Masks
+* We can have addresses in the range of anything **from 0.0.0.0** all the way up **to 255.255.255.255**  -- there are sets of IP addresses inside of this range that are reserved for specific things:
+    - **Network Address**: the first IP address. Example: **192.168.50.0**
+    - **Default Gateway**: the IP address of the Router. Example: **192.168.50.1**
+    - **Broadcast Address**: the last IP address. Example: **192.168.50.255**
+    - **Subnet Mask**: tells us which portion of the IP address is actually for the network address and then which portion of that IP address are free to be used for the host address.
+    
+    ![alt text](images/practical-helpdesk/2026-11-04_19-11.png)
+
+    ![alt text](images/practical-helpdesk/2026-11-04_19-39.png)
+
+<br>
+
+### CIDR Notation
+* CIDR = **Classless Interdomain Routing**
+* CIDR Notation = Shorthand to write out IP and Subnet Mask
+* Examples:
+
+![alt text](images/practical-helpdesk/2026-11-04_19-55.png)
+
+![alt text](images/practical-helpdesk/2026-11-04_19-59.png)
+
+**Note:** A valid Subnet Mask should have 0s all the way to the end (contiguous)
+
+![alt text](images/practical-helpdesk/2026-11-04_20-03.png)
+
+<br>
+
+### Hubs, Switches and ARP
+
+#### Hubs
+* Hubs are obsolete because when a hub receives a data packet on one port, it blindly broadcasts that data out to every other port and connected device.
+
+![alt text](images/practical-helpdesk/2026-11-04_20-50.png)
+
+#### Crossover Cable
+* For connecting just 2 devices.
+
+![alt text](images/practical-helpdesk/2026-11-04_20-39.png)
+
+#### Switch
+
+![alt text](images/practical-helpdesk/2026-11-04_20-58.png)
+
+* **Unamanaged Swicth**: All ports are identical.
+
+![alt text](images/practical-helpdesk/2026-11-04_20-07.png)
+
+* **Managed Switch**: Allows us to perform some **configuration like VLAN**. You'll also be able to set things like **mirroring ports**.
+
+![alt text](images/practical-helpdesk/2026-11-04_20-10.png)
+
+
+
+#### ARP
+* ARP (Address Resolution Protocol) is the digital translator that **connects an IP address to a MAC address** (physical device)
+* `arp -a`: is a linux/windows command to see the **arp table**
+
+<br>
+
+### Routers
+* **Switches** are used to create networks and **routers** are used to connect networks together.
+
+![alt text](images/practical-helpdesk/2026-11-04_21-51.png)
+
+<br>
+
+### Ports
+*  A **port** is a **virtual slot** used by an operating system **to direct network traffic to specific applications or services**.
+* **Firewalls** use ports to block or allow data, securing your device from unwanted access.
+* Common Examples:
+
+![alt text](images/practical-helpdesk/2026-11-04_22-16.png)
+
+- **Note:** For web servers, they usually open port 443 to listen for incoming requests from the user.
+
+- **Note:** We can have ports for both TCP and UDP and those are separate ports apart from each other.
+
+![alt text](images/practical-helpdesk/2026-11-04_22-32.png)
+
+- **Notes:**
+    - `netstat -tulpna`: a linux command to see the open ports in your machine.
+    - `127.0.0.*` - local host (loop back addresses), which doesn't listen from extenal connections.
+    - `0.0.0.0` - means that we're listening on all IPv4 addresses
+    - `192.168.50.7:68` - this is an example of an ESTABLISHED coonection to the router (192.168.50.1:67) - and these ports **67 and 68 are associated with DHCP** - the basics of this protocol is that it is what allows us to get an IP address from the router.
+
+<br>
+
+### VPN (Virtual Private Networks)
+* Used to create an encrypted channel (usually) over the internet between a client and server
+* Multiple use cases
+* Connect to another LAN through the internet
+* Additional security for traffic over the internet
+* Increased anonymity on the internet
+
+#### Remote LAN Connection
+* Used to allow a remote computer to tunnel into a LAN through the VPN server
+* Frequently used to allow remote workers to access an office LAN and internal resources
+* VPN client device will receive a LAN IP of the remote network
+* For the most part the client can communicate as if it were physically on the LAN
+* Traffic still encrypted over the internet, even if LAN
+
+![alt text](images/practical-helpdesk/2026-11-04_23-01.png)
+
+<br>
+
+### OpenVPN Client (Plus how to connect to TCM Exam Platform)
+
+#### Windows Setup
+1. Go to https //openvpn.net/client/
+2. Click **Download OpenVPN Connect for Windows**
+3. Install.
+4. Download the `.ovpn` file from https //exams.tcmsecurity.com
+
+![alt text](images/practical-helpdesk/2026-11-04_23-22.png)
+
+5. Upload file on OpenVPN app.
+
+#### Linux CLI
+1. Download the `.ovpn` file from https //exams.tcmsecurity.com
+2. Go to the folder where you downloaded the file.
+3. `sudo openvpn --config <ovpn file>`
+
+<br>
+
+### Network Troubleshooting Commands (Windows)
+
+* Start Menu -> Command Prompt (Run as Administrator)
+
+* `ping <ip address or url>`: to check if you have a connection to the specified ip address. Good for checking **layer 3** network connections. Example: `ping 192.168.50.1`, or `ping www.google.com`
+    - Note: One thing to keep in mind is that some devices actually will be configured to not respond to ping messages by default for security issues.
+
+* `ipconfig`: to see both our IP address, the subnet mask and the default gateway.
+    - `ipconfig /all`: to see more details like the mac address, etc.
+    - `ipconfig /release`: sometimes releasing your current ip address and getting a new one can fix some networking issues on our network. Then run `ipconfig /renew` to have a new ip address.
+    - `ipconfig /displaydns`: to get a bunch of details back for the various DNS records we have.
+    - `ipconfig /flushdns`: to flush the DNS Resolver Cache. Then run `ipconfig /registerdns` to get a fresh register of DNS.
+    - `ipconfig --help`: to see more ipconfig options
 
 <br>
 
