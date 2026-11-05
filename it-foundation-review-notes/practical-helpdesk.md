@@ -9,6 +9,7 @@
 * [Windows](#windows)
 * [Linux](#linux)
 * [Networking](#networking)
+* [Remote Support](#remote-support)
 
 ---
 
@@ -678,6 +679,108 @@ troubleshooting (shared understanding of complex system)
     - `ipconfig /displaydns`: to get a bunch of details back for the various DNS records we have.
     - `ipconfig /flushdns`: to flush the DNS Resolver Cache. Then run `ipconfig /registerdns` to get a fresh register of DNS.
     - `ipconfig --help`: to see more ipconfig options
+
+* `tracert <ip address or url>`: the way it works is every time it gets öne hop, it then sends a message asking for it to do another hop until it reaches its final destination. Example: `tracert www.google.com`
+
+* `netstat`: useful for troubleshooting if we want to make
+sure that connections are actually being open for the applications that we want them to do.
+
+* `arp -a`: allows us to interact with and see the ARP table that's on our computer.
+    - `arp --help`: to see other arp options
+    - `arp -d <ip address>`: to delete a single ip in the arp table
+    - `arp -d *`: to delete all the ip in the arp list
+
+* Start Menu -> Control Panel -> Network and Internet -> Network and Sharing Center -> Change adapter settings: to see if your network is connected, check some settings, etc.
+
+<br>
+
+---
+
+<br>
+
+## Remote Support 
+
+### SSH (Secure Shell)
+
+#### SSH to a Configured Server
+
+* To create an SSH Server in Linux (example: in Ubuntu)
+    - `sudo apt install openssh-server`
+    - `sudo systemctl enable ssh`
+    - `sudo systemctl start ssh`
+    - `systemctl status ssh` - to check if it's active and to see what ip & port it is listening, in this example: **Server listening on 0.0.0.0 port 22**, hit `q` to exit.
+    - `sudo ufw allow ssh` then check its status, enable it if it's inactive:
+
+    ![alt text](images/practical-helpdesk/2026-11-05_13-11.png)
+
+    - `ip -a` to see your ip address. Example:
+
+    ![alt text](images/practical-helpdesk/2026-11-05_13-17.png)
+
+    (Note: Make sure that Network Settings in your VM is set to **Bridged Adpapter**)
+
+* Go to Windows 11 (ssh is pre-installed in Windows 11):
+    - Start Menu -> Command Prompt (Run as Admin)
+    - `ssh <username@ipaddress>`. Example: `ssh andrew@192.168.50.7`
+    - Enter andrew's password
+
+
+#### SSH using Key Pairs
+* Go to Windows Command Prompt
+    - `ssh-keygen`
+    - just hit `Enter` if you accept the default file location
+    - Enter passphrase for added security, or hit `Enter` if you don't want to add a passphrase
+    - cd to the key location to check:
+
+    ![alt text](images/practical-helpdesk/2026-11-05_13-38.png)
+
+    - **Important Note:** `id_rsa` is the **private** key, and should NOT be handed over to anyone. The `id_rsa.pub` is the public key that we will give to our Linux machine.
+    - Copy the Windows public key to andrew's ssh folder (~/.ssh) by using `nano authorized_keys` then paste it here.
+    
+    ![alt text](images/practical-helpdesk/2026-11-05_13-58.png)
+
+    - Now you can ssh to andrew without a password.
+
+<br>
+
+### Remote Desktop (RDP)
+
+* Go to Windows 11:
+    - Start Menu -> System
+    - Click **Remote Desktop** then toggle it ON. Take note of your PC-name.
+
+    ![alt text](images/practical-helpdesk/2026-11-05_14-08.png)
+
+    - Click the **Remote Desktop users** only if you want to set up what users actually have access to the Remote Desktop.
+    - In Windows Command Prompt, run `ipconfig` just to see your ip address. In this example, `192.168.50.190`.
+
+* Go to Linux VM (example: Ubuntu):
+    - `sudo apt install remmina`
+    - Go to your apps to launch **Remmina**, input the Windows 11 ip address:
+
+    ![alt text](images/practical-helpdesk/2026-11-05_14-20.png)
+
+    - Input andrew's username and password. Click Okay.
+
+* Connect from Windows to Windows
+    - On another Windows PC, hit **Windows + R** then run `mstsc`
+    - Input andrew's username and password. Click Okay.
+
+<br>
+
+### VNC (Virtual Network Computing)
+
+* Go to Windows 11 to setup VNC server:
+    - Download a third-party software **TightVNC** at https://www.tightvnc.com/download.php then Install it.
+    - For security, set up the password:
+
+    ![alt text](images/practical-helpdesk/2026-11-05_14-39.png)
+
+    - VNC server will run automatically on the background.
+
+* Go to your Linux VM (example: Ubuntu):
+    - Go to your apps to launch **Remmina**, change the protocol to **VNC** then input the Windows 11 ip address.
+    - Input the password that you setup earlier.
 
 <br>
 
