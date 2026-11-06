@@ -10,6 +10,7 @@
 * [Linux](#linux)
 * [Networking](#networking)
 * [Remote Support](#remote-support)
+* [Ticketing](#ticketing)
 
 ---
 
@@ -781,6 +782,68 @@ sure that connections are actually being open for the applications that we want 
 * Go to your Linux VM (example: Ubuntu):
     - Go to your apps to launch **Remmina**, change the protocol to **VNC** then input the Windows 11 ip address.
     - Input the password that you setup earlier.
+
+<br>
+
+---
+
+<br>
+
+## Ticketing
+
+### Installing Docker and Peppermint
+* Go to your Linux VM and install docker. You can follow this: https://docs.docker.com/engine/install/ubuntu
+* To test if your installation was successful, run `sudo docker run hello-world` 
+* Go to https://github.com/Peppermint-Lab/peppermint
+* Copy **Installation with docker**.
+* Go to your terminal and create a docker-compose file inside a new directory. Example:
+
+![alt text](images/practical-helpdesk/2026-11-05_15-45.png)
+
+* Paste here and adjust `API_URL: "http://localhost:5003"`
+* Run `sudo docker compose up`
+* Go to your web browser. `http://localhost:3000`
+* Sign in using email: `admin@admin.com`, password: `1234`
+* Click **To Dashboard**
+* When you're done using peppermint, run `sudo docker compose down`
+
+<br>
+
+### Configuring Peppermint
+* Go to your peppermint directory, in this example **~/peppermint**
+* Make sure first that it is down, `sudo docker compose down`
+* Run `sudo docker compose up`
+* Then sign in like before:
+    - on web browser: `http://localhost:3000`
+    - email address: `admin@admin.com`; password: `1234`; Click **To Dashboard**
+* Add **Users**:
+    - On the left side, click **Admin Settings** then click **Users**
+    - Add 3 random users.
+* **Clients** - clients means the people that are actually going to be putting in tickets to solicit support from IT dept
+    - On the left, click **Clients**
+    - Click the **New Client** button then add some random clients.
+* **Email queues** - we can set up a list of mailboxes that we're listening to
+* **Web Hook Settings** - these are to allow us to actually go out to various URLs and trigger things. Example: We could create web hooks to send us a slack message if we receive a new ticket.
+* **Outbound Email Settings** - if we have an email host that we can configure, that would allow us to automatically
+email out people.
+* **SSO (Single Sign On) settings** - So then we could actually have people sign on with their SSO from the organization.
+
+<br>
+
+### Creating, Commenting, Assigning and Closing Tickets
+* In peppermint, sign in as a normal user with no admin rights (the one that you created earlier)
+* On the left side, click **Create Ticket**.
+* Simulate creating a new ticket, you can assign it to another user (technician) that you created earlier, but for this example just assign it to yourself:
+
+![alt text](images/practical-helpdesk/2026-11-05_19-13.png)
+
+* Since we assigned it to ourselves, we can now see that we have a pending open ticket.
+
+![alt text](images/practical-helpdesk/2026-11-05_19-22.png)
+
+* Just pretend that we took care of this issue, comment what you did, then close the ticket. After clicking the **Close Ticket**, the button will change to **Reopen Issue** if we need to reopen this issue.
+
+![alt text](images/practical-helpdesk/2026-11-05_19-24.png)
 
 <br>
 
