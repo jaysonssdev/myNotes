@@ -11,6 +11,7 @@
 * [Networking](#networking)
 * [Remote Support](#remote-support)
 * [Ticketing](#ticketing)
+* [Security](#security)
 
 ---
 
@@ -844,6 +845,92 @@ email out people.
 * Just pretend that we took care of this issue, comment what you did, then close the ticket. After clicking the **Close Ticket**, the button will change to **Reopen Issue** if we need to reopen this issue.
 
 ![alt text](images/practical-helpdesk/2026-11-05_19-24.png)
+
+<br>
+
+---
+
+<br>
+
+## Security
+
+### The CIA Triad
+* CIA stands for **Confidentiality Integrity Availability**
+
+#### Confidentiality
+- Keeps sensitive data private and hidden from unauthorized users. Measures include **data encryption, multi-factor authentication (MFA)**, and **strict access controls**.
+
+#### Integrity
+- Ensures data is accurate, trustworthy, and free from unauthorized tampering or corruption. Common tools include **digital signatures, cryptographic hashing**, and **checksums**.
+
+#### Availability
+- Guarantees that authorized users can reliably access systems and data whenever needed. This is supported by s**ystem backups, hardware redundancy**, and **disaster recovery plans**.
+
+<br>
+
+### Firewall, AV, EDR and SIEM
+
+#### Firewall 
+- A digital barrier that **monitors and filters incoming and outgoing network traffic based on established security rules**. Think of it as a security guard at the gate of your network, deciding who is allowed to enter and leave.
+
+#### AV (Antivirus)
+- Software **designed to detect, block, and remove known malicious code (malware) like viruses, worms, and trojans**. It relies primarily on a library of "signatures" (like digital fingerprints) to recognize traditional cyber threats.
+
+#### EDR (Endpoint Detection & Response)
+- An advanced security tool that **continuously monitors individual devices (endpoints like laptops, desktops, and servers)** for suspicious behavior. Unlike a standard AV, EDR **doesn't just look for known signatures; it tracks live activity** to spot novel, fileless, or active hacker behaviors and allows teams to isolate the device instantly.
+
+#### SIEM (Security Information & Event Management)
+- A **centralized platform that aggregates and analyzes log data from across an entire organization**. It acts as the **brain or "control room"** of security operations, gathering data from your Firewalls, EDRs, servers, and networks to cross-reference activities, spot complex attacks, and generate alerts.
+
+<br>
+
+### TAM, SSO and MFA
+
+These three concepts focus heavily on **Identity and Access Management (IAM)**—ensuring the right people have the right access while keeping attackers out. You'll sometimes hear the important aspects of IAM referred to as the 4 A's (**Administration, Authentication, Authorization, and Auditing**)
+
+#### TAM (Technical Account Manager)
+- In cybersecurity contexts, a TAM **is a dedicated cybersecurity advisor provided by a technology vendor to partner with an organization**. They help companies properly configure, update, and optimize their complex security tools to prevent vulnerabilities before they happen. (Note: In broader IT, **TAM can also stand for Technology Asset Management**—tracking hardware and software devices).
+
+#### SSO (Single Sign-On)
+- An authentication method that **allows a user to log in once with a single set of credentials and gain access to multiple independent applications**. For example, when you log into your corporate portal once and instantly access your email, HR portal, and chat apps without entering your password every single time. It improves user convenience while making it easier for IT teams to manage and revoke access from a central point.
+
+#### MFA (Multi-Factor Authentication)
+- A security protocol that **requires users to provide two or more verification factors to gain access to an account**. Instead of just relying on a password (which can be stolen), MFA forces you to also provide something you have (like a physical token or a push notification on your smartphone) or something you are (like a fingerprint or face scan). **MFA is usually used for SSO**.
+
+<br>
+
+### Social Engineering
+* It is the **act of manipulating someone to give up sensitive information or perform a task**.
+
+* It **can take many forms** including phishing emails, over the phone or text message or even in person
+
+#### Common Warning Signs 
+- The use of a pretext, where an attacker creates a **false story and/or identity** to gain trust of the victim
+
+- The attacker creates a **sense of urgency** that something needs to be done and possibly inserts **a consequence if the request isn't fulfilled quickly**
+
+- The attacker is **making a request for something**
+
+<br>
+
+### Phishing
+* Phishing is a type of social engineering.
+* The most common is email phishing, however other formats like text and voice calls are used.
+* Common goals of phishing include:
+    - gathering passwords through fake login portals
+    - getting users to click links to malicious websites
+    - getting users to download malicious attachments
+    - gathering confidential information
+    - askyou to perform as task (like buying gift cards)
+
+#### Other Types of Phishing
+* **Smishing**: sms phishing aka phishing via text messages
+* **Vishing**: voice phishing, a type of phishing usually performed over phone
+* **Spear phishing**: targeted phishing attempts which use more detailed pretexts specific to their target
+* **Whaling**: targeting high value accounts like C-Suite (CEO,
+CISO, CFO etc.)
+* **SEO Poisoning**: using sponsored or suggested posts to
+direct users to illegitimate support lines or websites
 
 <br>
 
