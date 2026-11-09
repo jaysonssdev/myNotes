@@ -12,6 +12,7 @@
 * [Remote Support](#remote-support)
 * [Ticketing](#ticketing)
 * [Security](#security)
+* [Active Directory Lab](#active-directory-lab)
 
 ---
 
@@ -931,6 +932,475 @@ These three concepts focus heavily on **Identity and Access Management (IAM)**â€
 CISO, CFO etc.)
 * **SEO Poisoning**: using sponsored or suggested posts to
 direct users to illegitimate support lines or websites
+
+<br>
+
+---
+
+<br>
+
+## Active Directory Lab
+
+### What is Active Directory (AD)
+* AD is Microsoft's (very popular) directory service.
+* AD contains details like:
+    - Name
+    - Email
+    - Username
+    - Password
+    - What resources you can access
+    - What computers you can login to
+    - What you can do on those computers
+
+#### Why Active Directory (AD)
+* Centralized IAM for users and resources in an organization
+* Ease of administration by having centralized source of truth
+* Enhanced security, allows for much more granular controls of who can do and access what
+* Single point for backup and recovery
+
+#### Physical Components of AD
+* **Domain Controller**
+    - Server (physical, virtual, cloud in Azure)
+    - Hosts AD Database
+    - Responds to authentication requests
+    - Process logins
+    - orces policies
+* **AD Database (NTDS.dit)**
+    - Stores the data for the directory
+    - Stores log files
+    - Structure of the DB is called the Shema
+
+#### Logical Components of AD
+- Logical components of AD are what provide structure to how the environment is laid out
+- They allow for organization and management of
+users and resources
+- In AD essentially everything inside of the database
+is considered an object
+- Some objects are also containers in that they can hold other objects, think of them like folders, this is what gives AD itâ€™s hierarchical structure
+
+![alt text](images/practical-helpdesk/2026-11-07_12-29.png)
+
+#### Domain
+- **One of the top level containers** is a domain
+- Holds a collection of objects (users, computers, groups and more)
+- Serves as an **administrative boundary for managing the objects** inside of it
+- **Can enforce security and policy settings** across all objects inside the domain
+- Domains are **referred to by their domain name in this example abc.com**
+- Frequently this will line up with an organizations registered
+domain
+
+#### Organizational Units
+- **A container object inside of domains**
+- Used to group together other objects
+- Lowest level container that can allow administrative privileges over it
+- Lowest level container that can have group policies applied to it
+- Frequently organizations will split up departments into OUs (Sales, HR, IT, Engineering etc)
+
+#### Non-Container Objects
+- Users
+- Computers
+- Groups (used for setting access)
+- Printers
+- Group Policy Objects
+
+#### Forests and Trees
+
+![alt text](images/practical-helpdesk/2026-11-07_13-44.png)
+
+#### Active Directory Example
+
+![alt text](images/practical-helpdesk/2026-11-07_13-47.png)
+
+<br>
+
+### Configuring Server as a Domain Controller
+* Start Menu -> **View your PC name** -> **Rename thic PC** button -> name it "DC01" (example only) -> Restart now
+
+* On the top right corner of the Server Manager Dashboard, click **Manage** -> Add Roles and Features
+    - click Next
+    - select **Role-based or feature-based installation**, click Next
+    - Select the server that you just created: "DC01", click Next
+    - put check on **Active Directory Domain Services** -> click **Add features** button, click Next
+    - click Next a few times (the default checks are okay for now)
+    - Put check on **Restart the destination server automatically if required** -> click Yes -> click **Install**
+    - After Feature installation click **Promote this server to a domain controller**
+
+    ![alt text](images/practical-helpdesk/2026-11-07_15-12.png)
+
+    - select **Add a new forest**, then Root domain name: "LAB.local" (example only) -> click Next
+    - Type the Directory Services Restore Mode password -> click Next -> Next again
+    - wait for the "LAB" name to show up then click Next -> click Next again to accept the deafults location
+    - if you get the green check that you passed the **Prereguisites Check**, click **Install**
+
+    ![alt text](images/practical-helpdesk/2026-11-07_15-23.png)
+
+    - After installation it will restart, you should see the "LAB\" on the log in screen.
+
+    ![alt text](images/practical-helpdesk/2026-11-07_15-25.png)
+
+* Click again **Manage** -> Add Roles and Features
+    - click Next
+    - select **Role-based or feature-based installation**, click Next
+    - if "DC01.LAB.local" is already selected, click Next
+    - put check on **Active Directory Certificate Services** -> click **Add features** button, click Next
+    - click Next -> Next again -> Next again
+    - Put check on **Restart the destination server automatically if required** -> click Yes -> click **Install**
+    - After Feature installation click **Configure Active Directory Certificate Services on the destination server**
+
+    ![alt text](images/practical-helpdesk/2026-11-07_15-38.png)
+
+    - click Next, then put check on **Certification Authority**, click Next
+    - leave the default selected **Enterprise CA**, click Next
+    - leave the default selected **Root CA**, click Next
+    - leave the default selected **Create a new private key**, click Next, click Next again a few times until you click **Configure** -> Close -> Close
+
+<br>
+
+### Creating Domain Users
+
+#### Organizing Folders
+* On the top right corner of the Server Manager Dashboard, click **Tools** -> **Active Directory Users and Computers**
+* Right-click **LAB.local** -> **New** -> **Organizational Unit**
+
+![alt text](images/practical-helpdesk/2026-11-09_12-32.png)
+
+* Name it whatever you want. In this example: **Groups**
+* Click **Users**, then select all the **Security Group** type (just leave the *User Type* - Administrator and Guest), then drag them inside the new folder that you just created, **Groups**. Just click Yes when a warning shows up.
+
+![alt text](images/practical-helpdesk/2026-11-09_12-38.png)
+
+#### Users Folder
+
+![alt text](images/practical-helpdesk/2026-11-09_13-10.png)
+
+* **Administrator**: 
+    - This is not just the administrator of this computer, but it's also the **domain administrator**.
+    - This is **a very powerful account** - it essentially **has control over the entire domain** or the keys to the whole castle.
+    - One of the best practices is that **we actually shouldn't be logging in as a domain administrator** account unless we absolutely need to to be making changes that reguire those privileges.
+    - **Member Of** tab - you'll see the different groups that they are part of.
+
+    ![alt text](images/practical-helpdesk/2026-11-09_13-22.png)
+
+* **Guest**:
+    - The *down arrow* in its icon means it's not in use.
+
+#### Creating Domain Users inside the Users Folder
+* Right-click inside the Users folder -> **New** -> **Users**
+* Name it whatever you want.
+
+![alt text](images/practical-helpdesk/2026-11-09_13-28.png)
+
+* Click Next to create Password, click Next, then Finish
+* Create 3 more new users, by right-clicking this newly created user (in this example: Richard), then select **Copy...**, then repeat the process above.
+
+![alt text](images/practical-helpdesk/2026-11-09_13-41.png)
+
+<br>
+
+### Attaching Windows 11 VM to Domain
+
+#### Create a new Network in VirtualBox
+* In VirtualBox, create a new Network for this lab: **File** -> **Tools** -> **Network Manager**
+* Click **Create** (make sure that you are in the NAT Networks tab)
+* Name it whatever you want (example: ADNetwork)
+* Leave the others options in default, then click Apply.
+
+#### Windows 11 and Server VM Settings
+* Click your Windows 11 VM, then go to its Network settings
+* Select the NAT network that you created earlier.
+* Click your Windows Server VM, then go to its Network settings
+* Select the same NAT network that you created earlier.
+* Start both the VMs.
+
+#### Windows Server Static IP Setup
+* Open Command Prompt, run `ipconfig` to see your network settings.
+* On the bottom right corner of your windows taskbar, click **Open Network and Internet settings**
+* Click **Change adapter options**
+* Right-click **LAB.local**, then click Properties
+* Double-click **Internet Protocol Version 4**
+
+![alt text](images/practical-helpdesk/2026-11-09_14-05.png)
+
+* Copy the IP address from your Command Prompt, and localhost for the DNS Server. Click OK, then OK.
+
+![alt text](images/practical-helpdesk/2026-11-09_14-09.png)
+
+#### Windows 11 Static IP Setup
+* Change first the pc name of this computer, to make it much easier to identify:
+    - Start Menu -> type **View your PC name**
+    - Click the **Rename this PC** button.
+    - Name it to an easier name (example: WS01) -> Restart now
+* Setup its static IP. Just make it sequential to make it easier to remember, and as for the DNS server, put the IP address of the Windows Server:
+
+![alt text](images/practical-helpdesk/2026-11-09_14-21.png)
+
+#### Attach Windows 11 VM to Domain
+* Start Menu -> **Access work or school**
+* Click **Connect** button.
+    - Click **Join this device to a local Active Directory domain**
+    - Domain name: LAB.local
+    - Click Next, enter the domain admin account info:
+
+    ![alt text](images/practical-helpdesk/2026-11-09_14-26.png)
+
+    ![alt text](images/practical-helpdesk/2026-11-09_14-27.png)
+
+    - Restart Now
+* Click **Other user**, try logging in with the user that you created earlier (example: rhendricks)
+
+#### Check if the Computer was added in the Windows Server
+* Go back to your Windows Server VM.
+* On the top right corner of the Server Manager Dashboard, click **Tools** -> **Active Directory Users and Computers**
+
+![alt text](images/practical-helpdesk/2026-11-09_14-35.png)
+
+<br>
+
+### Organizational Units (OU) and Groups
+
+#### Recap
+**OU** is a container in Active Directory used to organize and administer objects such as users, computers, groups and even other OUs. OUs are **the smallest administrative unit** in Active Directory.
+
+#### Difference Between OUs and Groups
+* Groups **are just another object in AD**
+* Groups **can be used to assign permissions and access**, for example to shared folders
+* Groups **cannot be used for administration like applying GPOs**
+* OUs can contains groups, **groups cannot contain OUs**
+* Objects such as users can be part of multiple
+
+#### Creating Organizational Units (OU)
+* Go to your Windows Server VM.
+* On the top right corner of the Server Manager Dashboard, click **Tools** -> **Active Directory Users and Computers**
+* Right-click the domain (example: LAB.local) -> **New** -> Organizational Unit
+* Name it whatever you want (example: Engineering)
+* Make another 2 (examples: Management, IT)
+* Click the **Users** folder to assign some users in this new Organizational Units:
+    - Nelson and Richard in Engineering
+    - Erlich and Jared in Management
+    - Administrator in IT
+    
+    ![alt text](images/practical-helpdesk/2026-11-09_15-04.png)
+* Note: We can create OUs inside OUs:
+    - Inside the IT OU, right-click -> **New** -> **Organizational Unit**, name it **Administrators**
+    - Put in the **Administrator** user inside this new sub-OU
+
+    ![alt text](images/practical-helpdesk/2026-11-09_15-13.png)
+
+#### Creating Groups
+* Right-click inside the Engineering OU -> **New** -> **Group**.
+
+![alt text](images/practical-helpdesk/2026-11-09_15-15.png)
+
+![alt text](images/practical-helpdesk/2026-11-09_15-15_1.png)
+
+* Double-click this new Group (example: EngineeringShare) to add the users Nelson, Richard, and Jared (note: Jared is in Management but in this example he also needs access to the EngineeringShare group).
+    - On **Members** tab click **Add...** to add the 3 users then click Apply.
+
+#### Setting Up Permissions for this Group
+* Let's create first a file that we can practice on:
+    - In your Windows Server, on the left side, click **File and Storage Services**
+        - On its left click **Shares**
+        - Click **TASKS** -> **New Share...**
+
+        ![alt text](images/practical-helpdesk/2026-11-09_15-35.png)
+
+        - Select Profile: SMB Sharp - Quick, click Next
+        - Share Location: DC01 (the default selected), click Next
+        - Share Name: EngineeringShare
+            - Remote path to share: `\\DC01\EngineeringShare`, click Next
+        - Other Settings: Allow caching of share (selected by default), click Next
+        - Permissions: Click **Customize permissions...**
+            - Click **Disable Inheritance** -> Convert inherited permissions into explicit permissions on this object
+            - Remove the 2 **Users**:
+
+            ![alt text](images/practical-helpdesk/2026-11-09_15-45.png)
+
+            - Then click the **Add** button
+                - Click **Select a principal**
+                    - Type **EngineeringShare**
+                    - click OK, then OK.
+
+                    ![alt text](images/practical-helpdesk/2026-11-09_15-47.png)
+            - Double-click this new permission entry - EngineeringShare to add write permissions.
+
+            ![alt text](images/practical-helpdesk/2026-11-09_19-02.png)
+
+            - Click OK, then OK, then click Next.
+        - Confirmation: Click **Create** then **Close**
+
+#### Accessing this new shared folder on your Windows 11 VM
+* In your Windows 11 Log In page, click **Other user**
+* In this example, log in as *Jared Dunn*
+* Go to File Explorer then put the shared remote path: `\\DC01\EngineeringShare`
+
+![alt text](images/practical-helpdesk/2026-11-09_19-09.png)
+
+* Notice that you can access it. Jared can read, write and any basic permissions that you allowed on it.
+* Note: You can map this *network share* so that you don't need to always type the `\\DC01\EngineeringShare`
+    - Right-click **This PC** -> **Map network drive...**
+
+    ![alt text](images/practical-helpdesk/2026-11-09_19-15.png)
+
+    - Select any Drive letter, then input the `\\DC01\EngineeringShare`
+
+    ![alt text](images/practical-helpdesk/2026-11-09_19-16.png)
+
+<br>
+
+### Group Policy Objects (GPO)
+- GPOs are a **collection of policy settings** that control how a system is going to behave for users, groups of users, or even a computer.
+- Inside of Active Directory we can link GPOs to domains or organizational units to be able to have those GPOs apply to all of the objects inside of either a domain or organizational unit.
+- Some examples of things we could set with the GPO:
+    - limiting access to the command prompt or PowerShell, 
+    - limiting access to control panel or some features in the control panel
+    - setting whether or not you can even plug in removable media like a USB,
+    - changing the wallpaper
+    - setting password policies like expiration or length,
+    - setting the screen lockout time
+
+#### Example: Setting up a Wallpaper using GPO
+* Go to your Windows Server VM.
+* Save the wallpaper image on a shared folder that all of the users will be affected by this GPO (at least read access):
+    - On the left of the Server Manager Dashboard, click **File and Storage Services**
+    - On its left click **Shares**, right-click **NETLOGON** -> **Open Share**
+
+    ![alt text](images/practical-helpdesk/2026-11-09_19-41.png)
+
+    - Put here the wallpaper image.
+    - Shift + right-click the image file -> **Copy as path**
+
+    ![alt text](images/practical-helpdesk/2026-11-09_19-43.png)
+
+* On the top right corner, click **Tools** -> **Group Policy Management**
+* To create a GPO in an OU (example: Engineering), right-click the OU -> **Create a GPO in this domain, and Link it here.**
+
+![alt text](images/practical-helpdesk/2026-11-09_19-50.png)
+
+* Name this GPO whatever you want, example: SetEngineeringBackground -> click OK
+* Right-click this new GPO -> **Edit**
+* Double-click **Desktop Wallpaper**
+
+![alt text](images/practical-helpdesk/2026-11-09_19-55.png)
+
+* Click **Enabled**, and in **Wallpaper Name:** paste here the path that you copied earlier -> click OK.
+* Go to your Windows 11 VM, log in as one of the user in Engineering (example: Richard) to check if the wallpaper has changed.
+
+<br>
+
+### Intro to PowerShell
+
+* Log in as Admin (example: administrator@lab.local) in your Windows 11 VM.
+* Start Menu -> **Windows PowerShell**
+* Notes:
+    - One thing we can do here is run similar commands that we are used to from the command prompt.
+    - We can also run some linux commands here (which is not possible in the Command Prompt)
+* One of the real strengths of PowerShell is **its ability to load modules**, and each of the modules have what are called **commandlets** (like miniature or smaller commands) in them.
+* **Syntax for commandlets:** `verb + dash + noun`
+    - Example: `Get-Command -Module Microsoft.Powershell.Management`
+
+    ![alt text](images/practical-helpdesk/2026-11-09_20-22.png)
+
+    - To get help to know more on a command - Example: `Get-Help New-Item`
+    - To create a new file- Example: `New-Item -Name test.txt -ItemType file -Value "hello from Powershell"`
+    - To check a content of a file - Example: `Get-Content test.txt`
+
+#### Installing Modules for Active Directory using PowerShell
+* Log in as Admin (example: administrator@lab.local) in your Windows 11 VM.
+* Start Menu -> **Settings** (System) -> **Optional Features** -> click **View features** button -> type **RSAT**, put a check then click Next then click **Add**
+
+![alt text](images/practical-helpdesk/2026-11-09_20-34.png)
+
+* Start Menu -> **Windows PowerShell**
+    - To check if that module got installed, run `Get-Module -Name ActiveDirectory -ListAvailable`
+    - To check the **cmdlets** that are available, run `Get-Command -Module ActiveDirectory`
+    - One really useful commandlet for Active Directory is the **Get-ADUser** commandlet, which allows us to get details about a specific AD user. Example: `Get-ADUser rhendricks -Properties *`
+
+<br>
+
+### Automating Tasks with PowerShell
+
+#### Basic PowerShell script to help automate the task of creating a new Active Directory user
+* Log in as Admin (example: administrator@lab.local) in your Windows 11 VM.
+* Install a code editor (example: VS Code) then run it after installation.
+* Install PowerShell extension.
+* Create a new file. Example: **Create-ADUser.ps1** (note: **ps1** is the file extension for PowerShell)
+```ps1
+#Script to create a new AD user with the parameters passed in by the user
+
+#Getting parameters for script fron user
+param (
+    [Parameter(Mandatory=$true)]
+    [string]$FirstName,
+    
+    [Parameter(Mandatory=$true)]
+    [string]$LastName,
+
+    [Parameter(Mandatory=$true)]
+    [string]$UserName,
+
+    [Parameter(Mandatory=$true)]
+    [string]$OU,
+
+    [Parameter(Mandatory=$true)]
+    [string]$Domain
+
+)
+
+#Generate Random Password
+$Password = -join((0x30..0x39)+(0x41..0x5A)+(0x61..0x7A) | Get-Random -Count 12 | ForEach-Object | {[char]$_})
+Write-Host "Password Generated as: $Password"
+
+$SecurePassword = ($Password | ConvertTo-SecureString -AsPlainText -Force)
+
+
+#Make a call to New-ADUser to create the AD user
+New-ADUser `
+    -SamAccountName $UserName `
+    -UserPrincipalName "$Username@$Domain" `
+    -Name "$FirstName $LastName" `
+    -GivenName $FirstName `
+    -Surname $LastName `
+    -AccountPassword $SecurePassword `
+    -Enabled $true `
+    -Path "OU = $OU, DC = LAB, DC = local" `
+    -PasswordNeverExpires $false `
+    -ChangePasswordAtLogon $true
+```
+
+* To run this script: `.\Create-ADUser.ps1`
+
+<br>
+
+### Resetting AD Passwords
+
+#### Creating a GPO (Account Lockout Policy) if a User typed wrong password 3 times
+* Log in to your Windows Server VM (example: LAB\Administrator)
+* On the top right corner of the Server Manager Dashboard, click **Tools** -> **Group Policy Management**
+* Add a GPO for the whole domain:
+    - Right-click **LAB.local** -> **Create a GPO in this domain, and Link it here.**
+    - Name it whatever you want. Example: AccountLockoutPolicy
+    - Click OK
+* Right-click this new GPO -> **Edit**
+    - Policies -> Windows Settings -> Security Settings -> Account Policies -> **Account Lockout Policy** -> **Account lockout threshold**
+
+    ![alt text](images/practical-helpdesk/2026-11-09_21-49.png)
+
+    - Click Apply -> OK -> OK
+* Right-click again this new GPO -> **Enforced**
+* Log in to your Windows 11 VM, try wrong passwords.
+
+#### Resetting this Locked out User
+* Go back to your Windows Server VM (example: LAB\Administrator)
+* On the top right corner of the Server Manager Dashboard, click **Tools** -> **Active Directory Users and Computers**
+* Click this icon to search for the User:
+
+![alt text](images/practical-helpdesk/2026-11-09_21-57.png)
+
+* From the result, right-click the User -> **Reset Password...**
+
+![alt text](images/practical-helpdesk/2026-11-09_21-59.png)
+
+* You can also use the PowerShell in the Windows Server to lockout this user, Example: `Set-ADACcountPassword -Identity rhendricks -reset`, the force them to change the password: `Set-ADUser rhendricks $true`
 
 <br>
 
