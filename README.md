@@ -22,6 +22,7 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 
 ## 🖥️ IT Foundation Review Notes
 * [practical-helpdesk.md](./it-foundation-review-notes/practical-helpdesk.md)
+* [linux-fundamentals.md](./it-foundation-review-notes/linux-fundamentals.md)
 
 ## 🛠️ Git Notes
 * [essentials.md](./git-notes/essentials.md)
