@@ -6,7 +6,6 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 
 ## 🗺️ Table of Contents
 * [IT Foundation Review Notes](#️-it-foundation-review-notes)
-* [Networking Notes](#-networking-notes)
 * [Git Notes](#-git-notes)
 * [VS Code Notes](#-vscode-notes)
 * [Python Notes](#-python-notes)
@@ -24,9 +23,6 @@ Welcome to my personal repository of study notes, summaries, and quick reference
 ## 🖥️ IT Foundation Review Notes
 * [practical-helpdesk.md](./it-foundation-review-notes/practical-helpdesk.md)
 * [linux-fundamentals.md](./it-foundation-review-notes/linux-fundamentals.md)
-
-## 🖧 Networking Notes
-* [comptia-network-plus-n10-009.md](./networking-notes/comptia-network-plus-n10-009.md)
 
 ## 🛠️ Git Notes
 * [essentials.md](./git-notes/essentials.md)
